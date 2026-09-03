@@ -1388,6 +1388,16 @@ body {
           <span class="nav-item-text">Đương lượng Magiê (Mg)</span>
           <span class="nav-item-badge">Tính</span>
         </a>
+        <a class="nav-item" data-module="hdc8">
+          <div class="nav-item-icon">8</div>
+          <span class="nav-item-text">Pha dung dịch & Chuẩn độ Axit-Bazơ</span>
+          <span class="nav-item-badge">Tính</span>
+        </a>
+        <a class="nav-item" data-module="hdc11">
+          <div class="nav-item-icon">11</div>
+          <span class="nav-item-text">Áp suất hơi bão hòa & Nhiệt bay hơi của nước</span>
+          <span class="nav-item-badge">Đồ thị</span>
+        </a>
       </div>
 
       <!-- Nhóm 3: Hóa lý -->
@@ -1549,100 +1559,71 @@ body {
 /* ========================================================================= */
 /* INLINED: js/data/handbook_data.js */
 /* ========================================================================= */
-// js/data/handbook_data.js
-// Dữ liệu Sổ tay thực hành Hóa đại cương & Hóa lý + Bảng tra cứu & Ngân hàng câu hỏi
-
-const WATER_VAPOR_PRESSURE_TABLE = [
-  { t: 10, f: 9.21 }, { t: 11, f: 9.84 }, { t: 12, f: 10.52 }, { t: 13, f: 11.23 },
-  { t: 14, f: 11.99 }, { t: 15, f: 12.79 }, { t: 16, f: 13.63 }, { t: 17, f: 14.53 },
-  { t: 18, f: 15.48 }, { t: 19, f: 16.48 }, { t: 20, f: 17.54 }, { t: 21, f: 18.65 },
-  { t: 22, f: 19.83 }, { t: 23, f: 21.07 }, { t: 24, f: 22.38 }, { t: 25, f: 23.76 },
-  { t: 26, f: 25.21 }, { t: 27, f: 26.74 }, { t: 28, f: 28.35 }, { t: 29, f: 30.04 },
-  { t: 30, f: 31.82 }, { t: 31, f: 33.70 }, { t: 32, f: 35.66 }, { t: 33, f: 37.73 },
-  { t: 34, f: 39.90 }, { t: 35, f: 42.18 }, { t: 36, f: 44.56 }, { t: 37, f: 47.07 },
-  { t: 38, f: 49.69 }, { t: 39, f: 52.44 }, { t: 40, f: 55.32 }
-];
-
-function getWaterVaporPressure(tempC) {
-  if (tempC == null || isNaN(tempC)) return 23.76;
-  const rounded = Math.round(tempC);
-  const found = WATER_VAPOR_PRESSURE_TABLE.find(item => item.t === rounded);
-  if (found) return found.f;
-  if (tempC < 10) return 9.21;
-  if (tempC > 40) return 55.32;
-  const tLow = Math.floor(tempC);
-  const tHigh = Math.ceil(tempC);
-  const fLow = WATER_VAPOR_PRESSURE_TABLE.find(item => item.t === tLow)?.f || 23.76;
-  const fHigh = WATER_VAPOR_PRESSURE_TABLE.find(item => item.t === tHigh)?.f || 23.76;
-  if (tLow === tHigh) return fLow;
-  return fLow + (fHigh - fLow) * (tempC - tLow);
-}
-
 const LAB_MODULES = [
   {
-    id: "kt1",
-    category: "tech",
-    categoryName: "I. Kỹ thuật Phòng Lab",
-    number: "Kỹ thuật 1",
-    title: "Gia công cắt ống thủy tinh & Bo tròn nhiệt",
-    shortDesc: "Tạo rãnh khía định vị nứt phẳng và gia nhiệt bo tròn mép cắt ống thủy tinh thí nghiệm.",
-    icon: "fa-flask-vial",
-    hasCalculator: false,
-    calcType: "checklist",
-    theory: {
-      purpose: "Rèn luyện kỹ năng cắt ống thủy tinh phòng thí nghiệm (đường kính $4 \\div 8\\text{ mm}$) thành các đoạn có kích thước xác định và xử lý bo tròn mép cắt an toàn làm ống dẫn khí, ống nối, đũa khuấy.",
-      principles: [
+    "id": "kt1",
+    "category": "tech",
+    "categoryName": "I. Kỹ thuật Phòng Lab",
+    "number": "Kỹ thuật 1",
+    "title": "Gia công cắt ống thủy tinh & Bo tròn nhiệt",
+    "shortDesc": "Tạo rãnh khía định vị nứt phẳng và gia nhiệt bo tròn mép cắt ống thủy tinh thí nghiệm.",
+    "icon": "fa-flask-vial",
+    "hasCalculator": false,
+    "calcType": "checklist",
+    "theory": {
+      "purpose": "Rèn luyện kỹ năng cắt ống thủy tinh phòng thí nghiệm (đường kính $4 \\div 8\\text{ mm}$) thành các đoạn có kích thước xác định và xử lý bo tròn mép cắt an toàn làm ống dẫn khí, ống nối, đũa khuấy.",
+      "principles": [
         "**Nguyên tắc cơ học (Cắt ống):** Không cưa đứt mà tạo một vết khía sâu duy nhất (khoảng $1/3$ chu vi) vuông góc với trục ống, tập trung ứng suất cơ học cực đại tại đáy rãnh khía để lan truyền vết nứt phẳng khi bẻ ngược chiều.",
         "**Nguyên tắc nhiệt động (Bo tròn nhiệt):** Nung nóng đầu cắt trên ngọn lửa đèn khí/đèn cồn để thủy tinh bề mặt nóng chảy nhớt. Dưới tác dụng của sức căng bề mặt ($\\gamma$), thủy tinh tự co tròn làm mất mép sắc nhọn và hàn kín vi nứt."
       ],
-      procedure: [
+      "procedure": [
         "1. **Khía định vị:** Đặt ống phẳng trên bàn, dùng dũa tam giác miết **1 đường duy nhất, dứt khoát theo 1 chiều hướng ra ngoài**, tạo vết rãnh sâu khoảng $1/3$ chu vi ống. *(Tuyệt đối không kéo cưa qua lại)*.",
         "2. **Làm ướt vết khía:** Nhỏ 1 giọt nước cất lên rãnh khía để phản ứng thủy phân cục bộ mạng lưới silicat hỗ trợ nứt phẳng.",
         "3. **Bẻ ống:** Bọc khăn vải dày quanh vết khía. Quay mặt khía ra phía trước, đặt 2 ngón tay cái song song ở mặt sau rãnh (cách $2 \\div 3\\text{ cm}$). Đẩy 2 ngón cái về trước và kéo 2 đầu ống về sau.",
         "4. **Bo tròn nhiệt:** Cầm ống hơi nghiêng hướng xuống, đưa đầu cắt vào vùng ngọn lửa xanh nóng nhất, **xoay tròn liên tục quanh trục** đến khi mép cắt đỏ hồng nhẹ và bo tròn nhẵn thì rút ra ngay.",
         "5. **Làm nguội chậm (Ủ nhiệt):** Đặt ống lên tấm amiăng/gốm cách nhiệt để nguội tự nhiên. Không nhúng nước lạnh tránh sốc nhiệt nứt vỡ."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "Luôn đeo kính bảo hộ khi bẻ ống thủy tinh.",
         "Dùng khăn vải dày quấn quanh tay và vị trí bẻ để chống mảnh vụn cắt vào tay.",
         "Không sờ tay vào đầu ống vừa hơ lửa."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Tại sao dũa ống thủy tinh chỉ được miết dứt khoát 1 đường theo 1 chiều mà không được cưa qua lại?",
-        a: "Miết 1 đường dứt khoát tạo ra 1 rãnh nứt phẳng và duy nhất, giúp tập trung ứng suất cực đại tại đáy rãnh để khi bẻ, vết nứt lan truyền thẳng góc $90^\\circ$. Nếu cưa qua lại sẽ tạo ra nhiều vi nứt đa hướng, làm vỡ vụn miệng ống, gây mẻ xiên và nguy cơ đứt tay."
+        "q": "Tại sao dũa ống thủy tinh chỉ được miết dứt khoát 1 đường theo 1 chiều mà không được cưa qua lại?",
+        "a": "Miết 1 đường dứt khoát tạo ra 1 rãnh nứt phẳng và duy nhất, giúp tập trung ứng suất cực đại tại đáy rãnh để khi bẻ, vết nứt lan truyền thẳng góc $90^\\circ$. Nếu cưa qua lại sẽ tạo ra nhiều vi nứt đa hướng, làm vỡ vụn miệng ống, gây mẻ xiên và nguy cơ đứt tay."
       },
       {
-        q: "Tại sao khi bo tròn nhiệt phải xoay tròn ống liên tục và cầm ống hơi nghiêng xuống?",
-        a: "Xoay tròn liên tục giúp nhiệt phân bố đều quanh chu vi miệng ống, sức căng bề mặt kéo đều mép thủy tinh co tròn đối xứng. Cầm ống hơi nghiêng xuống ngăn không khí nóng và hơi nước đối lưu làm nóng thân ống gây bỏng tay và tránh bụi bẩn rơi vào trong ống."
+        "q": "Tại sao khi bo tròn nhiệt phải xoay tròn ống liên tục và cầm ống hơi nghiêng xuống?",
+        "a": "Xoay tròn liên tục giúp nhiệt phân bố đều quanh chu vi miệng ống, sức căng bề mặt kéo đều mép thủy tinh co tròn đối xứng. Cầm ống hơi nghiêng xuống ngăn không khí nóng và hơi nước đối lưu làm nóng thân ống gây bỏng tay và tránh bụi bẩn rơi vào trong ống."
       },
       {
-        q: "Tại sao không được làm nguội nhanh ống thủy tinh nóng bằng nước lạnh?",
-        a: "Thủy tinh dẫn nhiệt kém. Làm nguội đột ngột bằng nước lạnh gây co ngót nhiệt cục bộ không đồng đều (sốc nhiệt), tạo ra ứng suất nhiệt dư cực lớn dẫn đến nứt vỡ ngay lập tức hoặc nổ vỡ chậm trong quá trình sử dụng sau này."
+        "q": "Tại sao không được làm nguội nhanh ống thủy tinh nóng bằng nước lạnh?",
+        "a": "Thủy tinh dẫn nhiệt kém. Làm nguội đột ngột bằng nước lạnh gây co ngót nhiệt cục bộ không đồng đều (sốc nhiệt), tạo ra ứng suất nhiệt dư cực lớn dẫn đến nứt vỡ ngay lập tức hoặc nổ vỡ chậm trong quá trình sử dụng sau này."
       }
     ]
   },
   {
-    id: "kt2",
-    category: "tech",
-    categoryName: "I. Kỹ thuật Phòng Lab",
-    number: "Kỹ thuật 2",
-    title: "Tinh chế Natri Clorua (NaCl)",
-    shortDesc: "Tách loại ion Ca2+, Mg2+, SO42- và kết tinh thu NaCl tinh khiết, tính hiệu suất thu hồi.",
-    icon: "fa-cubes-stacked",
-    hasCalculator: true,
-    calcType: "nacl_purification",
-    theory: {
-      purpose: "Tách loại các tạp chất cơ học không tan và các tạp chất ion $\\text{Ca}^{2+}, \\text{Mg}^{2+}, \\text{SO}_4^{2-}$ ra khỏi muối thô để thu $\\text{NaCl}$ tinh khiết và xác định hiệu suất tinh chế.",
-      principles: [
+    "id": "kt2",
+    "category": "tech",
+    "categoryName": "I. Kỹ thuật Phòng Lab",
+    "number": "Kỹ thuật 2",
+    "title": "Tinh chế Natri Clorua (NaCl)",
+    "shortDesc": "Tách loại ion Ca2+, Mg2+, SO42- và kết tinh thu NaCl tinh khiết, tính hiệu suất thu hồi.",
+    "icon": "fa-cubes-stacked",
+    "hasCalculator": true,
+    "calcType": "nacl_purification",
+    "theory": {
+      "purpose": "Tách loại các tạp chất cơ học không tan và các tạp chất ion $\\text{Ca}^{2+}, \\text{Mg}^{2+}, \\text{SO}_4^{2-}$ ra khỏi muối thô để thu $\\text{NaCl}$ tinh khiết và xác định hiệu suất tinh chế.",
+      "principles": [
         "Kết tủa $\\text{SO}_4^{2-}$ bằng $\\text{BaCl}_2$: $\\text{Ba}^{2+} + \\text{SO}_4^{2-} \\rightarrow \\text{BaSO}_4\\downarrow$",
         "Kết tủa $\\text{Mg}^{2+}$ bằng $\\text{NaOH}$: $\\text{Mg}^{2+} + 2\\text{OH}^- \\rightarrow \\text{Mg(OH)}_2\\downarrow$",
         "Kết tủa $\\text{Ca}^{2+}$ và lượng $\\text{Ba}^{2+}$ dư bằng $\\text{Na}_2\\text{CO}_3$: $\\text{Ca}^{2+} + \\text{CO}_3^{2-} \\rightarrow \\text{CaCO}_3\\downarrow$; $\\text{Ba}^{2+} + \\text{CO}_3^{2-} \\rightarrow \\text{BaCO}_3\\downarrow$",
         "Trung hòa $\\text{OH}^-$ và $\\text{CO}_3^{2-}$ dư bằng $\\text{HCl}$ về $\\text{pH } 6 \\div 7$: $\\text{OH}^- + \\text{H}^+ \\rightarrow \\text{H}_2\\text{O}$; $\\text{CO}_3^{2-} + 2\\text{H}^+ \\rightarrow \\text{CO}_2\\uparrow + \\text{H}_2\\text{O}$",
         "Kết tinh lại bằng phương pháp **cô đặc bay hơi dung môi** (do độ tan $\\text{NaCl}$ biến thiên rất ít theo nhiệt độ)."
       ],
-      procedure: [
+      "procedure": [
         "1. Hòa tan $20 \\div 25\\text{ g}$ muối thô vào $70 \\div 80\\text{ mL}$ nước cất nóng.",
         "2. Thêm từng giọt dung dịch $\\text{BaCl}_2\\text{ 20\\%}$ đến hết kết tủa trắng. Thêm $2 \\div 3\\text{ mL}$ dung dịch $\\text{NaOH 20\\%}$. Thêm $\\text{Na}_2\\text{CO}_3\\text{ 20\\%}$ đến khi kết tủa hoàn toàn.",
         "3. Đun nhẹ cho kết tủa đông tụ, lọc qua giấy lọc nếp lấy dịch trong.",
@@ -1650,89 +1631,89 @@ const LAB_MODULES = [
         "5. Cô đặc trong bát sứ trên bếp điện đến khi còn một lớp mỏng dung dịch mẹ (khoảng 15 - 20% thể tích ban đầu). Dừng đun, để nguội tự nhiên.",
         "6. Lọc hút tinh thể, rửa bằng một ít cồn $96^\\circ$ hoặc nước cất đá lạnh ($0 \\div 2^\\circ\\text{C}$), sấy khô ở $105^\\circ\\text{C}$ và cân khối lượng."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "$\\text{BaCl}_2$ và $\\text{NaOH}$ có tính độc/ăn mòn, tránh tiếp xúc trực tiếp.",
         "Không cô cạn khô bát sứ để tránh muối bắn tung tóe gây bỏng."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Tại sao phải cho BaCl2 trước rồi mới cho Na2CO3 sau? Đảo ngược thứ tự có được không?",
-        a: "Bắt buộc cho $\\text{BaCl}_2$ trước để loại bỏ hoàn toàn $\\text{SO}_4^{2-}$. Sau đó cho $\\text{Na}_2\\text{CO}_3$ vừa để kết tủa $\\text{Ca}^{2+}$ vừa kết tủa hết lượng $\\text{Ba}^{2+}$ dư độc hại thành $\\text{BaCO}_3\\downarrow$. Nếu đảo ngược, lượng $\\text{Ba}^{2+}$ thêm vào sau sẽ không có $\\text{CO}_3^{2-}$ để kết tủa và làm dung dịch $\\text{NaCl}$ bị nhiễm độc ion $\\text{Ba}^{2+}$."
+        "q": "Tại sao phải cho BaCl2 trước rồi mới cho Na2CO3 sau? Đảo ngược thứ tự có được không?",
+        "a": "Bắt buộc cho $\\text{BaCl}_2$ trước để loại bỏ hoàn toàn $\\text{SO}_4^{2-}$. Sau đó cho $\\text{Na}_2\\text{CO}_3$ vừa để kết tủa $\\text{Ca}^{2+}$ vừa kết tủa hết lượng $\\text{Ba}^{2+}$ dư độc hại thành $\\text{BaCO}_3\\downarrow$. Nếu đảo ngược, lượng $\\text{Ba}^{2+}$ thêm vào sau sẽ không có $\\text{CO}_3^{2-}$ để kết tủa và làm dung dịch $\\text{NaCl}$ bị nhiễm độc ion $\\text{Ba}^{2+}$."
       },
       {
-        q: "Tại sao không được cô cạn dung dịch muối đến khô kiệt?",
-        a: "Nếu cô cạn khô kiệt, các ion tạp chất còn sót lại trong dung dịch mẹ sẽ bám hết vào tinh thể $\\text{NaCl}$, làm giảm độ tinh khiết; đồng thời tinh thể muối khô sẽ bắn nổ tung tóe gây thất thoát và nguy hiểm do nhiệt độ đáy bát sứ tăng vọt."
+        "q": "Tại sao không được cô cạn dung dịch muối đến khô kiệt?",
+        "a": "Nếu cô cạn khô kiệt, các ion tạp chất còn sót lại trong dung dịch mẹ sẽ bám hết vào tinh thể $\\text{NaCl}$, làm giảm độ tinh khiết; đồng thời tinh thể muối khô sẽ bắn nổ tung tóe gây thất thoát và nguy hiểm do nhiệt độ đáy bát sứ tăng vọt."
       },
       {
-        q: "Tại sao dùng cồn 96° hoặc nước đá lạnh để rửa tinh thể muối?",
-        a: "$\\text{NaCl}$ tan rất ít trong cồn $96^\\circ$ và ít tan hơn trong nước lạnh, do đó dùng cồn/nước đá giúp rửa trôi dung dịch mẹ bám trên bề mặt tinh thể mà không làm hòa tan mất nhiều sản phẩm tinh thể $\\text{NaCl}$ tinh khiết."
+        "q": "Tại sao dùng cồn 96° hoặc nước đá lạnh để rửa tinh thể muối?",
+        "a": "$\\text{NaCl}$ tan rất ít trong cồn $96^\\circ$ và ít tan hơn trong nước lạnh, do đó dùng cồn/nước đá giúp rửa trôi dung dịch mẹ bám trên bề mặt tinh thể mà không làm hòa tan mất nhiều sản phẩm tinh thể $\\text{NaCl}$ tinh khiết."
       }
     ]
   },
   {
-    id: "kt3",
-    category: "tech",
-    categoryName: "I. Kỹ thuật Phòng Lab",
-    number: "Kỹ thuật 3",
-    title: "Vận hành hệ thống chưng cất nước phòng thí nghiệm",
-    shortDesc: "Vận hành hệ thống chưng cất nước đơn tiêu chuẩn TCVN 4851 / ISO 3696.",
-    icon: "fa-water",
-    hasCalculator: false,
-    calcType: "distillation_log",
-    theory: {
-      purpose: "Nắm vững cấu tạo, quy trình lắp ráp, vận hành an toàn hệ thống chưng cất nước một lần và các tiêu chuẩn kiểm tra chất lượng nước cất phòng thí nghiệm.",
-      principles: [
+    "id": "kt3",
+    "category": "tech",
+    "categoryName": "I. Kỹ thuật Phòng Lab",
+    "number": "Kỹ thuật 3",
+    "title": "Vận hành hệ thống chưng cất nước phòng thí nghiệm",
+    "shortDesc": "Vận hành hệ thống chưng cất nước đơn tiêu chuẩn TCVN 4851 / ISO 3696.",
+    "icon": "fa-water",
+    "hasCalculator": false,
+    "calcType": "distillation_log",
+    "theory": {
+      "purpose": "Nắm vững cấu tạo, quy trình lắp ráp, vận hành an toàn hệ thống chưng cất nước một lần và các tiêu chuẩn kiểm tra chất lượng nước cất phòng thí nghiệm.",
+      "principles": [
         "**Nguyên tắc:** Dựa trên chu trình chuyển pha nhiệt động học (Lỏng $\\rightarrow$ Hơi $\\rightarrow$ Lỏng). Nước sôi ở $100^\\circ\\text{C}$ hóa hơi để lại khoáng vô cơ, kim loại nặng và vi sinh vật, sau đó ngưng tụ trong ống sinh hàn thành nước cất Loại 3 (TCVN 4851:1989 / ISO 3696:1987).",
         "**Tiêu chuẩn Nước loại 3:** Độ dẫn điện $\\le 0,5\\text{ mS/m}$ ($5,0\\text{ }\\mu\\text{S/cm}$ ở $25^\\circ\\text{C}$); $\\text{pH } 5,0 \\div 7,5$; Cặn bay hơi $\\le 2\\text{ mg/kg}$."
       ],
-      procedure: [
+      "procedure": [
         "1. Cho nước vào bình đun đạt $1/3 \\div 1/2$ thể tích, thêm $2 \\div 3$ viên đá bọt khi nước còn nguội.",
         "2. Lắp sinh hàn: **Cấp nước lạnh vào ở cổng dưới, thoát nước ra ở cổng trên**.",
         "3. Bật gia nhiệt; bỏ $5 \\div 10\\text{ mL}$ phân đoạn nước cất đầu tiên.",
         "4. Thu nước cất với tốc độ $1 \\div 2\\text{ giọt/giây}$.",
         "5. Dừng đun khi còn lại khoảng 10 - 15% nước trong bình (tuyệt đối không đun cạn khô). Giữ nước làm mát thêm $5 \\div 10\\text{ phút}$ rồi mới ngắt toàn bộ."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "Tuyệt đối không đun khô bình cầu đáy tròn.",
         "Kiểm tra ống dẫn nước làm mát luôn thông suốt trước khi bật gia nhiệt.",
         "Không bịt kín nhánh phụ của sừng chưng cất (tránh áp suất kín gây nổ bình)."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Tại sao nước làm mát sinh hàn phải cấp từ cổng dưới và thoát ra ở cổng trên?",
-        a: "Nước cấp từ cổng dưới sẽ đi ngược chiều trọng lực, điền đầy toàn bộ khoang áo sinh hàn và đuổi hết bọt khí ra ngoài, đảm bảo bề mặt trao đổi nhiệt tối đa. Nếu cấp từ cổng trên, nước sẽ chảy tuột xuống đáy tạo dòng chảy hở và để lại các túi khí làm giảm hiệu suất ngưng tụ."
+        "q": "Tại sao nước làm mát sinh hàn phải cấp từ cổng dưới và thoát ra ở cổng trên?",
+        "a": "Nước cấp từ cổng dưới sẽ đi ngược chiều trọng lực, điền đầy toàn bộ khoang áo sinh hàn và đuổi hết bọt khí ra ngoài, đảm bảo bề mặt trao đổi nhiệt tối đa. Nếu cấp từ cổng trên, nước sẽ chảy tuột xuống đáy tạo dòng chảy hở và để lại các túi khí làm giảm hiệu suất ngưng tụ."
       },
       {
-        q: "Tại sao tuyệt đối không được bịt kín nhánh phụ của sừng chưng cất?",
-        a: "Nhánh phụ của sừng chưng cất có vai trò thông với khí quyển. Nếu bịt kín, hệ thống trở thành bình kín có áp suất tăng cao liên tục do hơi nước bốc lên, có thể dẫn đến nổ vỡ toàn bộ dụng cụ thủy tinh."
+        "q": "Tại sao tuyệt đối không được bịt kín nhánh phụ của sừng chưng cất?",
+        "a": "Nhánh phụ của sừng chưng cất có vai trò thông với khí quyển. Nếu bịt kín, hệ thống trở thành bình kín có áp suất tăng cao liên tục do hơi nước bốc lên, có thể dẫn đến nổ vỡ toàn bộ dụng cụ thủy tinh."
       },
       {
-        q: "Tại sao không được thêm đá bọt khi nước đang sôi hoặc cận sôi?",
-        a: "Đá bọt có vô số mao quản chứa không khí làm mầm tạo bọt khí sôi êm dịu. Nếu thả đá bọt vào chất lỏng đang sôi hoặc cận sôi quá nhiệt, không khí trong mao quản sẽ thoát ra mãnh liệt tức thì, gây hiện tượng sôi bùng đột ngột trào chất lỏng nóng ra ngoài gây bỏng nghiêm trọng."
+        "q": "Tại sao không được thêm đá bọt khi nước đang sôi hoặc cận sôi?",
+        "a": "Đá bọt có vô số mao quản chứa không khí làm mầm tạo bọt khí sôi êm dịu. Nếu thả đá bọt vào chất lỏng đang sôi hoặc cận sôi quá nhiệt, không khí trong mao quản sẽ thoát ra mãnh liệt tức thì, gây hiện tượng sôi bùng đột ngột trào chất lỏng nóng ra ngoài gây bỏng nghiêm trọng."
       }
     ]
   },
   {
-    id: "hdc3",
-    category: "hdc",
-    categoryName: "II. Hóa Đại Cương",
-    number: "HĐC Bài 3",
-    title: "Xác định khối lượng phân tử khí Oxygen (O2)",
-    shortDesc: "Nhiệt phân KClO3 có xúc tác MnO2, thu khí O2 dời nước, hiệu chỉnh p hơi nước f và cột nước h.",
-    icon: "fa-gauge-high",
-    hasCalculator: true,
-    calcType: "o2_mw",
-    theory: {
-      purpose: "Xác định khối lượng phân tử thực nghiệm của khí $\\text{O}_2$ bằng phương pháp nhiệt phân $\\text{KClO}_3$ có xúc tác $\\text{MnO}_2$ và thu khí dời nước trong ống đong.",
-      principles: [
+    "id": "hdc3",
+    "category": "hdc",
+    "categoryName": "II. Hóa Đại Cương",
+    "number": "HĐC Bài 3",
+    "title": "Xác định khối lượng phân tử khí Oxygen (O2)",
+    "shortDesc": "Nhiệt phân KClO3 có xúc tác MnO2, thu khí O2 dời nước, hiệu chỉnh p hơi nước f và cột nước h.",
+    "icon": "fa-gauge-high",
+    "hasCalculator": true,
+    "calcType": "o2_mw",
+    "theory": {
+      "purpose": "Xác định khối lượng phân tử thực nghiệm của khí $\\text{O}_2$ bằng phương pháp nhiệt phân $\\text{KClO}_3$ có xúc tác $\\text{MnO}_2$ và thu khí dời nước trong ống đong.",
+      "principles": [
         "**Phương trình phản ứng:** $2\\text{KClO}_3(s) \\xrightarrow{\\text{MnO}_2, t^\\circ} 2\\text{KCl}(s) + 3\\text{O}_2\\uparrow(g)$",
         "**Nguyên tắc đo:** Khối lượng khí $\\text{O}_2$ sinh ra $m = m_1 - m_2$ (độ giảm khối lượng ống nghiệm). Khí thu trên mặt nước nên áp suất khí quyển $P_{kk} = P_{\\text{O}_2} + f + P_h$.",
         "**Áp suất riêng phần $\\text{O}_2$ khô:** $P_{\\text{O}_2} = P_{\\text{kk}} - f - \\frac{h}{13,6}\\text{ (mmHg)}$ (với $13,6$ là tỷ trọng thủy ngân).",
         "**Khối lượng phân tử:** $M_{\\text{O}_2} = \\frac{m \\cdot R \\cdot T}{P_{\\text{O}_2} \\cdot V}$ với $R = 62400\\text{ mL}\\cdot\\text{mmHg}\\cdot\\text{mol}^{-1}\\cdot\\text{K}^{-1}$."
       ],
-      procedure: [
+      "procedure": [
         "1. Trộn đều khoảng $1,5\\text{ g } \\text{KClO}_3$ với $0,1\\text{ g } \\text{MnO}_2$ khô trong ống nghiệm chịu nhiệt, đậy nút có ống dẫn khí.",
         "2. Cân chính xác khối lượng ống nghiệm chứa hỗn hợp ($m_1$).",
         "3. Đổ đầy nước vào chậu và ống đong, úp ngược ống đong vào chậu nước.",
@@ -1741,35 +1722,35 @@ const LAB_MODULES = [
         "6. Đọc thể tích khí $V$, đo chiều cao cột nước $h$ trong ống đong, đo nhiệt độ nước $t^\\circ\\text{C}$ và áp suất khí quyển $P_{kk}$.",
         "7. Để ống nghiệm nguội hẳn rồi cân lại khối lượng ($m_2$)."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "Bắt buộc rút ống dẫn khí ra khỏi chậu nước TRƯỚC KHI tắt đèn cồn để tránh hiện tượng nước bị hút ngược vào ống nghiệm nóng gây nổ vỡ ống.",
         "Chỉ dùng $\\text{MnO}_2$ tinh khiết (không lẫn than hoặc chất hữu cơ dễ gây nổ)."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Tại sao phải rút ống dẫn khí ra khỏi chậu nước trước khi tắt đèn cồn?",
-        a: "Khi tắt đèn cồn, nhiệt độ trong ống nghiệm giảm đột ngột làm áp suất khí bên trong giảm mạnh. Nếu chưa rút ống dẫn khí, áp suất khí quyển sẽ đẩy nước lạnh từ chậu hút ngược vào ống nghiệm đang nóng đỏ, gây sốc nhiệt làm nổ vỡ ống nghiệm tức thì."
+        "q": "Tại sao phải rút ống dẫn khí ra khỏi chậu nước trước khi tắt đèn cồn?",
+        "a": "Khi tắt đèn cồn, nhiệt độ trong ống nghiệm giảm đột ngột làm áp suất khí bên trong giảm mạnh. Nếu chưa rút ống dẫn khí, áp suất khí quyển sẽ đẩy nước lạnh từ chậu hút ngược vào ống nghiệm đang nóng đỏ, gây sốc nhiệt làm nổ vỡ ống nghiệm tức thì."
       },
       {
-        q: "Tại sao phải hiệu chỉnh áp suất cột nước h và áp suất hơi nước bão hòa f?",
-        a: "Khí $\\text{O}_2$ thu bằng phương pháp đẩy nước luôn bão hòa hơi nước ($f$) và mực nước trong ống đong cao hơn mực nước ngoài chậu một khoảng $h$ tạo thêm áp suất thủy tĩnh ($h/13,6\\text{ mmHg}$). Do đó phải trừ đi $f$ và $h/13,6$ từ áp suất khí quyển để tìm đúng áp suất riêng phần của khí $\\text{O}_2$ khô."
+        "q": "Tại sao phải hiệu chỉnh áp suất cột nước h và áp suất hơi nước bão hòa f?",
+        "a": "Khí $\\text{O}_2$ thu bằng phương pháp đẩy nước luôn bão hòa hơi nước ($f$) và mực nước trong ống đong cao hơn mực nước ngoài chậu một khoảng $h$ tạo thêm áp suất thủy tĩnh ($h/13,6\\text{ mmHg}$). Do đó phải trừ đi $f$ và $h/13,6$ từ áp suất khí quyển để tìm đúng áp suất riêng phần của khí $\\text{O}_2$ khô."
       }
     ]
   },
   {
-    id: "hdc4",
-    category: "hdc",
-    categoryName: "II. Hóa Đại Cương",
-    number: "HĐC Bài 4",
-    title: "Xác định khối lượng phân tử khí Carbon Dioxide (CO2)",
-    shortDesc: "Điều chế CO2 từ bình kíp, nạp đẩy không khí trong bình cầu, xác định tỉ khối d_CO2/kk.",
-    icon: "fa-cloud",
-    hasCalculator: true,
-    calcType: "co2_mw",
-    theory: {
-      purpose: "Xác định khối lượng phân tử của khí $\\text{CO}_2$ bằng phương pháp đo tỉ khối của khí $\\text{CO}_2$ so với không khí ở cùng điều kiện nhiệt độ và áp suất.",
-      principles: [
+    "id": "hdc4",
+    "category": "hdc",
+    "categoryName": "II. Hóa Đại Cương",
+    "number": "HĐC Bài 4",
+    "title": "Xác định khối lượng phân tử khí Carbon Dioxide (CO2)",
+    "shortDesc": "Điều chế CO2 từ bình kíp, nạp đẩy không khí trong bình cầu, xác định tỉ khối d_CO2/kk.",
+    "icon": "fa-cloud",
+    "hasCalculator": true,
+    "calcType": "co2_mw",
+    "theory": {
+      "purpose": "Xác định khối lượng phân tử của khí $\\text{CO}_2$ bằng phương pháp đo tỉ khối của khí $\\text{CO}_2$ so với không khí ở cùng điều kiện nhiệt độ và áp suất.",
+      "principles": [
         "**Phản ứng điều chế:** $\\text{CaCO}_3(s) + 2\\text{HCl}(aq) \\rightarrow \\text{CaCl}_2(aq) + \\text{CO}_2\\uparrow(g) + \\text{H}_2\\text{O}(l)$",
         "Khí qua bình rửa $\\text{NaHCO}_3$ (giữ $\\text{HCl}$) và bình $\\text{H}_2\\text{SO}_4$ đặc (làm khô hơi nước).",
         "Vì $\\text{CO}_2$ nặng hơn không khí ($M = 44 > 29$), dẫn khí xuống tận đáy bình cầu để đẩy toàn bộ không khí ra ngoài.",
@@ -1778,48 +1759,48 @@ const LAB_MODULES = [
         "**Khối lượng $\\text{CO}_2$ thực:** $m_{\\text{CO}_2} = m_2 - m_1 + m_{\\text{kk}}$",
         "**Khối lượng phân tử:** $M_{\\text{CO}_2} = 29 \\times \\frac{m_{\\text{CO}_2}}{m_{\\text{kk}}}$"
       ],
-      procedure: [
+      "procedure": [
         "1. Chuẩn bị bình cầu có nút cao su đậy kín, cân khối lượng bình chứa không khí ($m_1$).",
         "2. Dẫn ống dẫn khí $\\text{CO}_2$ khô chạm sát đáy bình cầu, nạp khí trong khoảng 7 - 10 phút.",
         "3. Rút ống dẫn khí, đậy nút ngay lập tức và đem cân ($m_{2.1}$). Tiếp tục nạp khí thêm 3 phút rồi cân lại ($m_{2.2}$). Khi chênh lệch giữa 2 lần cân $\\le 0,005\\text{ g}$, lấy giá trị trung bình $m_2$.",
         "4. Đổ đầy nước cất vào bình cầu đến vạch tiếp xúc của nút, đổ ra ống đong để đo chính xác dung tích $V$ của bình.",
         "5. Ghi nhận nhiệt độ phòng $t^\\circ\\text{C}$ và áp suất khí quyển $P\\text{ (mmHg)}$."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "Kiểm tra hệ thống bình kíp kín khít, mở khóa nhẹ nhàng.",
         "Axit $\\text{H}_2\\text{SO}_4$ đặc trong bình làm khô có tính ăn mòn cực cao."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Tại sao khí CO2 phải đi qua bình NaHCO3 trước rồi mới qua bình H2SO4 đặc?",
-        a: "Khí $\\text{CO}_2$ từ bình kíp lẫn hơi axit $\\text{HCl}$ và hơi nước. Bình dung dịch $\\text{NaHCO}_3$ hấp thụ khí $\\text{HCl}$ (tạo thêm $\\text{CO}_2$). Sau đó, bình chứa $\\text{H}_2\\text{SO}_4$ đặc sẽ hút ẩm để làm khô hoàn toàn khí $\\text{CO}_2$. Nếu đảo ngược, khí sau khi làm khô lại bị ẩm trở lại khi qua dung dịch $\\text{NaHCO}_3$."
+        "q": "Tại sao khí CO2 phải đi qua bình NaHCO3 trước rồi mới qua bình H2SO4 đặc?",
+        "a": "Khí $\\text{CO}_2$ từ bình kíp lẫn hơi axit $\\text{HCl}$ và hơi nước. Bình dung dịch $\\text{NaHCO}_3$ hấp thụ khí $\\text{HCl}$ (tạo thêm $\\text{CO}_2$). Sau đó, bình chứa $\\text{H}_2\\text{SO}_4$ đặc sẽ hút ẩm để làm khô hoàn toàn khí $\\text{CO}_2$. Nếu đảo ngược, khí sau khi làm khô lại bị ẩm trở lại khi qua dung dịch $\\text{NaHCO}_3$."
       },
       {
-        q: "Dấu hiệu nhận biết khí CO2 đã đầy bình cầu là gì?",
-        a: "Đưa một que diêm đang cháy lại gần miệng bình cầu; nếu que diêm tắt ngay lập tức ở sát mép miệng bình nghĩa là khí $\\text{CO}_2$ đã dâng đầy và đẩy hết không khí ra ngoài."
+        "q": "Dấu hiệu nhận biết khí CO2 đã đầy bình cầu là gì?",
+        "a": "Đưa một que diêm đang cháy lại gần miệng bình cầu; nếu que diêm tắt ngay lập tức ở sát mép miệng bình nghĩa là khí $\\text{CO}_2$ đã dâng đầy và đẩy hết không khí ra ngoài."
       }
     ]
   },
   {
-    id: "hdc5",
-    category: "hdc",
-    categoryName: "II. Hóa Đại Cương",
-    number: "HĐC Bài 5",
-    title: "Xác định khối lượng phân tử Ethanol bằng xy-lanh gia nhiệt",
-    shortDesc: "Tiêm mẫu ethanol lỏng vào xy-lanh nhiệt độ sôi, đo thể tích hơi giãn nở, so sánh mô hình Van der Waals.",
-    icon: "fa-syringe",
-    hasCalculator: true,
-    calcType: "ethanol_mw",
-    theory: {
-      purpose: "Xác định khối lượng mol của hợp chất lỏng dễ bay hơi (Ethanol) bằng phương pháp hóa hơi trong xy-lanh chia độ gia nhiệt; so sánh kết quả giữa mô hình Khí lý tưởng và mô hình Khí thực Van der Waals.",
-      principles: [
+    "id": "hdc5",
+    "category": "hdc",
+    "categoryName": "II. Hóa Đại Cương",
+    "number": "HĐC Bài 5",
+    "title": "Xác định khối lượng phân tử Ethanol bằng xy-lanh gia nhiệt",
+    "shortDesc": "Tiêm mẫu ethanol lỏng vào xy-lanh nhiệt độ sôi, đo thể tích hơi giãn nở, so sánh mô hình Van der Waals.",
+    "icon": "fa-syringe",
+    "hasCalculator": true,
+    "calcType": "ethanol_mw",
+    "theory": {
+      "purpose": "Xác định khối lượng mol của hợp chất lỏng dễ bay hơi (Ethanol) bằng phương pháp hóa hơi trong xy-lanh chia độ gia nhiệt; so sánh kết quả giữa mô hình Khí lý tưởng và mô hình Khí thực Van der Waals.",
+      "principles": [
         "**Nguyên tắc:** Tiêm một lượng nhỏ ethanol lỏng ($m = m_1 - m_2$) vào xy-lanh khí chia độ đặt trong vỏ áo gia nhiệt ở $100^\\circ\\text{C}$. Ethanol hóa hơi hoàn toàn đẩy piston tự do; đo thể tích hơi giãn nở $\\Delta V = V_c - V_đ$.",
         "**Mô hình Khí lý tưởng:** $M_{\\text{ltg}} = \\frac{m \\cdot R \\cdot T}{P \\cdot \\Delta V}$",
         "**Mô hình Khí thực Van der Waals:** $M_{\\text{thực}} = M_{\\text{ltg}} \\left[1 + \\frac{P}{RT}\\left(b - \\frac{a}{RT}\\right)\\right]$",
         "*(Với ethanol: $a = 12,56\\text{ bar}\\cdot\\text{L}^2\\cdot\\text{mol}^{-2}$; $b = 0,0871\\text{ L/mol}$; $M_{\\text{chuẩn}} = 46,07\\text{ g/mol}$).*"
       ],
-      procedure: [
+      "procedure": [
         "1. Lắp hệ thống xy-lanh khí $100\\text{ mL}$ có vỏ áo thủy tinh chứa nước đun sôi.",
         "2. Đợi nhiệt độ ổn định ở khoảng $98 \\div 100^\\circ\\text{C}$, đọc thể tích ban đầu của xy-lanh ($V_đ$).",
         "3. Dùng bơm tiêm nhỏ hút khoảng $0,15 \\div 0,2\\text{ mL}$ ethanol nguyên chất, lau khô đầu kim và cân chính xác khối lượng ($m_1$).",
@@ -1827,42 +1808,42 @@ const LAB_MODULES = [
         "5. Quan sát piston di chuyển khi ethanol hóa hơi đến khi thể tích dừng lại ở giá trị cực đại, đọc thể tích cuối ($V_c$).",
         "6. Thực hiện lặp lại thí nghiệm 3 lần."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "Vỏ áo thủy tinh chứa nước sôi rất nóng, thao tác cẩn thận tránh bỏng nhiệt.",
         "Ethanol dễ cháy, tránh để gần nguồn lửa trần khi đang nạp mẫu."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Tại sao kết quả tính theo khí lý tưởng thường lớn hơn tính theo mô hình Van der Waals?",
-        a: "Ở điều kiện nhiệt độ hơi cao và áp suất khí quyển, các phân tử ethanol có lực hút liên phân tử (lực Van der Waals và liên kết hydro yếu) và thể tích bản thân phân tử ($b$). Lực hút phân tử làm áp suất thực tế nhỏ hơn khí lý tưởng, do đó thể tích hơi $\\Delta V$ đo được bị co lại so với lý thuyết, dẫn đến $M_{\\text{ltg}} = \\frac{mRT}{P\\Delta V}$ bị tính đội lên cao hơn."
+        "q": "Tại sao kết quả tính theo khí lý tưởng thường lớn hơn tính theo mô hình Van der Waals?",
+        "a": "Ở điều kiện nhiệt độ hơi cao và áp suất khí quyển, các phân tử ethanol có lực hút liên phân tử (lực Van der Waals và liên kết hydro yếu) và thể tích bản thân phân tử ($b$). Lực hút phân tử làm áp suất thực tế nhỏ hơn khí lý tưởng, do đó thể tích hơi $\\Delta V$ đo được bị co lại so với lý thuyết, dẫn đến $M_{\\text{ltg}} = \\frac{mRT}{P\\Delta V}$ bị tính đội lên cao hơn."
       },
       {
-        q: "Nếu ethanol chưa bay hơi hết thì khối lượng phân tử M tính ra bị tăng hay giảm? Vì sao?",
-        a: "Khối lượng phân tử $M$ tính ra sẽ **bị tăng vọt**. Vì một phần khối lượng mẫu $m$ vẫn ở thể lỏng không đóng góp vào thể tích hơi $\\Delta V$, làm cho thể tích $\\Delta V$ thu được nhỏ hơn thực tế rất nhiều, mà $\\Delta V$ nằm ở mẫu số của công thức $M = \\frac{mRT}{P\\Delta V}$ nên $M$ tăng cao."
+        "q": "Nếu ethanol chưa bay hơi hết thì khối lượng phân tử M tính ra bị tăng hay giảm? Vì sao?",
+        "a": "Khối lượng phân tử $M$ tính ra sẽ **bị tăng vọt**. Vì một phần khối lượng mẫu $m$ vẫn ở thể lỏng không đóng góp vào thể tích hơi $\\Delta V$, làm cho thể tích $\\Delta V$ thu được nhỏ hơn thực tế rất nhiều, mà $\\Delta V$ nằm ở mẫu số của công thức $M = \\frac{mRT}{P\\Delta V}$ nên $M$ tăng cao."
       }
     ]
   },
   {
-    id: "hdc7",
-    category: "hdc",
-    categoryName: "II. Hóa Đại Cương",
-    number: "HĐC Bài 7",
-    title: "Xác định đương lượng của Magiê (Mg)",
-    shortDesc: "Phản ứng Mg + H2SO4 giải phóng H2 đẩy nước, hiệu chỉnh Dalton & cột nước h, tính đương lượng Mg qua 2 phương pháp.",
-    icon: "fa-scale-unbalanced-flip",
-    hasCalculator: true,
-    calcType: "magnesium_equivalent",
-    theory: {
-      purpose: "Xác định đương lượng của kim loại Magiê ($Mg$) bằng phương pháp đẩy nước thu khí Hydrogen; rèn luyện kỹ năng hiệu chỉnh áp suất khí thực nghiệm (Định luật Dalton và cân bằng áp suất thủy tĩnh) và tính toán đối chiếu chéo qua 2 phương pháp độc lập.",
-      principles: [
+    "id": "hdc7",
+    "category": "hdc",
+    "categoryName": "II. Hóa Đại Cương",
+    "number": "HĐC Bài 7",
+    "title": "Xác định đương lượng của Magiê (Mg)",
+    "shortDesc": "Phản ứng Mg + H2SO4 giải phóng H2 đẩy nước, hiệu chỉnh Dalton & cột nước h, tính đương lượng Mg qua 2 phương pháp.",
+    "icon": "fa-scale-unbalanced-flip",
+    "hasCalculator": true,
+    "calcType": "magnesium_equivalent",
+    "theory": {
+      "purpose": "Xác định đương lượng của kim loại Magiê ($Mg$) bằng phương pháp đẩy nước thu khí Hydrogen; rèn luyện kỹ năng hiệu chỉnh áp suất khí thực nghiệm (Định luật Dalton và cân bằng áp suất thủy tĩnh) và tính toán đối chiếu chéo qua 2 phương pháp độc lập.",
+      "principles": [
         "**Định luật đương lượng:** Khối lượng các chất tham gia phản ứng tỉ lệ thuận với đương lượng của chúng: $\\frac{m_{\\text{Mg}}}{m_{\\text{H}_2}} = \\frac{Đ_{\\text{Mg}}}{Đ_{\\text{H}_2}} \\implies Đ_{\\text{Mg}} = m_{\\text{Mg}} \\times \\frac{1{,}008}{m_{\\text{H}_2}}$ (với $Đ_{\\text{H}_2} = 1{,}008\\text{ g/eq}$).",
         "**Định luật Dalton & Cân bằng thủy tĩnh:** Hỗn hợp khí trong ống đong gồm $\\text{H}_2$ và hơi nước bão hòa: $P_{\\text{H}_2} = P_{kk} - f - \\frac{h}{13{,}6}\\text{ (mmHg)}$ *(với $13{,}6$ là tỉ trọng của Hg so với nước)*.",
         "**Phương pháp 1 (Khối lượng $\\text{H}_2$):** $m_{\\text{H}_2} = \\frac{P_{\\text{H}_2} \\times V \\times 2{,}016}{62400 \\times T}\\text{ (g)} \\implies Đ_{\\text{Mg}, 1} = 1{,}008 \\times \\frac{m_{\\text{Mg}}}{m_{\\text{H}_2}}$.",
         "**Phương pháp 2 (Thể tích đktc $11200\\text{ mL/eq}$):** $V_0 = V \\times \\frac{P_{\\text{H}_2}}{760} \\times \\frac{273{,}15}{T}\\text{ (mL)} \\implies Đ_{\\text{Mg}, 2} = \\frac{m_{\\text{Mg}}}{V_0} \\times 11200\\text{ (g/eq)}$.",
         "*(Đương lượng lý thuyết của Magiê: $Đ_{\\text{LT}} = \\frac{A_{\\text{Mg}}}{n} = \\frac{24{,}305}{2} = 12{,}15\\text{ g/eq}$)*."
       ],
-      procedure: [
+      "procedure": [
         "1. Cạo sạch lớp màng oxide $\\text{MgO}$ trên bề mặt dây Magiê bằng giấy ráp mịn đến khi sáng bóng kim loại, cắt lấy đoạn dây có khối lượng khoảng $0{,}020 \\div 0{,}025\\text{ g}$.",
         "2. Cân chính xác khối lượng dây Magiê trên cân phân tích 4 số lẻ ($m_{\\text{Mg}}$).",
         "3. Cho khoảng $10 \\div 15\\text{ mL}$ dung dịch $\\text{H}_2\\text{SO}_4\\text{ 2M}$ vào ống đo khí/ống đong chia độ, sau đó rót thật nhẹ nhàng nước cất phủ đầy lên trên sát miệng ống để tạo lớp đệm nước ngăn axit tràn ra.",
@@ -1871,80 +1852,212 @@ const LAB_MODULES = [
         "6. Đo thể tích khí $\\text{H}_2$ ($V$), đo độ cao cột nước chênh lệch từ mặt thoáng chậu nước đến vòm khum ống đong ($h\\text{ mm}$), ghi nhận nhiệt độ phòng ($t^\\circ\\text{C}$) và áp suất khí quyển ($P_{kk}$).",
         "7. Tra bảng áp suất hơi nước bão hòa $f$ tương ứng với nhiệt độ $t$."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "Dung dịch axit $\\text{H}_2\\text{SO}_4\\text{ 2M}$ có tính ăn mòn da, cẩn thận khi rót vào ống đong và úp ngược vào chậu.",
         "Dây Magiê phải được cạo sạch lớp oxide bên ngoài để tránh làm sai lệch khối lượng kim loại phản ứng thực tế."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Tại sao khi tính áp suất khí H2 khô phải trừ đi áp suất hơi nước bão hòa (f) và hiệu chỉnh cột nước (h/13,6)?",
-        a: "Khí $\\text{H}_2$ sinh ra được thu bằng phương pháp dời chỗ nước nên khí trong ống đong bị bão hòa hơi nước. Theo Định luật Dalton, áp suất toàn phần bằng tổng các áp suất riêng phần ($P_{\\text{hỗn hợp}} = P_{\\text{H}_2} + f$). Đồng thời, do mặt thoáng nước trong ống đong cao hơn mặt thoáng chậu một khoảng $h\\text{ (mmH}_2\\text{O})$, áp suất hỗn hợp khí trong ống đong bị giảm đi một lượng đúng bằng áp suất thủy tĩnh của cột chất lỏng đó ($P_{\\text{cột nước}} = \\frac{h}{13{,}6}\\text{ mmHg}$). Do đó, áp suất của khí $\\text{H}_2$ khô thực tế phải là $P_{\\text{H}_2} = P_{kk} - f - \\frac{h}{13{,}6}$."
+        "q": "Tại sao khi tính áp suất khí H2 khô phải trừ đi áp suất hơi nước bão hòa (f) và hiệu chỉnh cột nước (h/13,6)?",
+        "a": "Khí $\\text{H}_2$ sinh ra được thu bằng phương pháp dời chỗ nước nên khí trong ống đong bị bão hòa hơi nước. Theo Định luật Dalton, áp suất toàn phần bằng tổng các áp suất riêng phần ($P_{\\text{hỗn hợp}} = P_{\\text{H}_2} + f$). Đồng thời, do mặt thoáng nước trong ống đong cao hơn mặt thoáng chậu một khoảng $h\\text{ (mmH}_2\\text{O})$, áp suất hỗn hợp khí trong ống đong bị giảm đi một lượng đúng bằng áp suất thủy tĩnh của cột chất lỏng đó ($P_{\\text{cột nước}} = \\frac{h}{13{,}6}\\text{ mmHg}$). Do đó, áp suất của khí $\\text{H}_2$ khô thực tế phải là $P_{\\text{H}_2} = P_{kk} - f - \\frac{h}{13{,}6}$."
       },
       {
-        q: "Nếu bề mặt dây Magiê chưa được cạo sạch lớp màng oxide (MgO) thì đương lượng tìm được sẽ lớn hơn hay nhỏ hơn giá trị lý thuyết? Giải thích.",
-        a: "Đương lượng tìm được sẽ **lớn hơn giá trị lý thuyết** ($> 12{,}15\\text{ g/eq}$). Vì khi cân, khối lượng $m_{\\text{Mg}}$ ghi nhận bao gồm cả phần tạp chất $\\text{MgO}$. Khi phản ứng, $\\text{MgO} + \\text{H}_2\\text{SO}_4 \\rightarrow \\text{MgSO}_4 + \\text{H}_2\\text{O}$ hoàn toàn không sinh ra khí $\\text{H}_2$, làm thể tích khí $\\text{H}_2$ đo được ($V$) nhỏ hơn so với lý thuyết ứng với khối lượng mẫu đã cân. Do $V$ nằm ở mẫu số của công thức tính đương lượng ($Đ = \\frac{m}{V_0} \\times 11200$), thể tích thu được nhỏ dẫn đến đương lượng tính toán bị tăng giả tạo."
+        "q": "Nếu bề mặt dây Magiê chưa được cạo sạch lớp màng oxide (MgO) thì đương lượng tìm được sẽ lớn hơn hay nhỏ hơn giá trị lý thuyết? Giải thích.",
+        "a": "Đương lượng tìm được sẽ **lớn hơn giá trị lý thuyết** ($> 12{,}15\\text{ g/eq}$). Vì khi cân, khối lượng $m_{\\text{Mg}}$ ghi nhận bao gồm cả phần tạp chất $\\text{MgO}$. Khi phản ứng, $\\text{MgO} + \\text{H}_2\\text{SO}_4 \\rightarrow \\text{MgSO}_4 + \\text{H}_2\\text{O}$ hoàn toàn không sinh ra khí $\\text{H}_2$, làm thể tích khí $\\text{H}_2$ đo được ($V$) nhỏ hơn so với lý thuyết ứng với khối lượng mẫu đã cân. Do $V$ nằm ở mẫu số của công thức tính đương lượng ($Đ = \\frac{m}{V_0} \\times 11200$), thể tích thu được nhỏ dẫn đến đương lượng tính toán bị tăng giả tạo."
       },
       {
-        q: "Tại sao 1 mol đương lượng khí H2 ở điều kiện tiêu chuẩn lại chiếm thể tích là 11,2 L (11200 mL)?",
-        a: "Ở điều kiện tiêu chuẩn ($0^\\circ\\text{C}, 1\\text{ atm}$), $1\\text{ mol}$ phân tử khí bất kỳ chiếm $22{,}4\\text{ L}$. Phân tử $\\text{H}_2$ gồm 2 nguyên tử hydro với hóa trị 1, do đó $1\\text{ mol } \\text{H}_2 = 2\\text{ mol đương lượng } \\text{H}$. Vậy $1\\text{ mol đương lượng } \\text{H}_2$ (tương ứng với $0{,}5\\text{ mol } \\text{H}_2$) sẽ chiếm thể tích tiêu chuẩn là $\\frac{22{,}4}{2} = 11{,}2\\text{ L} = 11200\\text{ mL}$."
+        "q": "Tại sao 1 mol đương lượng khí H2 ở điều kiện tiêu chuẩn lại chiếm thể tích là 11,2 L (11200 mL)?",
+        "a": "Ở điều kiện tiêu chuẩn ($0^\\circ\\text{C}, 1\\text{ atm}$), $1\\text{ mol}$ phân tử khí bất kỳ chiếm $22{,}4\\text{ L}$. Phân tử $\\text{H}_2$ gồm 2 nguyên tử hydro với hóa trị 1, do đó $1\\text{ mol } \\text{H}_2 = 2\\text{ mol đương lượng } \\text{H}$. Vậy $1\\text{ mol đương lượng } \\text{H}_2$ (tương ứng với $0{,}5\\text{ mol } \\text{H}_2$) sẽ chiếm thể tích tiêu chuẩn là $\\frac{22{,}4}{2} = 11{,}2\\text{ L} = 11200\\text{ mL}$."
       }
     ]
   },
   {
-    id: "hl1",
-    category: "hl",
-    categoryName: "III. Hóa Lý",
-    number: "Hóa Lý Bài 1",
-    title: "Nhiệt hòa tan & Nhiệt hydrat hóa của CuSO4",
-    shortDesc: "Đo nhiệt hòa tan KNO3 (tìm hằng số bình K), CuSO4.5H2O và CuSO4 khan, áp dụng Định luật Hess.",
-    icon: "fa-temperature-arrow-up",
-    hasCalculator: true,
-    calcType: "cuso4_calorimetry",
-    theory: {
-      purpose: "Xác định nhiệt hòa tan của $\\text{KNO}_3$ (chuẩn để xác định hằng số nhiệt lượng kế $K$), nhiệt hòa tan của $\\text{CuSO}_4\\cdot 5\\text{H}_2\\text{O}$ và $\\text{CuSO}_4$ khan; từ đó tính nhiệt hydrat hóa theo Định luật Hess.",
-      principles: [
+    "id": "hdc8",
+    "category": "hdc",
+    "categoryName": "II. Hóa Đại Cương",
+    "number": "Bài 8",
+    "title": "Pha chế dung dịch & Chuẩn độ Axit - Bazơ",
+    "shortDesc": "Pha loãng dung dịch theo quy tắc đường chéo, đo tỉ khối bằng phù kế và chuẩn độ thể tích HCl bằng NaOH 0,1 N với chỉ thị phenolphthalein.",
+    "icon": "fa-flask-vial",
+    "hasCalculator": true,
+    "calcType": "acid_base_titration",
+    "theory": {
+      "purpose": "Nắm vững kỹ năng pha chế dung dịch theo nồng độ phần trăm ($C\\%$) và nồng độ đương lượng ($N$), vận hành phù kế đo khối lượng riêng để kiểm tra nồng độ, và thực hành kỹ thuật chuẩn độ thể tích axit - bazơ xác định nồng độ thực tế của axit clohidric.",
+      "principles": [
+        "**Định luật bảo toàn khối lượng chất tan:** Khi pha loãng hoặc phối trộn dung môi (nước cất), khối lượng chất tan được bảo toàn: $m_{\\text{chất tan}} = m_{\\text{dd đầu}} \\times C_{\\text{đầu}}\\% = m_{\\text{dd sau}} \\times C_{\\text{sau}}\\%$. Số đương lượng gam cũng được bảo toàn: $N_{\\text{đầu}} \\times V_{\\text{đầu}} = N_{\\text{sau}} \\times V_{\\text{sau}}$.",
+        "**Quy tắc đường chéo (Diagonal Rule):** Tỉ lệ khối lượng giữa 2 dung dịch phối trộn $C_1\\%$ và $C_2\\%$ để tạo dung dịch $C_{\\text{sau}}\\%$ tuân theo tỉ số nghịch khoảng cách nồng độ: $\\frac{m_{\\text{dd1}}}{m_{\\text{dd2}}} = \\frac{|C_2 - C_{\\text{sau}}|}{|C_1 - C_{\\text{sau}}|}$. Với nước cất thì $C_2 = 0\\%$.",
+        "**Nguyên lý phù kế (Archimedes):** Phù kế nổi tự do chịu lực đẩy Archimedes cân bằng trọng lực: $P = F_A = d \\times V_{\\text{chìm}} \\implies d = P / V_{\\text{chìm}}$. Dung dịch càng đặc, khối lượng riêng $d$ càng lớn, phù kế nổi càng cao.",
+        "**Mối liên hệ giữa $N$ và $C\\%$:** $N = \\frac{10 \\times d \\times C\\%}{E}$ với $E_{\\text{HCl}} = M / 1 = 36{,}46\\text{ g/eq}$.",
+        "**Định luật đương lượng trong chuẩn độ:** Tại điểm tương đương: $N_{\\text{HCl}} \\times V_{\\text{HCl}} = N_{\\text{NaOH}} \\times \\overline{V}_{\\text{NaOH}} \\implies N_{\\text{HCl}} = \\frac{N_{\\text{NaOH}} \\times \\overline{V}_{\\text{NaOH}}}{V_{\\text{HCl}}}$."
+      ],
+      "procedure": [
+        "1. **Thí nghiệm 1-3 (Pha loãng $250\\text{ mL}$ dd $7\\%$ từ $10\\%$):**\n- Áp dụng quy tắc đường chéo tính tỉ lệ khối lượng: $\\frac{m_{\\text{HCl 10\\%}}}{m_{\\text{nước}}} = \\frac{7 - 0}{10 - 7} = \\frac{7}{3}$.\n- Đo tỉ khối $d_{7\\%} \\approx 1{,}033\\text{ g/mL} \\implies m_{\\text{dd}} = 250 \\times 1{,}033 = 258{,}25\\text{ g}$.\n- Tính $m_{\\text{HCl 10\\%}} = 258{,}25 \\times \\frac{7}{10} = 180{,}78\\text{ g} \\implies V_{\\text{HCl 10\\%}} = \\frac{180{,}78}{1{,}047} \\approx 172{,}66\\text{ mL}$.\n- Đong $172{,}7\\text{ mL}$ axit $10\\%$ và $77{,}5\\text{ mL}$ nước cất, khuấy đều trong ống đong lớn, thả phù kế đo kiểm tra $d_{\\text{sau}}$.",
+        "2. **Thí nghiệm 4 (Pha $100\\text{ mL}$ dd chuẩn $\\text{HCl } 0{,}1\\text{ N}$ từ $\\text{HCl } 17\\%$):**\n- Đo tỉ khối $\\text{HCl } 17\\%$ ($d \\approx 1{,}083\\text{ g/mL}$) $\\implies N_{\\text{gốc}} = \\frac{10 \\times 1{,}083 \\times 17}{36{,}46} = 5{,}05\\text{ N}$.\n- Tính thể tích hút: $V_{\\text{gốc}} = \\frac{0{,}1000 \\times 100{,}00}{5{,}05} \\approx 1{,}98\\text{ mL}$.\n- Cho sẵn khoảng $50\\text{ mL}$ nước cất vào bình định mức $100\\text{ mL}$, dùng pipet chính xác hút $1{,}98\\text{ mL}$ axit gốc cho vào bình, định mức đến vạch bằng nước cất và lắc đều.",
+        "3. **Thí nghiệm 5 (Chuẩn độ thể tích xác định nồng độ thực tế):**\n- Tráng rửa buret bằng dung dịch $\\text{NaOH } 0{,}1000\\text{ N}$, nạp đầy và chỉnh mặt khum về vạch $0{,}00\\text{ mL}$.\n- Dùng pipet hút chính xác $20{,}00\\text{ mL}$ dung dịch $\\text{HCl}$ vừa pha ở TN4 cho vào bình tam giác $250\\text{ mL}$, thêm 2 giọt chỉ thị phenolphthalein (dung dịch không màu).\n- Mở khóa buret nhỏ từng giọt $\\text{NaOH}$ vào bình tam giác, lắc đều tay đến khi xuất hiện màu hồng nhạt bền vững trong 30 giây thì dừng. Đọc thể tích buret.\n- Lặp lại chuẩn độ 3 lần song song để lấy thể tích trung bình $\\overline{V}_{\\text{NaOH}}$ (sai lệch $\\le 0{,}10\\text{ mL}$)."
+      ],
+      "safetyNotes": [
+        "Axit clohidric đặc bốc khói cay hắc, bắt buộc đong rót trong tủ hút.",
+        "Luôn tuân thủ nguyên tắc rót từ từ axit vào nước, không làm ngược lại.",
+        "Cầm phù kế nhẹ nhàng, thả nổi thẳng đứng ở chính giữa ống đong, không để rơi tự do va đập đáy ống."
+      ]
+    },
+    "qa": [
+      {
+        "q": "Tại sao khi pha loãng dung dịch axit sulfuric đậm đặc ($H_2SO_4$) ta bắt buộc phải rót từ từ axit vào nước mà tuyệt đối không được làm ngược lại? Đối với axit clohidric ($HCl$) đậm đặc thì sao?",
+        "a": "Với $H_2SO_4$ đậm đặc: Quá trình hydrat hóa tỏa lượng nhiệt cực lớn (khoảng $880\\text{ kJ/mol}$). Nước nhẹ hơn axit nên nếu đổ nước vào axit, nước nổi lên trên sôi đột ngột và bắn tung tóe kéo theo giọt axit gây bỏng nặng. Khi đổ từ từ axit vào nước, axit nặng hơn chìm xuống dưới, nhiệt lượng được lượng nước lớn hấp thụ và phân tán an toàn. Với $HCl$ đậm đặc: Hòa tan khí $HCl$ cũng tỏa nhiệt và axit bốc khói nồng nặc khí độc hại đường hô hấp, do đó vẫn tuân thủ rót từ từ axit vào nước trong tủ hút để đảm bảo an toàn tuyệt đối."
+      },
+      {
+        "q": "Nêu nguyên tắc hoạt động của phù kế. Tại sao khi đọc giá trị tỉ khối trên phù kế, ta phải để phù kế nổi tự do và mắt phải đặt ngang tầm với mặt thoáng chất lỏng?",
+        "a": "Phù kế hoạt động dựa trên định luật đẩy Archimedes ($P = F_A = d \\cdot V_{\\text{chìm}} \\implies d = P / V_{\\text{chìm}}$). Dung dịch càng đặc, lực đẩy Archimedes càng lớn nên phù kế chìm càng ít và nổi càng cao. Phải để phù kế nổi hoàn toàn tự do ở giữa ống đong, không chạm vào thành hoặc đáy để tránh ma sát cản trở cân bằng thủy tĩnh. Mắt phải đặt ngang tầm mặt thoáng và đọc ở vạch đáy của đường khum chất lỏng (với chất lỏng trong suốt) để triệt tiêu sai số thị sai do hiện tượng mao dẫn kéo khum bám dính thành thủy tinh."
+      },
+      {
+        "q": "Viết phương trình phản ứng trung hòa khi chuẩn độ HCl bằng NaOH. Tại sao lại chọn phenolphthalein làm chất chỉ thị mà không dùng methyl da cam?",
+        "a": "Phản ứng trung hòa: $\\text{HCl} + \\text{NaOH} \\rightarrow \\text{NaCl} + \\text{H}_2\\text{O}$ (ion thu gọn: $\\text{H}_3\\text{O}^+ + \\text{OH}^- \\rightarrow 2\\text{H}_2\\text{O}$). Chuẩn độ axit mạnh bằng bazơ mạnh có điểm tương đương tại pH = 7 và bước nhảy pH rất rộng từ 4 đến 10. Phenolphthalein chuyển màu hồng nhạt ở pH khoảng 8,2 (nằm hoàn toàn trong bước nhảy pH sát nút điểm tương đương, sai số chuẩn độ $< 0{,}1\\%$, mắt rất dễ nhận biết giọt đổi màu từ không màu sang hồng nhạt). Methyl da cam đổi màu ở pH 3,1 - 4,4 (đỏ sang vàng) sẽ đổi màu từ quá sớm khi chưa đạt điểm tương đương, gây sai số thiếu hụt axit nghiêm trọng."
+      },
+      {
+        "q": "Thế nào là dung dịch nguyên chuẩn (dung dịch tiêu chuẩn)? Trình bày cách pha chế dung dịch chuẩn từ chất gốc (như axit oxalic) và từ fixanan có sẵn.",
+        "a": "Dung dịch nguyên chuẩn là dung dịch có nồng độ được xác định cực kỳ chính xác và ổn định, dùng làm mốc để xác định nồng độ các dung dịch khác. Pha từ chất gốc ($H_2C_2O_4 \\cdot 2H_2O$): Cân lượng chính xác trên cân phân tích 4 chữ số, hòa tan cốc mỏ bằng nước cất, chuyển định lượng vào bình định mức kèm tráng rửa nhiều lần, thêm nước cất đến sát vạch rồi dùng pipet nhỏ giọt chỉnh đáy khum trùng vạch định mức, đậy nút lắc đều. Pha từ ống Fixanan: Đập vỡ màng ống fixanan trên phễu lọc đặt trên bình định mức $1000\\text{ mL}$, dùng tia nước cất phun rửa sạch toàn bộ hóa chất vào bình, thêm nước cất định mức đến vạch và lắc đều."
+      },
+      {
+        "q": "Nếu trong quá trình chuẩn độ, trên thành trong của bình nón có dính giọt dung dịch từ buret hoặc tia nước cất tráng thành bình, điều này ảnh hưởng thế nào đến kết quả chuẩn độ?",
+        "a": "Với giọt kiềm từ buret bám thành bình: CÓ làm sai lệch kết quả. Lượng kiềm này buret đã ghi nhận xả ra nhưng chưa rơi xuống đáy phản ứng trung hòa axit, dẫn đến thể tích kiềm tiêu tốn ghi nhận bị thừa ra, tính ra nồng độ $N_{\\text{HCl}}$ bị cao hơn thực tế. Với nước cất tráng thành bình: KHÔNG làm sai lệch kết quả. Tia nước cất chỉ làm loãng dung dịch nhưng không làm thay đổi số mol ion $H^+$ ban đầu trong bình tam giác. Do số mol chất phản ứng không đổi, thể tích kiềm cần để đạt tương đương vẫn chính xác tuyệt đối."
+      }
+    ]
+  },
+  {
+    "id": "hdc11",
+    "category": "hdc",
+    "categoryName": "II. Hóa Đại Cương",
+    "number": "Bài 11",
+    "title": "Áp suất hơi bão hòa & Nhiệt bay hơi của nước",
+    "shortDesc": "Xác định áp suất hơi nước bão hòa theo nhiệt độ bằng phương pháp bọt khí bị giam giữ; hồi quy tuyến tính Clausius - Clapeyron để tính enthalpy bay hơi của nước.",
+    "icon": "fa-temperature-arrow-up",
+    "hasCalculator": true,
+    "calcType": "clausius_clapeyron_vapor",
+    "theory": {
+      "purpose": "Đo áp suất hơi bão hòa của nước ở các nhiệt độ khác nhau ($50^\\circ\\text{C} \\div 75^\\circ\\text{C}$) bằng phương pháp bọt khí không khí bị giam giữ trong ống đong úp ngược; kiểm chứng phương trình Clausius - Clapeyron và xác định nhiệt bay hơi mol ($\\Delta H_{\\text{bh}}$) của nước.",
+      "principles": [
+        "**Cân bằng pha lỏng - hơi:** Áp suất hơi bão hòa $P_{H_2O}$ là áp suất tại đó tốc độ bay hơi bằng tốc độ ngưng tụ, chỉ phụ thuộc vào nhiệt độ và tăng theo hàm mũ theo nhiệt độ.",
+        "**Bảo toàn số mol không khí khô ($n_{kk}$):** Lượng không khí giam trong ống nghiệm úp ngược không đổi. Ở nhiệt độ rất thấp ($t_0 \\approx 5^\\circ\\text{C}$), áp suất hơi nước bão hòa vô cùng nhỏ ($f \\approx 6{,}5\\text{ mmHg} \\ll P_{kk} \\approx 760\\text{ mmHg}$), coi bọt khí hoàn toàn là không khí khô: $n_{kk} = \\frac{P_{kk} \\cdot V_0}{R \\cdot T_0}$.",
+        "**Định luật Dalton áp suất riêng phần:** Tại nhiệt độ $T_i$ bất kỳ: $P_{\\text{tổng}} = P_{kk} = P_{\\text{air}, T_i} + P_{H_2O, T_i}$. Với $P_{\\text{air}, T_i} = P_{kk} \\cdot \\frac{V_0}{V_i} \\cdot \\frac{T_i}{T_0} \\implies P_{H_2O, T_i} = P_{kk} - P_{\\text{air}, T_i}$.",
+        "**Phương trình Clausius - Clapeyron tích phân:** $\\lg P_{H_2O} = -\\frac{\\Delta H_{\\text{bh}}}{2{,}303 \\cdot R \\cdot T} + C$. Tuyến tính hóa dạng $Y = a \\cdot X + b$ với $Y = \\lg P_{H_2O}$ và $X = 1/T$.",
+        "**Nhiệt bay hơi mol:** Hệ số góc $a = -\\frac{\\Delta H_{\\text{bh}}}{2{,}303 \\cdot R} \\implies \\Delta H_{\\text{bh}} = -2{,}303 \\times 8{,}314 \\times a = -19{,}147 \\times a\\text{ (J/mol)}$."
+      ],
+      "graphingGuide": {
+        "generalRule": "Vẽ đường thẳng hồi quy biểu diễn $\\lg P_{H_2O}$ theo $1/T$ trên giấy kẻ ô mm, phân bố đều các điểm thực nghiệm về hai phía đường thẳng xu hướng.",
+        "steps": [
+          {
+            "stepNumber": "Bước 1",
+            "stepName": "Hiểu bài toán (Understand the Problem)",
+            "content": "* **Mục tiêu:** Xác định hệ số góc $a$ để tính nhiệt hóa hơi $\\Delta H_{\\text{bh}} = -19{,}147 \\times a\\text{ (J/mol)}$.\n* **Biến số:** Trục hoành $X = 1/T\\text{ (K}^{-1}\\text{)}$; Trục tung $Y = \\lg P_{H_2O}\\text{ (với } P\\text{ tính theo mmHg)}$.\n* **Dạng hàm số:** Tuyến tính nghịch biến (độ dốc âm $a < 0$)."
+          },
+          {
+            "stepNumber": "Bước 2",
+            "stepName": "Lập kế hoạch (Devise a Plan)",
+            "content": "* **Thang chia trục:**\n  - Trục hoành $X$: dải từ $0{,}00280$ đến $0{,}00320\\text{ K}^{-1}$ (chia $1\\text{ cm} = 0{,}00005\\text{ K}^{-1}$).\n  - Trục tung $Y$: dải từ $2{,}20$ đến $2{,}60$ (chia $1\\text{ cm} = 0{,}05$ đơn vị logarit).\n* Cắt gốc tọa độ không nhất thiết phải chứa $(0, 0)$ để mở rộng tối đa diện tích phân bố điểm."
+          },
+          {
+            "stepNumber": "Bước 3",
+            "stepName": "Thực hiện kế hoạch (Carry Out the Plan)",
+            "content": "* Chấm chính xác 6 điểm thực nghiệm $(X_i, Y_i)$ trên giấy kẻ ô mm.\n* Đặt thước trong suốt vẽ đường thẳng tối ưu sao cho tổng độ lệch bình phương là nhỏ nhất.\n* Chọn 2 điểm cách xa nhau trên đường thẳng vẽ được $(X_A, Y_A)$ và $(X_B, Y_B)$ để tính hệ số góc $a = \\frac{Y_B - Y_A}{X_B - X_A}$."
+          },
+          {
+            "stepNumber": "Bước 4",
+            "stepName": "Nhìn lại & Đánh giá (Look Back)",
+            "content": "* Tính $\\Delta H_{\\text{bh}} = -19{,}147 \\times a\\text{ (J/mol)}$.\n* Đổi ra $\\text{kJ/mol}$ bằng cách chia 1000.\n* So sánh với giá trị lý thuyết $\\Delta H_{\\text{LT}} = 43{,}0\\text{ kJ/mol}$, sai số mong đợi $< 5\\%$."
+          }
+        ]
+      },
+      "procedure": [
+        "1. **Tạo bọt khí giam giữ:** Lấy một ống đong chia độ $10\\text{ mL}$, nạp nước cất chừa lại khoảng $4 \\div 5\\text{ mL}$ không khí, dùng ngón tay bịt chặt miệng ống rồi lật úp chìm hoàn toàn vào cốc thủy tinh $1\\text{ L}$ đựng đầy nước.",
+        "2. **Làm lạnh sâu ($t_0 \\approx 5^\\circ\\text{C}$):** Thêm đá viên vụn vào cốc nước, khuấy nhẹ đều đến khi nhiệt độ hạ xuống khoảng $5^\\circ\\text{C}$. Đọc chính xác nhiệt độ $t_0$ và thể tích bọt khí nhỏ nhất $V_0\\text{ (mL)}$. Ghi áp suất khí quyển $P_{kk}$.",
+        "3. **Gia nhiệt:** Đặt cốc nước lên bếp điện đun nóng từ từ, khuấy đều liên tục để nhiệt độ đồng nhất, đến khi đạt khoảng $75^\\circ\\text{C}$ thì tắt bếp.",
+        "4. **Ghi số liệu khi để nguội:** Để hệ thống nguội tự nhiên (hoặc hạ nhiệt chậm). Cứ mỗi khi nhiệt độ giảm xuống các mốc quy định ($75, 70, 65, 60, 55, 50^\\circ\\text{C}$), đọc chính xác thể tích bọt khí ẩm $V_i\\text{ (mL)}$ trên ống đong.",
+        "5. **Xử lý số liệu:** Tính các giá trị $T_i, 1/T_i, P_{\\text{air}}, P_{H_2O}, \\lg P_{H_2O}$, lập bảng hồi quy tuyến tính xác định $\\Delta H_{\\text{bh}}$."
+      ],
+      "safetyNotes": [
+        "Cẩn thận khi đun nước nóng trong cốc thủy tinh $1\\text{ L}$, dùng kẹp hoặc găng tay cách nhiệt.",
+        "Khuấy nhẹ nhàng bằng đũa khuấy bọc cao su hoặc que khuấy từ, tránh va đập mạnh làm vỡ ống đong úp ngược hoặc làm bọt khí thoát ra ngoài."
+      ]
+    },
+    "qa": [
+      {
+        "q": "Áp suất hơi bão hòa của nước ở 30°C là 31,82 mmHg, 55°C là 118 mmHg, ở 70°C là 233,7 mmHg. Tìm ΔH bay hơi theo 2 cách (đại số vs đồ thị) và so sánh.",
+        "a": "Cách 1 (Đại số): $\\lg(P_2/P_1) = \\frac{\\Delta H}{2{,}303 R}(\\frac{1}{T_1} - \\frac{1}{T_2})$. Tính cặp 30-55°C được $43{,}37\\text{ kJ/mol}$; cặp 55-70°C được $42{,}66\\text{ kJ/mol}$; cặp 30-70°C được $43{,}13\\text{ kJ/mol}$. Trung bình $\\Delta H \\approx 43{,}05\\text{ kJ/mol}$. Cách 2 (Đồ thị): Hồi quy $Y = \\lg P$ theo $X = 1/T$ cho hệ số góc $a \\approx -2250\\text{ K} \\implies \\Delta H = -19{,}147 \\times (-2250) \\approx 43{,}08\\text{ kJ/mol}$. So sánh: Hai phương pháp sai lệch $< 0{,}1\\%$. Phương pháp đồ thị ưu việt hơn vì san đều sai số ngẫu nhiên của toàn bộ các điểm thực nghiệm, trong khi tính đại số từng cặp điểm đơn lẻ rất nhạy cảm với sai số đọc của từng mốc riêng rẽ."
+      },
+      {
+        "q": "Ngoài mmHg ta có thể tính áp suất theo atm, Pa, Bar được không? Như vậy có ảnh hưởng đến kết quả tính ΔH bay hơi không? Vì sao?",
+        "a": "Hoàn toàn có thể dùng bất kỳ đơn vị áp suất nào khác ($1\\text{ atm} = 760\\text{ mmHg} = 101325\\text{ Pa} = 1{,}01325\\text{ Bar}$). Việc đổi đơn vị áp suất TUYỆT ĐỐI KHÔNG ảnh hưởng đến giá trị $\\Delta H_{\\text{bh}}$. Bản chất nhiệt động học: Khi đổi đơn vị bằng cách nhân hằng số tỉ lệ $k$ ($P' = k \\cdot P$), ta có $\\lg P' = \\lg P + \\lg k$. Hằng số $\\lg k$ này chỉ làm thay đổi hệ số chặn tự do $b$ trên trục tung mà hoàn toàn GIỮ NGUYÊN HỆ SỐ GÓC $a$ (độ dốc của đường thẳng). Vì $\\Delta H_{\\text{bh}} = -2{,}303 \\cdot R \\cdot a$, kết quả cuối cùng hoàn toàn độc lập với đơn vị áp suất."
+      },
+      {
+        "q": "Trong quá trình thí nghiệm, tại sao phải làm lạnh nước trong cốc tới nhiệt độ thấp (5°C)?",
+        "a": "Làm lạnh sâu xuống $5^\\circ\\text{C}$ là điều kiện tiên quyết mang tính kỹ thuật để: (1) Triệt tiêu áp suất hơi nước: Ở $5^\\circ\\text{C}$, áp suất hơi bão hòa chỉ khoảng $6{,}5\\text{ mmHg}$ (chưa đầy $0{,}8\\%$ áp suất khí quyển), cho phép áp dụng giả thiết coi toàn bộ thể tích bọt khí lúc này chỉ chứa không khí khô nguyên chất. (2) Xác định chính xác số mol không khí gốc $n_{kk}$: Cung cấp cặp chuẩn $(T_0, V_0)$ tin cậy để tính $n_{kk} = \\frac{P_{kk} V_0}{R T_0}$. Nếu không làm lạnh sâu, lượng hơi nước lẫn lớn sẽ gây sai số hệ thống lan truyền cho toàn bộ các phép tính ở nhiệt độ cao hơn."
+      },
+      {
+        "q": "Tại sao giá trị ΔH bay hơi tính được bằng phương pháp đồ thị hồi quy tuyến tính tổng thể lại chính xác hơn so với giải đại số từ từng cặp điểm?",
+        "a": "(1) Triệt tiêu sai số ngẫu nhiên: Mọi phép đo thể tích và nhiệt độ đều có sai số đọc và sai số trễ nhiệt. Phương pháp hồi quy bình phương tối thiểu tính toán và phân bổ đều độ lệch của toàn dải số liệu, triệt tiêu tối đa các sai số ngẫu nhiên này. (2) Hạn chế độ nhạy của phép chia vi phân: Khoảng hiệu $(1/T_1 - 1/T_2)$ ở mẫu số rất bé (cỡ $10^{-4}$), bất kỳ một sai số đọc nhỏ nào ở một điểm đơn lẻ cũng sẽ bị phóng đại lên rất nhiều lần, khiến kết quả tính từng cặp điểm riêng lẻ dao động mạnh và kém ổn định."
+      },
+      {
+        "q": "Tại sao trong thực tế thực nghiệm ta được phép bỏ qua biến thiên chiều cao cột nước Δh giữa trong và ngoài ống đong?",
+        "a": "(1) Áp suất cột nước cực kỳ nhỏ so với áp suất khí quyển: Chiều cao ống đong $10\\text{ mL}$ chỉ khoảng $120\\text{ mm}$, áp suất thủy tĩnh lớn nhất $\\Delta P_{\\text{thủy tĩnh, max}} = \\frac{120\\text{ mmH}_2\\text{O}}{13{,}6} \\approx 8{,}8\\text{ mmHg}$, chỉ chiếm tối đa khoảng $1\\%$ áp suất khí quyển ($760\\text{ mmHg}$) và giảm dần về 0 khi bọt khí giãn nở. (2) Nằm trong giới hạn sai số cho phép: Sai số $1\\%$ này nằm hoàn toàn trong dung sai vạch chia của dụng cụ đo (sai số ống đong $\\pm 0{,}1\\text{ mL}$ đã tương đương $1 \\div 2\\%$ thể tích bọt khí). Việc bỏ qua $\\Delta h$ giúp đơn giản hóa xử lý số liệu mà vẫn đảm bảo độ chính xác khoa học."
+      }
+    ]
+  },
+  {
+    "id": "hl1",
+    "category": "hl",
+    "categoryName": "III. Hóa Lý",
+    "number": "Hóa Lý Bài 1",
+    "title": "Nhiệt hòa tan & Nhiệt hydrat hóa của CuSO4",
+    "shortDesc": "Đo nhiệt hòa tan KNO3 (tìm hằng số bình K), CuSO4.5H2O và CuSO4 khan, áp dụng Định luật Hess.",
+    "icon": "fa-temperature-arrow-up",
+    "hasCalculator": true,
+    "calcType": "cuso4_calorimetry",
+    "theory": {
+      "purpose": "Xác định nhiệt hòa tan của $\\text{KNO}_3$ (chuẩn để xác định hằng số nhiệt lượng kế $K$), nhiệt hòa tan của $\\text{CuSO}_4\\cdot 5\\text{H}_2\\text{O}$ và $\\text{CuSO}_4$ khan; từ đó tính nhiệt hydrat hóa theo Định luật Hess.",
+      "principles": [
         "**Định luật Hess:** $\\Delta H_{\\text{hyd}} = \\Delta H_{\\text{ht}(\\text{CuSO}_4\\text{ khan})} - \\Delta H_{\\text{ht}(\\text{CuSO}_4\\cdot 5\\text{H}_2\\text{O})}$",
         "**Hằng số nhiệt lượng kế ($K$):** $K = -\\frac{34,89 \\times n_{\\text{KNO}_3}}{\\Delta T_{\\text{KNO}_3}}\\text{ (kJ/K)}$",
         "**Nhiệt hòa tan muối:** $\\Delta H_{\\text{ht}} = -\\frac{K \\times \\Delta T}{n}\\text{ (kJ/mol)}$",
         "*(Hòa tan $\\text{CuSO}_4\\cdot 5\\text{H}_2\\text{O}$ thu nhiệt: $\\Delta H > 0, \\Delta T < 0$; hòa tan $\\text{CuSO}_4$ khan tỏa nhiệt: $\\Delta H < 0, \\Delta T > 0$).*"
       ],
-      procedure: [
+      "procedure": [
         "1. Cho $500\\text{ mL}$ nước cất vào bình Dewar nhiệt lượng kế, lắp nắp, cánh khuấy và nhiệt kế nhạy ($0,05^\\circ\\text{C}$).",
         "2. Khuấy đều và theo dõi nhiệt độ ban đầu $T_1$ trong 3 - 5 phút đến khi ổn định.",
         "3. Cân khoảng $8\\text{ g } \\text{KNO}_3$ khô, trút nhanh qua phễu vào bình nhiệt lượng kế, khuấy liên tục và ghi nhận nhiệt độ thấp nhất đạt được ($T_2$). Cân lại máng trút để tính khối lượng muối thực tế.",
         "4. Rửa sạch bình, thay $500\\text{ mL}$ nước mới, lặp lại thao tác với khoảng $10\\text{ g } \\text{CuSO}_4\\cdot 5\\text{H}_2\\text{O}$.",
         "5. Lặp lại tương tự với khoảng $6,4\\text{ g } \\text{CuSO}_4$ khan vừa nung mới lấy từ bình hút ẩm."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "$\\text{CuSO}_4$ khan hút ẩm cực nhanh từ không khí, phải thao tác cân và trút muối thật nhanh.",
         "Khuấy đều tay với tốc độ ổn định, tránh khuấy quá mạnh làm sinh nhiệt do ma sát."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Tại sao sau khi nung CuSO4 khan phải bảo quản ngay trong bình hút ẩm?",
-        a: "$\\text{CuSO}_4$ khan là chất hút ẩm cực mạnh, nếu để ngoài không khí nó sẽ nhanh chóng hấp thụ hơi nước tạo thành các dạng ngậm nước trung gian ($\\text{CuSO}_4\\cdot x\\text{H}_2\\text{O}$), làm quá trình hòa tan không còn là của muối khan $100\\%$, dẫn đến nhiệt tỏa ra $\\Delta H_{\\text{ht}}$ bị giảm mạnh gây sai lệch kết quả định luật Hess."
+        "q": "Tại sao sau khi nung CuSO4 khan phải bảo quản ngay trong bình hút ẩm?",
+        "a": "$\\text{CuSO}_4$ khan là chất hút ẩm cực mạnh, nếu để ngoài không khí nó sẽ nhanh chóng hấp thụ hơi nước tạo thành các dạng ngậm nước trung gian ($\\text{CuSO}_4\\cdot x\\text{H}_2\\text{O}$), làm quá trình hòa tan không còn là của muối khan $100\\%$, dẫn đến nhiệt tỏa ra $\\Delta H_{\\text{ht}}$ bị giảm mạnh gây sai lệch kết quả định luật Hess."
       },
       {
-        q: "Có bắt buộc phải cân chính xác tuyệt đối 8g, 10g hóa chất không? Lượng mol 2 muối CuSO4 có cần tương đương nhau không?",
-        a: "Không bắt buộc phải đúng chính xác $8,000\\text{ g}$ hay $10,000\\text{ g}$, nhưng **bắt buộc phải biết chính xác khối lượng thực tế đã hòa tan** để tính số mol $n = m/M$. Nhiệt hòa tan tính theo đơn vị $\\text{kJ/mol}$ là đại lượng mol chuẩn, do đó lượng mol giữa các lần đo không bắt buộc phải bằng nhau."
+        "q": "Có bắt buộc phải cân chính xác tuyệt đối 8g, 10g hóa chất không? Lượng mol 2 muối CuSO4 có cần tương đương nhau không?",
+        "a": "Không bắt buộc phải đúng chính xác $8,000\\text{ g}$ hay $10,000\\text{ g}$, nhưng **bắt buộc phải biết chính xác khối lượng thực tế đã hòa tan** để tính số mol $n = m/M$. Nhiệt hòa tan tính theo đơn vị $\\text{kJ/mol}$ là đại lượng mol chuẩn, do đó lượng mol giữa các lần đo không bắt buộc phải bằng nhau."
       }
     ]
   },
   {
-    id: "hl3",
-    category: "hl",
-    categoryName: "III. Hóa Lý",
-    number: "Hóa Lý Bài 3",
-    title: "Cân bằng hóa học trong dung dịch giữa KI và I2",
-    shortDesc: "Phương pháp phân bố pha CCl4/H2O, xác định hằng số phân bố Kpb, hằng số tạo phức Kcb và ΔG°.",
-    icon: "fa-scale-balanced",
-    hasCalculator: true,
-    calcType: "ki_i2_equilibrium",
-    theory: {
-      purpose: "Xác định hằng số phân bố $K_{\\text{pb}}$ của $\\text{I}_2$ giữa $\\text{CCl}_4$ và nước; xác định hằng số cân bằng $K_{\\text{cb}}$ của phản ứng tạo phức $\\text{I}^- + \\text{I}_2 \\rightleftharpoons \\text{I}_3^-$ và biến thiên thế đẳng áp $\\Delta G^\\circ$.",
-      principles: [
+    "id": "hl3",
+    "category": "hl",
+    "categoryName": "III. Hóa Lý",
+    "number": "Hóa Lý Bài 3",
+    "title": "Cân bằng hóa học trong dung dịch giữa KI và I2",
+    "shortDesc": "Phương pháp phân bố pha CCl4/H2O, xác định hằng số phân bố Kpb, hằng số tạo phức Kcb và ΔG°.",
+    "icon": "fa-scale-balanced",
+    "hasCalculator": true,
+    "calcType": "ki_i2_equilibrium",
+    "theory": {
+      "purpose": "Xác định hằng số phân bố $K_{\\text{pb}}$ của $\\text{I}_2$ giữa $\\text{CCl}_4$ và nước; xác định hằng số cân bằng $K_{\\text{cb}}$ của phản ứng tạo phức $\\text{I}^- + \\text{I}_2 \\rightleftharpoons \\text{I}_3^-$ và biến thiên thế đẳng áp $\\Delta G^\\circ$.",
+      "principles": [
         "$\\text{I}_2$ phân bố giữa 2 pha lỏng không tan: $K_{\\text{pb}} = \\frac{[\\text{I}_2]_{\\text{aq}}}{[\\text{I}_2]_{\\text{org}}}$.",
         "$\\text{KI}$ và $\\text{KI}_3$ chỉ tan trong nước, không tan trong $\\text{CCl}_4$.",
         "Chuẩn độ pha $\\text{CCl}_4$ bằng $\\text{Na}_2\\text{S}_2\\text{O}_3\\text{ } 0,05\\text{ N}$ (mất màu tím, không chỉ thị).",
@@ -1956,7 +2069,7 @@ const LAB_MODULES = [
         "- $K_{\\text{cb}} = \\frac{[\\text{KI}_3]_{\\text{cb}}}{[\\text{I}_2]_{\\text{cb}} \\cdot [\\text{KI}]_{\\text{cb}}}$",
         "- $\\Delta G^\\circ = -R \\cdot T \\cdot \\ln \\overline{K}_{\\text{cb}}$"
       ],
-      procedure: [
+      "procedure": [
         "1. Chuẩn bị 3 phễu chiết:",
         "   - Phễu 1: $5\\text{ mL } \\text{CCl}_4(\\text{I}_2) + 25\\text{ mL } \\text{H}_2\\text{O}$.",
         "   - Phễu 2: $5\\text{ mL } \\text{CCl}_4(\\text{I}_2) + 25\\text{ mL } \\text{KI 0,1M}$.",
@@ -1966,35 +2079,35 @@ const LAB_MODULES = [
         "4. Hút chính xác $5\\text{ mL}$ lớp nước ở trên, chuẩn độ bằng $\\text{Na}_2\\text{S}_2\\text{O}_3\\text{ } 0,01\\text{ N}$ đến khi dung dịch có màu vàng rơm nhạt, thêm 5 giọt hồ tinh bột (chuyển màu xanh tím) rồi chuẩn độ tiếp đến mất màu xanh.",
         "5. Lặp lại chuẩn độ 3 lần cho mỗi phễu lấy giá trị thể tích trung bình."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "$\\text{CCl}_4$ là dung môi hữu cơ bay hơi có hại cho gan và hệ hô hấp, phải thực hiện trong tủ hút khí độc.",
         "Xả van phễu chiết định kỳ khi lắc để tránh tăng áp suất khí."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Tại sao không thêm hồ tinh bột ngay từ đầu khi chuẩn độ lớp nước?",
-        a: "Ở nồng độ $\\text{I}_2$ cao, $\\text{I}_2$ sẽ hấp phụ rất mạnh và sâu vào cấu trúc xoắn của amylose trong hồ tinh bột tạo phức bền, làm $\\text{Na}_2\\text{S}_2\\text{O}_3$ giải phóng $\\text{I}_2$ rất chậm dẫn đến chuẩn độ quá điểm tương đương (thừa thể tích). Do đó chỉ thêm hồ tinh bột khi dung dịch đã chuyển sang màu vàng rơm nhạt (lượng $\\text{I}_2$ còn rất ít)."
+        "q": "Tại sao không thêm hồ tinh bột ngay từ đầu khi chuẩn độ lớp nước?",
+        "a": "Ở nồng độ $\\text{I}_2$ cao, $\\text{I}_2$ sẽ hấp phụ rất mạnh và sâu vào cấu trúc xoắn của amylose trong hồ tinh bột tạo phức bền, làm $\\text{Na}_2\\text{S}_2\\text{O}_3$ giải phóng $\\text{I}_2$ rất chậm dẫn đến chuẩn độ quá điểm tương đương (thừa thể tích). Do đó chỉ thêm hồ tinh bột khi dung dịch đã chuyển sang màu vàng rơm nhạt (lượng $\\text{I}_2$ còn rất ít)."
       },
       {
-        q: "Tại sao chuẩn độ lớp CCl4 không cần dùng chỉ thị hồ tinh bột?",
-        a: "Bản thân dung dịch $\\text{I}_2$ trong dung môi $\\text{CCl}_4$ có màu tím hồng rất đậm đặc trưng. Khi chuẩn độ bằng thiosunfat với dung dịch $\\text{KI}$ phụ trợ, $\\text{I}_2$ chuyển hết thành $\\text{I}^-$ không màu, lớp $\\text{CCl}_4$ mất màu tím hoàn toàn trở nên trong suốt, giúp nhận biết điểm kết thúc vô cùng rõ ràng mà không cần thêm chất chỉ thị."
+        "q": "Tại sao chuẩn độ lớp CCl4 không cần dùng chỉ thị hồ tinh bột?",
+        "a": "Bản thân dung dịch $\\text{I}_2$ trong dung môi $\\text{CCl}_4$ có màu tím hồng rất đậm đặc trưng. Khi chuẩn độ bằng thiosunfat với dung dịch $\\text{KI}$ phụ trợ, $\\text{I}_2$ chuyển hết thành $\\text{I}^-$ không màu, lớp $\\text{CCl}_4$ mất màu tím hoàn toàn trở nên trong suốt, giúp nhận biết điểm kết thúc vô cùng rõ ràng mà không cần thêm chất chỉ thị."
       }
     ]
   },
   {
-    id: "hl4",
-    category: "hl",
-    categoryName: "III. Hóa Lý",
-    number: "Hóa Lý Bài 4",
-    title: "Hấp phụ Axit Axetic trên Than hoạt tính",
-    shortDesc: "Khảo sát hấp phụ đẳng nhiệt Freundlich, chuẩn độ NaOH 0.1M, hồi quy tuyến tính lg(x/m) vs lg C.",
-    icon: "fa-chart-line",
-    hasCalculator: true,
-    calcType: "freundlich_isotherm",
-    theory: {
-      purpose: "Khảo sát sự hấp phụ đẳng nhiệt của axit axetic từ dung dịch nước trên than hoạt tính; kiểm nghiệm phương trình thực nghiệm Freundlich và xác định các hằng số $a, n$.",
-      principles: [
+    "id": "hl4",
+    "category": "hl",
+    "categoryName": "III. Hóa Lý",
+    "number": "Hóa Lý Bài 4",
+    "title": "Hấp phụ Axit Axetic trên Than hoạt tính",
+    "shortDesc": "Khảo sát hấp phụ đẳng nhiệt Freundlich, chuẩn độ NaOH 0.1M, hồi quy tuyến tính lg(x/m) vs lg C.",
+    "icon": "fa-chart-line",
+    "hasCalculator": true,
+    "calcType": "freundlich_isotherm",
+    "theory": {
+      "purpose": "Khảo sát sự hấp phụ đẳng nhiệt của axit axetic từ dung dịch nước trên than hoạt tính; kiểm nghiệm phương trình thực nghiệm Freundlich và xác định các hằng số $a, n$.",
+      "principles": [
         "**Phương trình đẳng nhiệt Freundlich:** $\\frac{x}{m} = a \\cdot C^{1/n} \\iff \\lg\\left(\\frac{x}{m}\\right) = \\lg a + \\frac{1}{n}\\lg C$",
         "Hấp phụ vật lý đơn lớp trên bề mặt chất hấp phụ xốp đa mao quản.",
         "Chuẩn độ nồng độ axit trước hấp phụ ($V_0$) và sau hấp phụ ($V$) bằng $\\text{NaOH 0,1 M}$ (chỉ thị phenolphthalein).",
@@ -2004,106 +2117,138 @@ const LAB_MODULES = [
         "- Hồi quy tuyến tính $Y = A \\cdot X + B$ với $Y = \\lg(x/m)$ và $X = \\lg C$.",
         "- Suy ra $n = 1/A$ và $a = 10^B$."
       ],
-      graphingGuide: {
-        generalRule: "Tuyệt đối không nối từng điểm (connect-the-dots). Kẻ MỘT ĐƯỜNG THẲNG TRUNG BÌNH duy nhất cân đối các điểm phân bố đều 2 bên. Khi tính hệ số góc, chọn 2 điểm trên đường thẳng ở 2 đầu xa nhau, không lấy điểm thực nghiệm.",
-        steps: [
-          { stepNumber: "Bước 1", stepName: "Hiểu bài toán (Understand the Problem)", content: "* **Mục tiêu:** Tìm $a, n$ từ $\\frac{x}{m} = a \\cdot C^{1/n} \\iff \\lg(x/m) = \\lg a + \\frac{1}{n}\\lg C$.\n* **Dạng tuyến tính:** $Y = A \\cdot X + B$ với $X = \\lg C < 0$, $Y = \\lg(x/m) < 0$.\n* **Hệ số góc:** $A = 1/n \\implies n = 1/A$ ($n > 1$).\n* **Hệ số chặn:** $B = \\lg a \\implies a = 10^B$." },
-          { stepNumber: "Bước 2", stepName: "Lập kế hoạch (Devise a Plan)", content: "* Lập bảng 6 tọa độ $(X_i, Y_i)$ từ $C_i$ và $(x/m)_i$.\n* Bố trí hệ trục ở Góc phần tư III ($X \\in [-2,5; -0,4]$, $Y \\in [-4,0; -1,5]$).\n* Tỉ lệ xích: $1\\text{ cm} = 0,2$ đơn vị logarit (chiếm $\\ge 70\\%$ diện tích trang giấy kẻ mm)." },
-          { stepNumber: "Bước 3", stepName: "Thực hiện kế hoạch (Carry Out the Plan)", content: "* Chấm 6 điểm $P_1 \\dots P_6$ bằng dấu $\\odot$.\n* Đặt thước trong suốt kẻ đường thẳng trung bình cân đối các điểm.\n* Chọn 2 điểm hiệu chuẩn $M_1, M_2$ trên đường thẳng ở 2 đầu xa nhau." },
-          { stepNumber: "Bước 4", stepName: "Nhìn lại & Trích xuất thông số (Look Back & Extract Parameters)", content: "* Tính $A = \\frac{Y_2 - Y_1}{X_2 - X_1} \\implies n = 1/A$ (kiểm tra $n \\in [1,2; 5,0]$).\n* Tính $B = Y_1 - A \\cdot X_1 \\implies a = 10^B$.\n* Viết phương trình thực nghiệm $\\frac{x}{m} = a \\cdot C^{1/n}$." }
+      "graphingGuide": {
+        "generalRule": "Tuyệt đối không nối từng điểm (connect-the-dots). Kẻ MỘT ĐƯỜNG THẲNG TRUNG BÌNH duy nhất cân đối các điểm phân bố đều 2 bên. Khi tính hệ số góc, chọn 2 điểm trên đường thẳng ở 2 đầu xa nhau, không lấy điểm thực nghiệm.",
+        "steps": [
+          {
+            "stepNumber": "Bước 1",
+            "stepName": "Hiểu bài toán (Understand the Problem)",
+            "content": "* **Mục tiêu:** Tìm $a, n$ từ $\\frac{x}{m} = a \\cdot C^{1/n} \\iff \\lg(x/m) = \\lg a + \\frac{1}{n}\\lg C$.\n* **Dạng tuyến tính:** $Y = A \\cdot X + B$ với $X = \\lg C < 0$, $Y = \\lg(x/m) < 0$.\n* **Hệ số góc:** $A = 1/n \\implies n = 1/A$ ($n > 1$).\n* **Hệ số chặn:** $B = \\lg a \\implies a = 10^B$."
+          },
+          {
+            "stepNumber": "Bước 2",
+            "stepName": "Lập kế hoạch (Devise a Plan)",
+            "content": "* Lập bảng 6 tọa độ $(X_i, Y_i)$ từ $C_i$ và $(x/m)_i$.\n* Bố trí hệ trục ở Góc phần tư III ($X \\in [-2,5; -0,4]$, $Y \\in [-4,0; -1,5]$).\n* Tỉ lệ xích: $1\\text{ cm} = 0,2$ đơn vị logarit (chiếm $\\ge 70\\%$ diện tích trang giấy kẻ mm)."
+          },
+          {
+            "stepNumber": "Bước 3",
+            "stepName": "Thực hiện kế hoạch (Carry Out the Plan)",
+            "content": "* Chấm 6 điểm $P_1 \\dots P_6$ bằng dấu $\\odot$.\n* Đặt thước trong suốt kẻ đường thẳng trung bình cân đối các điểm.\n* Chọn 2 điểm hiệu chuẩn $M_1, M_2$ trên đường thẳng ở 2 đầu xa nhau."
+          },
+          {
+            "stepNumber": "Bước 4",
+            "stepName": "Nhìn lại & Trích xuất thông số (Look Back & Extract Parameters)",
+            "content": "* Tính $A = \\frac{Y_2 - Y_1}{X_2 - X_1} \\implies n = 1/A$ (kiểm tra $n \\in [1,2; 5,0]$).\n* Tính $B = Y_1 - A \\cdot X_1 \\implies a = 10^B$.\n* Viết phương trình thực nghiệm $\\frac{x}{m} = a \\cdot C^{1/n}$."
+          }
         ]
       },
-      procedure: [
+      "procedure": [
         "1. Chuẩn bị 6 bình nón khô, cân chính xác $1,00\\text{ g}$ than hoạt tính cho vào mỗi bình.",
         "2. Pha 6 dung dịch axit axetic với nồng độ giảm dần ($0,4000\\text{ M}; 0,2000\\text{ M}; 0,1000\\text{ M}; 0,0500\\text{ M}; 0,0250\\text{ M}; 0,0125\\text{ M}$).",
         "3. Rót $40\\text{ mL}$ dung dịch tương ứng vào từng bình chứa than, đậy nút kín và lắc đều trong 30 phút để đạt cân bằng hấp phụ.",
         "4. Lọc dung dịch qua phễu có giấy lọc nhiều nếp khô, bỏ $5\\text{ mL}$ dịch lọc đầu tiên.",
         "5. Hút $10\\text{ mL}$ dung dịch trước hấp phụ và $10\\text{ mL}$ dịch lọc sau hấp phụ đem chuẩn độ bằng $\\text{NaOH 0,1 M}$ với chỉ thị phenolphthalein đến khi xuất hiện màu hồng nhạt bền trong 30 giây."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "Axit axetic đặc có mùi xốc, thao tác pha loãng cẩn thận.",
         "Bình nón và giấy lọc phải hoàn toàn khô ráo tránh làm loãng nồng độ."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Hấp phụ axit axetic trên than hoạt tính là hấp phụ vật lý hay hóa học? Vì sao?",
-        a: "Đây là **hấp phụ vật lý**, vì liên kết giữa phân tử axit axetic và bề mặt than hoạt tính chủ yếu là lực tương tác liên phân tử Van der Waals và liên kết phân tán, nhiệt hấp phụ nhỏ ($< 40\\text{ kJ/mol}$), là quá trình thuận nghịch và không làm biến đổi bản chất hóa học của axit axetic."
+        "q": "Hấp phụ axit axetic trên than hoạt tính là hấp phụ vật lý hay hóa học? Vì sao?",
+        "a": "Đây là **hấp phụ vật lý**, vì liên kết giữa phân tử axit axetic và bề mặt than hoạt tính chủ yếu là lực tương tác liên phân tử Van der Waals và liên kết phân tán, nhiệt hấp phụ nhỏ ($< 40\\text{ kJ/mol}$), là quá trình thuận nghịch và không làm biến đổi bản chất hóa học của axit axetic."
       },
       {
-        q: "Tại sao phải dùng giấy lọc nhiều nếp và bỏ vài giọt dịch lọc đầu tiên?",
-        a: "Giấy lọc nhiều nếp giúp tăng diện tích bề mặt lọc, đẩy nhanh tốc độ lọc để giảm thiểu sự bay hơi của axit axetic. Bỏ $3 \\div 5\\text{ mL}$ dịch lọc đầu tiên để loại bỏ sai số do giấy lọc khô hấp phụ một phần axit axetic hoặc làm loãng dịch lọc nếu giấy còn ẩm."
+        "q": "Tại sao phải dùng giấy lọc nhiều nếp và bỏ vài giọt dịch lọc đầu tiên?",
+        "a": "Giấy lọc nhiều nếp giúp tăng diện tích bề mặt lọc, đẩy nhanh tốc độ lọc để giảm thiểu sự bay hơi của axit axetic. Bỏ $3 \\div 5\\text{ mL}$ dịch lọc đầu tiên để loại bỏ sai số do giấy lọc khô hấp phụ một phần axit axetic hoặc làm loãng dịch lọc nếu giấy còn ẩm."
       }
     ]
   },
   {
-    id: "hl9",
-    category: "hl",
-    categoryName: "III. Hóa Lý",
-    number: "Hóa Lý Bài 9",
-    title: "Động học phản ứng bậc nhất - Thủy phân Etyl Axetat",
-    shortDesc: "Thủy phân este xúc tác H+, chuẩn độ NaOH 0.05N theo thời gian, tính hằng số k, chu kỳ bán hủy t1/2.",
-    icon: "fa-hourglass-half",
-    hasCalculator: true,
-    calcType: "ester_kinetics",
-    theory: {
-      purpose: "Xác định hằng số tốc độ $k$ và chu kỳ bán hủy $t_{1/2}$ của phản ứng thủy phân etyl axetat trong môi trường axit; chứng minh phản ứng tuân theo quy luật động học bậc một giả.",
-      principles: [
+    "id": "hl9",
+    "category": "hl",
+    "categoryName": "III. Hóa Lý",
+    "number": "Hóa Lý Bài 9",
+    "title": "Động học phản ứng bậc nhất - Thủy phân Etyl Axetat",
+    "shortDesc": "Thủy phân este xúc tác H+, chuẩn độ NaOH 0.05N theo thời gian, tính hằng số k, chu kỳ bán hủy t1/2.",
+    "icon": "fa-hourglass-half",
+    "hasCalculator": true,
+    "calcType": "ester_kinetics",
+    "theory": {
+      "purpose": "Xác định hằng số tốc độ $k$ và chu kỳ bán hủy $t_{1/2}$ của phản ứng thủy phân etyl axetat trong môi trường axit; chứng minh phản ứng tuân theo quy luật động học bậc một giả.",
+      "principles": [
         "**Phương trình phản ứng:** $\\text{CH}_3\\text{COOC}_2\\text{H}_5 + \\text{H}_2\\text{O} \\xrightarrow{\\text{H}^+} \\text{CH}_3\\text{COOH} + \\text{C}_2\\text{H}_5\\text{OH}$",
         "Vì nồng độ nước rất lớn ($[\\text{H}_2\\text{O}] \\approx \\text{const}$) và xúc tác $[\\text{H}^+] \\approx \\text{const}$, phản ứng là bậc 1 giả.",
         "**Hằng số tốc độ:** $k_t = \\frac{1}{t}\\ln\\left(\\frac{V_\\infty - V_0}{V_\\infty - V_t}\\right)\\text{ (phút}^{-1}\\text{)}$",
         "**Chu kỳ bán hủy:** $t_{1/2} = \\frac{\\ln 2}{\\overline{k}} = \\frac{0,693}{\\overline{k}}\\text{ (phút)}$",
         "*(Với $V_0$: thể tích $\\text{NaOH}$ chuẩn độ ở $t=0$; $V_t$: thể tích ở thời điểm $t$; $V_\\infty$: thể tích sau khi thủy phân hoàn toàn ở $70 \\div 80^\\circ\\text{C}$)*."
       ],
-      graphingGuide: {
-        generalRule: "Đồ thị động học bậc nhất $\\ln\\left(\\frac{V_\\infty - V_0}{V_\\infty - V_t}\\right)$ theo $t$ bắt buộc đi qua gốc tọa độ $(0, 0)$. Kẻ một đường thẳng duy nhất xuất phát từ $(0, 0)$ phân bố đều các điểm thực nghiệm.",
-        steps: [
-          { stepNumber: "Bước 1", stepName: "Hiểu bài toán (Understand the Problem)", content: "* **Mục tiêu:** Tìm hằng số tốc độ $k$ và chu kỳ bán hủy $t_{1/2}$.\n* **Dạng tuyến tính:** $Y = k \\cdot X$ với $X = t\\text{ (phút)}$, $Y = \\ln[(V_\\infty - V_0)/(V_\\infty - V_t)] \\ge 0$.\n* **Hệ số góc:** Trực tiếp bằng hằng số tốc độ $k\\text{ (phút}^{-1}\\text{)}$.\n* **Gốc tọa độ:** Bắt buộc đi qua $(0, 0)$." },
-          { stepNumber: "Bước 2", stepName: "Lập kế hoạch (Devise a Plan)", content: "* Lập bảng số liệu $(t_i, Y_i)$ cho $t = 0, 15, 30, 45, 60\\text{ phút}$.\n* Đặt gốc $(0, 0)$ ở góc dưới-trái tờ giấy kẻ ô mm.\n* Thang chia: Trục hoành $0 \\rightarrow 70\\text{ phút}$ ($1\\text{ cm} = 10\\text{ phút}$); Trục tung $0 \\rightarrow 1,0$ ($1\\text{ cm} = 0,10$)." },
-          { stepNumber: "Bước 3", stepName: "Thực hiện kế hoạch (Carry Out the Plan)", content: "* Chấm 5 điểm $(0, 0), (15, Y_{15}), (30, Y_{30}), (45, Y_{45}), (60, Y_{60})$.\n* Kẻ đường thẳng xuất phát từ $(0, 0)$ đi qua vùng trung tâm các điểm.\n* Chọn 2 điểm kiểm chuẩn $P_1(t_1, Y_1)$ và $P_2(t_2, Y_2)$ trên đường thẳng." },
-          { stepNumber: "Bước 4", stepName: "Nhìn lại & Trích xuất thông số (Look Back & Extract Parameters)", content: "* Tính hằng số tốc độ: $k = \\frac{Y_2 - Y_1}{t_2 - t_1}\\text{ (phút}^{-1}\\text{)}$.\n* Tính chu kỳ bán hủy: $t_{1/2} = \\frac{0,693}{k}\\text{ (phút)}$.\n* So sánh với giá trị trung bình số học $\\overline{k}$ (độ lệch $< 2\\%$)." }
+      "graphingGuide": {
+        "generalRule": "Đồ thị động học bậc nhất $\\ln\\left(\\frac{V_\\infty - V_0}{V_\\infty - V_t}\\right)$ theo $t$ bắt buộc đi qua gốc tọa độ $(0, 0)$. Kẻ một đường thẳng duy nhất xuất phát từ $(0, 0)$ phân bố đều các điểm thực nghiệm.",
+        "steps": [
+          {
+            "stepNumber": "Bước 1",
+            "stepName": "Hiểu bài toán (Understand the Problem)",
+            "content": "* **Mục tiêu:** Tìm hằng số tốc độ $k$ và chu kỳ bán hủy $t_{1/2}$.\n* **Dạng tuyến tính:** $Y = k \\cdot X$ với $X = t\\text{ (phút)}$, $Y = \\ln[(V_\\infty - V_0)/(V_\\infty - V_t)] \\ge 0$.\n* **Hệ số góc:** Trực tiếp bằng hằng số tốc độ $k\\text{ (phút}^{-1}\\text{)}$.\n* **Gốc tọa độ:** Bắt buộc đi qua $(0, 0)$."
+          },
+          {
+            "stepNumber": "Bước 2",
+            "stepName": "Lập kế hoạch (Devise a Plan)",
+            "content": "* Lập bảng số liệu $(t_i, Y_i)$ cho $t = 0, 15, 30, 45, 60\\text{ phút}$.\n* Đặt gốc $(0, 0)$ ở góc dưới-trái tờ giấy kẻ ô mm.\n* Thang chia: Trục hoành $0 \\rightarrow 70\\text{ phút}$ ($1\\text{ cm} = 10\\text{ phút}$); Trục tung $0 \\rightarrow 1,0$ ($1\\text{ cm} = 0,10$)."
+          },
+          {
+            "stepNumber": "Bước 3",
+            "stepName": "Thực hiện kế hoạch (Carry Out the Plan)",
+            "content": "* Chấm 5 điểm $(0, 0), (15, Y_{15}), (30, Y_{30}), (45, Y_{45}), (60, Y_{60})$.\n* Kẻ đường thẳng xuất phát từ $(0, 0)$ đi qua vùng trung tâm các điểm.\n* Chọn 2 điểm kiểm chuẩn $P_1(t_1, Y_1)$ và $P_2(t_2, Y_2)$ trên đường thẳng."
+          },
+          {
+            "stepNumber": "Bước 4",
+            "stepName": "Nhìn lại & Trích xuất thông số (Look Back & Extract Parameters)",
+            "content": "* Tính hằng số tốc độ: $k = \\frac{Y_2 - Y_1}{t_2 - t_1}\\text{ (phút}^{-1}\\text{)}$.\n* Tính chu kỳ bán hủy: $t_{1/2} = \\frac{0,693}{k}\\text{ (phút)}$.\n* So sánh với giá trị trung bình số học $\\overline{k}$ (độ lệch $< 2\\%$)."
+          }
         ]
       },
-      procedure: [
+      "procedure": [
         "1. Cho $50\\text{ mL } \\text{HCl 0,1 N}$ vào bình nón đặt trong chậu ổn nhiệt ở nhiệt độ phòng.",
         "2. Dùng pipet hút $2\\text{ mL}$ etyl axetat cho nhanh vào bình, bấm đồng hồ bấm giây ngay lập tức ($t = 0$), lắc đều.",
         "3. Hút ngay $5\\text{ mL}$ hỗn hợp phản ứng cho vào bình nón chứa sẵn $20\\text{ mL}$ nước cất đá lạnh ($0 \\div 2^\\circ\\text{C}$) để dập tắt phản ứng, chuẩn độ bằng $\\text{NaOH 0,05 N}$ với phenolphthalein $\\rightarrow$ thu được $V_0$.",
         "4. Tại các thời điểm $t = 15, 30, 45, 60\\text{ phút}$, hút $5\\text{ mL}$ mẫu, dập tắt bằng nước đá và chuẩn độ tương tự $\\rightarrow$ thu được các giá trị $V_t$.",
         "5. Lấy lượng dung dịch còn lại đun cách thủy hồi lưu ở $70 \\div 80^\\circ\\text{C}$ trong 45 - 60 phút để phản ứng hoàn toàn, để nguội về nhiệt độ phòng, hút $5\\text{ mL}$ chuẩn độ $\\rightarrow$ thu được $V_\\infty$."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "Etyl axetat dễ bay hơi và dễ cháy, đậy kín bình sau khi lấy mẫu.",
         "Khi đun thủy phân hoàn toàn tìm $V_\\infty$ bắt buộc lắp ống sinh hàn hồi lưu kín để tránh thất thoát este và axit."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Tại sao phản ứng lưỡng phân tử lại tuân theo quy luật động học bậc một?",
-        a: "Phương trình phản ứng gồm 2 chất tham gia là etyl axetat và nước ($v = k' [\\text{Este}][\\text{H}_2\\text{O}]$). Tuy nhiên, phản ứng tiến hành trong dung dịch nước loãng nên lượng nước dư rất lớn và coi như không đổi trong suốt quá trình phản ứng. Hằng số $[\\text{H}_2\\text{O}]$ được gộp vào hằng số tốc độ $k = k'[\\text{H}_2\\text{O}]$, làm phương trình tốc độ trở thành $v = k[\\text{Este}]$ (phản ứng bậc một giả)."
+        "q": "Tại sao phản ứng lưỡng phân tử lại tuân theo quy luật động học bậc một?",
+        "a": "Phương trình phản ứng gồm 2 chất tham gia là etyl axetat và nước ($v = k' [\\text{Este}][\\text{H}_2\\text{O}]$). Tuy nhiên, phản ứng tiến hành trong dung dịch nước loãng nên lượng nước dư rất lớn và coi như không đổi trong suốt quá trình phản ứng. Hằng số $[\\text{H}_2\\text{O}]$ được gộp vào hằng số tốc độ $k = k'[\\text{H}_2\\text{O}]$, làm phương trình tốc độ trở thành $v = k[\\text{Este}]$ (phản ứng bậc một giả)."
       },
       {
-        q: "Tại sao phải nhỏ mẫu phản ứng vào nước cất đá lạnh trước khi chuẩn độ?",
-        a: "Nước cất đá lạnh ($0 \\div 2^\\circ\\text{C}$) có tác dụng làm hạ nhiệt độ đột ngột và pha loãng nồng độ các chất, từ đó 'đóng băng' / dập tắt tốc độ phản ứng thủy phân gần như bằng 0, giúp thể tích $\\text{NaOH}$ chuẩn độ phản ánh chính xác nồng độ axit tại đúng thời điểm $t$ lấy mẫu."
+        "q": "Tại sao phải nhỏ mẫu phản ứng vào nước cất đá lạnh trước khi chuẩn độ?",
+        "a": "Nước cất đá lạnh ($0 \\div 2^\\circ\\text{C}$) có tác dụng làm hạ nhiệt độ đột ngột và pha loãng nồng độ các chất, từ đó 'đóng băng' / dập tắt tốc độ phản ứng thủy phân gần như bằng 0, giúp thể tích $\\text{NaOH}$ chuẩn độ phản ánh chính xác nồng độ axit tại đúng thời điểm $t$ lấy mẫu."
       },
       {
-        q: "Tại sao khi đun thủy phân hoàn toàn để tìm V_∞ lại phải lắp ống sinh hàn hồi lưu?",
-        a: "Etyl axetat có nhiệt độ sôi thấp ($77,1^\\circ\\text{C}$) rất dễ bay hơi. Nếu không có sinh hàn hồi lưu để ngưng tụ hơi este chảy ngược lại bình phản ứng, este sẽ bay hơi thất thoát ra ngoài trước khi kịp thủy phân, làm giá trị $V_\\infty$ đo được bị thiếu hụt nghiêm trọng."
+        "q": "Tại sao khi đun thủy phân hoàn toàn để tìm V_∞ lại phải lắp ống sinh hàn hồi lưu?",
+        "a": "Etyl axetat có nhiệt độ sôi thấp ($77,1^\\circ\\text{C}$) rất dễ bay hơi. Nếu không có sinh hàn hồi lưu để ngưng tụ hơi este chảy ngược lại bình phản ứng, este sẽ bay hơi thất thoát ra ngoài trước khi kịp thủy phân, làm giá trị $V_\\infty$ đo được bị thiếu hụt nghiêm trọng."
       }
     ]
   },
   {
-    id: "hl10",
-    category: "hl",
-    categoryName: "III. Hóa Lý",
-    number: "Hóa Lý Bài 10",
-    title: "Động học phản ứng bậc hai - Iốt hóa Axeton & Năng lượng hoạt hóa Ea",
-    shortDesc: "Đo tốc độ phản ứng ở T1 và T2, chuẩn độ I2 dư bằng Na2S2O3 0.01N, tính k và năng lượng hoạt hóa Ea theo Arrhenius.",
-    icon: "fa-bolt",
-    hasCalculator: true,
-    calcType: "acetone_iodination",
-    theory: {
-      purpose: "Xác định hằng số tốc độ của phản ứng Iốt hóa Axeton ở hai nhiệt độ khác nhau ($T_1, T_2$); từ đó xác định năng lượng hoạt hóa $E_a$ của phản ứng theo phương trình Arrhenius.",
-      principles: [
+    "id": "hl10",
+    "category": "hl",
+    "categoryName": "III. Hóa Lý",
+    "number": "Hóa Lý Bài 10",
+    "title": "Động học phản ứng bậc hai - Iốt hóa Axeton & Năng lượng hoạt hóa Ea",
+    "shortDesc": "Đo tốc độ phản ứng ở T1 và T2, chuẩn độ I2 dư bằng Na2S2O3 0.01N, tính k và năng lượng hoạt hóa Ea theo Arrhenius.",
+    "icon": "fa-bolt",
+    "hasCalculator": true,
+    "calcType": "acetone_iodination",
+    "theory": {
+      "purpose": "Xác định hằng số tốc độ của phản ứng Iốt hóa Axeton ở hai nhiệt độ khác nhau ($T_1, T_2$); từ đó xác định năng lượng hoạt hóa $E_a$ của phản ứng theo phương trình Arrhenius.",
+      "principles": [
         "**Phương trình phản ứng:** $\\text{CH}_3\\text{COCH}_3 + \\text{I}_2 \\xrightarrow{\\text{H}^+} \\text{CH}_3\\text{COCH}_2\\text{I} + \\text{H}^+ + \\text{I}^-$",
         "**Cơ chế:** Giai đoạn enol hóa chậm có xúc tác axit quyết định tốc độ $\\rightarrow$ bậc 0 theo $\\text{I}_2$, bậc 1 theo Axeton, bậc 1 theo $\\text{H}^+ \\implies$ Phản ứng bậc 2 tổng quát.",
         "Dập tắt phản ứng bằng $\\text{NaHCO}_3$ (khử xúc tác $\\text{H}^+$), chuẩn độ $\\text{I}_2$ dư bằng $\\text{Na}_2\\text{S}_2\\text{O}_3\\text{ } 0,01\\text{ N}$.",
@@ -2112,16 +2257,32 @@ const LAB_MODULES = [
         "- Hằng số tốc độ: $k_t = \\frac{2,303}{(C_A + C_{\\text{H}^+})\\cdot t} \\lg\\left[\\frac{C_{\\text{H}^+}(C_A - C_x)}{C_A(C_{\\text{H}^+} + C_x)}\\right]\\text{ (L}\\cdot\\text{mol}^{-1}\\cdot\\text{phút}^{-1}\\text{)}$",
         "- Năng lượng hoạt hóa Arrhenius: $E_a = \\frac{R \\cdot T_1 \\cdot T_2}{T_2 - T_1} \\ln\\left(\\frac{\\overline{k}_{T_2}}{\\overline{k}_{T_1}}\\right)\\text{ (J/mol)}$"
       ],
-      graphingGuide: {
-        generalRule: "Vẽ cả 2 đường thẳng động học của nhiệt độ phòng ($T_1$) và máy điều nhiệt ($T_2$) trên CÙNG MỘT HỆ TRỤC TỌA ĐỘ xuất phát từ $(0, 0)$ để trực quan hóa sự gia tăng độ dốc khi tăng nhiệt độ.",
-        steps: [
-          { stepNumber: "Bước 1", stepName: "Hiểu bài toán (Understand the Problem)", content: "* **Mục tiêu:** Xác định $k_{T_1}, k_{T_2}$ và năng lượng hoạt hóa $E_a$.\n* **Dạng tuyến tính:** $Y = S \\cdot X$ với $S = \\frac{(C_A + C_{\\text{H}^+}) \\cdot k}{2,303} \\implies k = \\frac{2,303 \\cdot S}{C_A + C_{\\text{H}^+}}$.\n* **Độ dốc:** $S$ phản ánh trực tiếp tốc độ phản ứng." },
-          { stepNumber: "Bước 2", stepName: "Lập kế hoạch (Devise a Plan)", content: "* Lập bảng tọa độ $(t, Y)$ ở 2 nhiệt độ $T_1$ và $T_2$.\n* Bố trí gốc $(0, 0)$ ở góc dưới-trái tờ giấy kẻ ô mm.\n* Thang chia: Trục hoành $0 \\rightarrow 70\\text{ phút}$ ($1\\text{ cm} = 10\\text{ phút}$); Trục tung $0 \\rightarrow 0,10$ ($1\\text{ cm} = 0,01$)." },
-          { stepNumber: "Bước 3", stepName: "Thực hiện kế hoạch (Carry Out the Plan)", content: "* Chấm các điểm thực nghiệm ở $T_1$ (mực xanh) và $T_2$ (mực đỏ).\n* Kẻ 2 đường thẳng xuất phát từ $(0, 0)$.\n* Đo 2 độ dốc: $S_1 = \\frac{\\Delta Y_1}{\\Delta t_1}$ và $S_2 = \\frac{\\Delta Y_2}{\\Delta t_2}$." },
-          { stepNumber: "Bước 4", stepName: "Nhìn lại & Trích xuất thông số (Look Back & Extract Parameters)", content: "* Tính $k_{T_1} = \\frac{2,303 \\cdot S_1}{C_A + C_{\\text{H}^+}}$ và $k_{T_2} = \\frac{2,303 \\cdot S_2}{C_A + C_{\\text{H}^+}}$.\n* Tính $E_a = \\frac{R \\cdot T_1 \\cdot T_2}{T_2 - T_1} \\ln(k_{T_2}/k_{T_1})\\text{ (J/mol)}$.\n* Kiểm tra: $E_a$ nằm trong khoảng $65 \\div 85\\text{ kJ/mol}$." }
+      "graphingGuide": {
+        "generalRule": "Vẽ cả 2 đường thẳng động học của nhiệt độ phòng ($T_1$) và máy điều nhiệt ($T_2$) trên CÙNG MỘT HỆ TRỤC TỌA ĐỘ xuất phát từ $(0, 0)$ để trực quan hóa sự gia tăng độ dốc khi tăng nhiệt độ.",
+        "steps": [
+          {
+            "stepNumber": "Bước 1",
+            "stepName": "Hiểu bài toán (Understand the Problem)",
+            "content": "* **Mục tiêu:** Xác định $k_{T_1}, k_{T_2}$ và năng lượng hoạt hóa $E_a$.\n* **Dạng tuyến tính:** $Y = S \\cdot X$ với $S = \\frac{(C_A + C_{\\text{H}^+}) \\cdot k}{2,303} \\implies k = \\frac{2,303 \\cdot S}{C_A + C_{\\text{H}^+}}$.\n* **Độ dốc:** $S$ phản ánh trực tiếp tốc độ phản ứng."
+          },
+          {
+            "stepNumber": "Bước 2",
+            "stepName": "Lập kế hoạch (Devise a Plan)",
+            "content": "* Lập bảng tọa độ $(t, Y)$ ở 2 nhiệt độ $T_1$ và $T_2$.\n* Bố trí gốc $(0, 0)$ ở góc dưới-trái tờ giấy kẻ ô mm.\n* Thang chia: Trục hoành $0 \\rightarrow 70\\text{ phút}$ ($1\\text{ cm} = 10\\text{ phút}$); Trục tung $0 \\rightarrow 0,10$ ($1\\text{ cm} = 0,01$)."
+          },
+          {
+            "stepNumber": "Bước 3",
+            "stepName": "Thực hiện kế hoạch (Carry Out the Plan)",
+            "content": "* Chấm các điểm thực nghiệm ở $T_1$ (mực xanh) và $T_2$ (mực đỏ).\n* Kẻ 2 đường thẳng xuất phát từ $(0, 0)$.\n* Đo 2 độ dốc: $S_1 = \\frac{\\Delta Y_1}{\\Delta t_1}$ và $S_2 = \\frac{\\Delta Y_2}{\\Delta t_2}$."
+          },
+          {
+            "stepNumber": "Bước 4",
+            "stepName": "Nhìn lại & Trích xuất thông số (Look Back & Extract Parameters)",
+            "content": "* Tính $k_{T_1} = \\frac{2,303 \\cdot S_1}{C_A + C_{\\text{H}^+}}$ và $k_{T_2} = \\frac{2,303 \\cdot S_2}{C_A + C_{\\text{H}^+}}$.\n* Tính $E_a = \\frac{R \\cdot T_1 \\cdot T_2}{T_2 - T_1} \\ln(k_{T_2}/k_{T_1})\\text{ (J/mol)}$.\n* Kiểm tra: $E_a$ nằm trong khoảng $65 \\div 85\\text{ kJ/mol}$."
+          }
         ]
       },
-      procedure: [
+      "procedure": [
         "1. Chuẩn bị 2 bình phản ứng phối trộn theo tỉ lệ: $10\\text{ mL Axeton } 0,517\\text{ M} + 10\\text{ mL HCl } 0,5\\text{ M} + 25\\text{ mL } \\text{H}_2\\text{O} + 5\\text{ mL I}_2\\text{ } 0,05\\text{ N}$.",
         "   - Bình 1: khảo sát ở nhiệt độ phòng ($T_1$).",
         "   - Bình 2: khảo sát ở máy điều nhiệt cao hơn nhiệt độ phòng khoảng $10^\\circ\\text{C}$ ($T_2$).",
@@ -2130,23 +2291,23 @@ const LAB_MODULES = [
         "4. Tại các thời điểm $t$ quy định (ở $T_1: 15, 30, 45, 60\\text{ phút}$; ở $T_2: 10, 20, 30, 40\\text{ phút}$), hút $10\\text{ mL}$ hỗn hợp cho vào bình nón chứa sẵn $5\\text{ mL NaHCO}_3\\text{ 5\\%}$ để dập tắt phản ứng.",
         "5. Chuẩn độ lượng $\\text{I}_2$ dư bằng $\\text{Na}_2\\text{S}_2\\text{O}_3\\text{ } 0,01\\text{ N}$ với chỉ thị hồ tinh bột đến khi mất màu xanh."
       ],
-      safetyNotes: [
+      "safetyNotes": [
         "Axeton dễ bay hơi và dễ cháy.",
         "$\\text{I}_2$ ăn mòn và bám dính, tránh dính vào da hoặc quần áo."
       ]
     },
-    qa: [
+    "qa": [
       {
-        q: "Tại sao tốc độ phản ứng không phụ thuộc vào nồng độ I2?",
-        a: "Phản ứng diễn ra qua cơ chế nhiều giai đoạn. Giai đoạn chậm nhất quyết định tốc độ phản ứng là giai đoạn proton hóa axeton và chuyển thành dạng enol dưới tác dụng của xúc tác $\\text{H}^+$. Sau khi dạng enol hình thành, nó phản ứng cực nhanh với $\\text{I}_2$. Do đó, tốc độ phản ứng chỉ phụ thuộc vào nồng độ axeton và xúc tác $\\text{H}^+$, mà hoàn toàn không phụ thuộc vào nồng độ $\\text{I}_2$ (bậc 0 theo $\\text{I}_2$)."
+        "q": "Tại sao tốc độ phản ứng không phụ thuộc vào nồng độ I2?",
+        "a": "Phản ứng diễn ra qua cơ chế nhiều giai đoạn. Giai đoạn chậm nhất quyết định tốc độ phản ứng là giai đoạn proton hóa axeton và chuyển thành dạng enol dưới tác dụng của xúc tác $\\text{H}^+$. Sau khi dạng enol hình thành, nó phản ứng cực nhanh với $\\text{I}_2$. Do đó, tốc độ phản ứng chỉ phụ thuộc vào nồng độ axeton và xúc tác $\\text{H}^+$, mà hoàn toàn không phụ thuộc vào nồng độ $\\text{I}_2$ (bậc 0 theo $\\text{I}_2$)."
       },
       {
-        q: "Vai trò của dung dịch NaHCO3 khi lấy mẫu là gì?",
-        a: "Dung dịch $\\text{NaHCO}_3$ có tính kiềm nhẹ sẽ phản ứng trung hòa ngay lập tức ion $\\text{H}^+$ ($\text{HCO}_3^- + \\text{H}^+ \\rightarrow \\text{CO}_2\\uparrow + \\text{H}_2\\text{O}$). Do $\\text{H}^+$ là chất xúc tác bắt buộc cho giai đoạn enol hóa, khi mất $\\text{H}^+$, phản ứng iốt hóa axeton bị dừng lại ngay lập tức (dập tắt phản ứng) để chuẩn độ lượng $\\text{I}_2$ dư còn lại tại đúng thời điểm $t$."
+        "q": "Vai trò của dung dịch NaHCO3 khi lấy mẫu là gì?",
+        "a": "Dung dịch $\\text{NaHCO}_3$ có tính kiềm nhẹ sẽ phản ứng trung hòa ngay lập tức ion $\\text{H}^+$ ($\text{HCO}_3^- + \\text{H}^+ \\rightarrow \\text{CO}_2\\uparrow + \\text{H}_2\\text{O}$). Do $\\text{H}^+$ là chất xúc tác bắt buộc cho giai đoạn enol hóa, khi mất $\\text{H}^+$, phản ứng iốt hóa axeton bị dừng lại ngay lập tức (dập tắt phản ứng) để chuẩn độ lượng $\\text{I}_2$ dư còn lại tại đúng thời điểm $t$."
       },
       {
-        q: "Tại sao phải đo ở 2 nhiệt độ và khoảng chênh 10°C có ý nghĩa gì?",
-        a: "Theo phương trình Arrhenius $k = A \\cdot e^{-E_a/RT}$, để giải tìm năng lượng hoạt hóa $E_a$ và thừa số tần số $A$ cần tối thiểu 2 điểm dữ liệu $(k_1, T_1)$ và $(k_2, T_2)$. Khoảng chênh lệch $\\Delta T \\approx 10^\\circ\\text{C}$ là tối ưu vì đủ lớn để thấy rõ sự gia tăng tốc độ phản ứng (thường tăng $2 \\div 4$ lần theo quy tắc Van 't Hoff) nhưng không quá lớn làm bay hơi dung môi axeton hoặc gây sai lệch nhiệt động học."
+        "q": "Tại sao phải đo ở 2 nhiệt độ và khoảng chênh 10°C có ý nghĩa gì?",
+        "a": "Theo phương trình Arrhenius $k = A \\cdot e^{-E_a/RT}$, để giải tìm năng lượng hoạt hóa $E_a$ và thừa số tần số $A$ cần tối thiểu 2 điểm dữ liệu $(k_1, T_1)$ và $(k_2, T_2)$. Khoảng chênh lệch $\\Delta T \\approx 10^\\circ\\text{C}$ là tối ưu vì đủ lớn để thấy rõ sự gia tăng tốc độ phản ứng (thường tăng $2 \\div 4$ lần theo quy tắc Van 't Hoff) nhưng không quá lớn làm bay hơi dung môi axeton hoặc gây sai lệch nhiệt động học."
       }
     ]
   }
@@ -2363,6 +2524,60 @@ const LAB_PRESETS = {
       { t: 30, vt: 11.60 },
       { t: 40, vt: 10.10 }
     ]
+  },
+
+  hdc8: {
+    // Thí nghiệm 1-3: Pha loãng dung dịch và đo tỉ khối
+    v_can: 250.0,       // Thể tích dung dịch 7% cần pha (mL)
+    c_sau: 7.0,         // Nồng độ % mong muốn (%)
+    c_dau: 10.0,        // Nồng độ % axit HCl gốc ban đầu (%)
+    d_goc: 1.047,       // Tỉ khối dung dịch HCl 10% (g/mL)
+    d_sau: 1.033,       // Tỉ khối dung dịch HCl 7% (g/mL)
+    
+    // Thí nghiệm 4: Pha 100 mL dung dịch chuẩn HCl 0.1 N từ HCl 17%
+    v_dinh_muc: 100.0,  // Thể tích bình định mức (mL)
+    n_can: 0.1000,      // Nồng độ đương lượng mục tiêu (N)
+    c_goc: 17.0,        // Nồng độ % HCl gốc (%)
+    d_goc_17: 1.083,    // Tỉ khối HCl 17% (g/mL)
+    e_hcl: 36.46,       // Đương lượng gam HCl (g/eq)
+    
+    // Thí nghiệm 5: Chuẩn độ thể tích HCl bằng NaOH 0.1 N
+    v_hcl_pipet: 20.00, // Thể tích HCl lấy chuẩn độ (mL)
+    n_naoh: 0.1000,     // Nồng độ đương lượng NaOH chuẩn (N)
+    v1: 20.10,          // Buret lần 1 (mL)
+    v2: 20.15,          // Buret lần 2 (mL)
+    v3: 20.05,          // Buret lần 3 (mL)
+    tempC: 25.0,        // Nhiệt độ phòng khi đo tỉ khối (°C)
+    d_t: 1.033          // Tỉ khối đọc trên phù kế ở nhiệt độ thực tế (g/mL)
+  },
+
+  hdc11: {
+    // Hóa Đại Cương Bài 11
+    p_atm: 760.0,
+    t0_c: 5.0,
+    v0_ml: 4.50,
+    points: [
+      { t_c: 75.0, v_ml: 9.10 },
+      { t_c: 70.0, v_ml: 8.02 },
+      { t_c: 65.0, v_ml: 7.26 },
+      { t_c: 60.0, v_ml: 6.71 },
+      { t_c: 55.0, v_ml: 6.28 },
+      { t_c: 50.0, v_ml: 5.95 }
+    ]
+  },
+
+  hl11: {
+    p_atm: 760.0,         // Áp suất khí quyển phòng thí nghiệm (mmHg)
+    t0_c: 5.0,            // Nhiệt độ làm lạnh sâu thấp nhất (°C)
+    v0_ml: 4.50,          // Thể tích bọt khí đọc ở nhiệt độ thấp nhất (mL)
+    points: [
+      { t_c: 75.0, v_ml: 9.10 },
+      { t_c: 70.0, v_ml: 8.02 },
+      { t_c: 65.0, v_ml: 7.26 },
+      { t_c: 60.0, v_ml: 6.71 },
+      { t_c: 55.0, v_ml: 6.28 },
+      { t_c: 50.0, v_ml: 5.95 }
+    ]
   }
 };
 
@@ -2375,6 +2590,14 @@ const LAB_PRESETS = {
 // Tích hợp First Principles, Khí thực (Virial, Van der Waals, RKS, Berthelot, Peng-Robinson),
 // Cân bằng pha Pitzer / Debye-Hückel / Sechenov, Hệ 4 đẳng nhiệt (Freundlich, Langmuir, Temkin, D-R) + AIC/BIC,
 // Động học Eyring, Bodenstein PSSH, Levenberg-Marquardt phi tuyến và Lan truyền sai số Gauss.
+
+// Hàm tính áp suất hơi nước bão hòa (mmHg) theo phương trình Antoine
+function getWaterVaporPressure(t) {
+  const temp = typeof t === 'number' && !isNaN(t) ? t : 25.0;
+  return Math.pow(10, 8.07131 - 1730.63 / (233.426 + temp));
+}
+if (typeof window !== 'undefined') window.getWaterVaporPressure = getWaterVaporPressure;
+if (typeof global !== 'undefined') global.getWaterVaporPressure = getWaterVaporPressure;
 
 const Calculators = {
   // 1. Kỹ thuật 1: Gia công cắt ống thủy tinh & Bo tròn nhiệt
@@ -3899,6 +4122,293 @@ $$F(C_x) = \\lg\\left[\\frac{C_{\\text{H}^+}(C_A - C_x)}{C_A(C_{\\text{H}^+} + C
       procedureSteps
     };
   }
+,
+
+  // 13. Hóa Đại Cương Bài 8: Pha chế dung dịch & Chuẩn độ Axit - Bazơ
+  calc_hdc8(data) {
+    // 1. Thí nghiệm 1-3: Pha loãng dung dịch
+    const v_can = parseFloat(data.v_can) || 250.0;
+    const c_sau = parseFloat(data.c_sau) || 7.0;
+    const c_dau = parseFloat(data.c_dau) || 10.0;
+    const d_goc = parseFloat(data.d_goc) || 1.047;
+    const d_sau = parseFloat(data.d_sau) || 1.033;
+
+    const m_dd_sau = v_can * d_sau;
+    const m_ct = (m_dd_sau * c_sau) / 100.0;
+    const m_dd_dau = c_dau > 0 ? (m_ct * 100.0) / c_dau : 0;
+    const v_dd_dau = d_goc > 0 ? m_dd_dau / d_goc : 0;
+    const m_nuoc = Math.max(0, m_dd_sau - m_dd_dau);
+    const v_nuoc = m_nuoc; // Khối lượng riêng nước cất ~ 1.0 g/mL
+
+    // 2. Thí nghiệm 4: Pha dung dịch chuẩn HCl 0.1 N từ HCl 17%
+    const v_dinh_muc = parseFloat(data.v_dinh_muc) || 100.0;
+    const n_can = parseFloat(data.n_can) || 0.1000;
+    const c_goc = parseFloat(data.c_goc) || 17.0;
+    const d_goc_17 = parseFloat(data.d_goc_17) || 1.083;
+    const e_hcl = parseFloat(data.e_hcl) || 36.46;
+
+    const n_goc = e_hcl > 0 ? (10.0 * d_goc_17 * c_goc) / e_hcl : 5.05;
+    const v_axit_goc = n_goc > 0 ? (n_can * v_dinh_muc) / n_goc : 1.98;
+
+    // 3. Thí nghiệm 5: Chuẩn độ thể tích xác định nồng độ thực tế
+    const v_hcl_pipet = parseFloat(data.v_hcl_pipet) || 20.00;
+    const n_naoh = parseFloat(data.n_naoh) || 0.1000;
+    const v1 = parseFloat(data.v1) || 20.10;
+    const v2 = parseFloat(data.v2) || 20.15;
+    const v3 = parseFloat(data.v3) || 20.05;
+    const tempC = parseFloat(data.tempC) || 25.0;
+    const d_t = parseFloat(data.d_t) || 1.033;
+
+    const v_naoh_tb = (v1 + v2 + v3) / 3.0;
+    const n_hcl_tn = v_hcl_pipet > 0 ? (n_naoh * v_naoh_tb) / v_hcl_pipet : 0.1000;
+    const error_pct = n_can > 0 ? (Math.abs(n_can - n_hcl_tn) / n_can) * 100.0 : 0;
+    const d_20 = d_t + 0.0003 * (tempC - 20.0);
+
+    // 4. Mô hình Hóa lý sâu:
+    // (a) Sai số chuẩn độ phenolphthalein (pT = 8.2 vs pH_td = 7.00):
+    const c_equiv = (n_hcl_tn * v_hcl_pipet) / (v_hcl_pipet + v_naoh_tb);
+    const delta_titr_pct = c_equiv > 0 ? ((Math.pow(10, -(14.0 - 8.2)) - Math.pow(10, -8.2)) / c_equiv) * 100.0 : 0.0316;
+
+    // (b) Hiệu chỉnh dãn nở nhiệt buret thủy tinh Borosilicate:
+    const gamma_glass = 9.9e-6; // 1/°C
+    const v_naoh_corr = v_naoh_tb * (1.0 + gamma_glass * (tempC - 20.0));
+
+    // (c) Hoạt độ ion Debye-Hückel Extended:
+    const I = n_hcl_tn;
+    const log_gamma = - (0.509 * Math.sqrt(I)) / (1.0 + 1.32 * Math.sqrt(I)) + 0.1 * I;
+    const gamma_pm = Math.pow(10, log_gamma);
+
+    const stepsLatex = [
+      {
+        title: "1. Thí nghiệm 1-3: Tính toán lượng hóa chất pha loãng theo Quy tắc đường chéo",
+        dataOrigin: `Đo tỉ khối phù kế: $d_{\\text{gốc}} = ${d_goc.toFixed(3)}\\text{ g/mL}$, $d_{\\text{sau}} = ${d_sau.toFixed(3)}\\text{ g/mL}$, $V_{\\text{cần}} = ${v_can.toFixed(1)}\\text{ mL}$`,
+        formula: "m_{\\text{dd sau}} = V \times d_{\\text{sau}}; \quad m_{\\text{ct}} = \\frac{m_{\\text{dd sau}} \times C_{\\text{sau}}\\%}{100}; \quad V_{\\text{đầu}} = \\frac{m_{\\text{dd đầu}}}{d_{\\text{gốc}}}",
+        substituted: `m_{\\text{dd sau}} = ${v_can.toFixed(1)} \times ${d_sau.toFixed(3)} = ${m_dd_sau.toFixed(2)}\\text{ g} \implies m_{\\text{HCl 10\\%}} = ${m_dd_dau.toFixed(2)}\\text{ g} \implies V_{\\text{đầu}} = \\frac{${m_dd_dau.toFixed(2)}}{${d_goc.toFixed(3)}} = ${v_dd_dau.toFixed(2)}\\text{ mL}`,
+        result: `V_HCl(10%) = ${v_dd_dau.toFixed(2)} mL, V_nước = ${v_nuoc.toFixed(1)} mL`
+      },
+      {
+        title: "2. Thí nghiệm 4: Nồng độ đương lượng axit gốc và Thể tích hút pha HCl 0,1N",
+        dataOrigin: `Axit gốc $\\text{HCl } 17\\%$, $d = ${d_goc_17.toFixed(3)}\\text{ g/mL}$, $E_{\\text{HCl}} = 36{,}46\\text{ g/eq}$, bình định mức $V = ${v_dinh_muc.toFixed(0)}\\text{ mL}$`,
+        formula: "N_{\\text{gốc}} = \\frac{10 \times d \times C\\%}{E_{\\text{HCl}}}; \quad V_{\\text{hút}} = \\frac{N_{\\text{cần}} \times V_{\\text{định mức}}}{N_{\\text{gốc}}}",
+        substituted: `N_{\\text{gốc}} = \\frac{10 \times ${d_goc_17.toFixed(3)} \times ${c_goc.toFixed(1)}}{${e_hcl.toFixed(2)}} = ${n_goc.toFixed(2)}\\text{ N} \implies V_{\\text{hút}} = \\frac{${n_can.toFixed(4)} \times ${v_dinh_muc.toFixed(0)}}{${n_goc.toFixed(2)}} = ${v_axit_goc.toFixed(2)}\\text{ mL}`,
+        result: `N_gốc = ${n_goc.toFixed(2)} N, V_axit_goc = ${v_axit_goc.toFixed(2)} mL`
+      },
+      {
+        title: "3. Thí nghiệm 5: Chuẩn độ xác định nồng độ thực tế & Sai số tương đối",
+        dataOrigin: `Pipet $V_{\\text{HCl}} = ${v_hcl_pipet.toFixed(2)}\\text{ mL}$, dung dịch chuẩn $\\text{NaOH } ${n_naoh.toFixed(4)}\\text{ N}$, đọc buret: ${v1.toFixed(2)}, ${v2.toFixed(2)}, ${v3.toFixed(2)}\\text{ mL}$`,
+        formula: "\\overline{V}_{\\text{NaOH}} = \\frac{V_1 + V_2 + V_3}{3}; \quad N_{\\text{HCl, TN}} = \\frac{N_{\\text{NaOH}} \times \\overline{V}_{\\text{NaOH}}}{V_{\\text{HCl}}}; \quad \\varepsilon\\% = \\frac{|N_{\\text{cần}} - N_{\\text{TN}}|}{N_{\\text{cần}}} \times 100\\%",
+        substituted: `\\overline{V}_{\\text{NaOH}} = ${v_naoh_tb.toFixed(2)}\\text{ mL} \implies N_{\\text{HCl, TN}} = \\frac{${n_naoh.toFixed(4)} \times ${v_naoh_tb.toFixed(2)}}{${v_hcl_pipet.toFixed(2)}} = ${n_hcl_tn.toFixed(4)}\\text{ N} \implies \\varepsilon\\% = ${error_pct.toFixed(2)}\\%`,
+        result: `N_HCl(TN) = ${n_hcl_tn.toFixed(4)} N (Sai số: ${error_pct.toFixed(2)}%)`
+      },
+      {
+        title: "4. Hiệu chỉnh nhiệt độ cho tỉ khối đọc trên Phù kế",
+        dataOrigin: `Phù kế chuẩn $20^\\circ\\text{C}$, nhiệt độ phòng đo thực tế $t = ${tempC.toFixed(1)}^\\circ\\text{C}$, $d_t = ${d_t.toFixed(3)}\\text{ g/mL}$`,
+        formula: "d_{20} = d_t + \\alpha \times (t - 20) \quad (\\alpha \\approx 0{,}0003\\text{ g}/(\\text{mL}\\cdot^\\circ\\text{C}))",
+        substituted: `d_{20} = ${d_t.toFixed(3)} + 0{,}0003 \times (${tempC.toFixed(1)} - 20) = ${d_20.toFixed(4)}\\text{ g/mL}`,
+        result: `d_20 = ${d_20.toFixed(4)} g/mL`
+      },
+      {
+        title: "5. Mô hình Hóa lý nâng cao: Sai số chỉ thị Phenolphthalein & Hệ số hoạt độ ion",
+        dataOrigin: "Cân bằng ion tại điểm tương đương, $pT = 8{,}2$, phương trình mở rộng Debye-Hückel",
+        formula: "\\Delta_{\\text{titr}}\\% = \\frac{10^{-(14-pT)} - 10^{-pT}}{C_{\\text{equiv}}} \times 100\\%; \quad \\log_{10} \\gamma_{\\pm} = -\\frac{0{,}509 \\sqrt{I}}{1 + 1{,}32 \\sqrt{I}} + 0{,}1 I",
+        substituted: `\\Delta_{\\text{titr}}\\% = +${delta_titr_pct.toFixed(4)}\\% \implies \\text{Lượng kiềm dư chuyển màu cực nhỏ}; \quad \\gamma_{\\pm} = ${gamma_pm.toFixed(3)}`,
+        result: `Δ_chỉ thị = +${delta_titr_pct.toFixed(4)}%, γ_± = ${gamma_pm.toFixed(3)}`
+      }
+    ];
+
+    return {
+      success: true,
+      m_dd_sau: m_dd_sau.toFixed(2),
+      m_ct: m_ct.toFixed(2),
+      m_dd_dau: m_dd_dau.toFixed(2),
+      v_dd_dau: v_dd_dau.toFixed(2),
+      v_nuoc: v_nuoc.toFixed(1),
+      n_goc: n_goc.toFixed(2),
+      v_axit_goc: v_axit_goc.toFixed(2),
+      v_naoh_tb: v_naoh_tb.toFixed(2),
+      n_hcl_tn: n_hcl_tn.toFixed(4),
+      error_pct: error_pct.toFixed(2),
+      d_20: d_20.toFixed(4),
+      delta_titr_pct: delta_titr_pct.toFixed(4),
+      v_naoh_corr: v_naoh_corr.toFixed(2),
+      gamma_pm: gamma_pm.toFixed(3),
+      stepsLatex
+    };
+  },
+
+  // 14. Hóa Đại Cương Bài 11: Áp suất hơi bão hòa & Nhiệt bay hơi của nước
+  calc_hdc11(data) {
+    return this.calc_hl11(data);
+  },
+
+  calc_hl11(data) {
+    const p_atm = parseFloat(data.p_atm) || 760.0;
+    const t0_c = parseFloat(data.t0_c) || 5.0;
+    const v0_ml = parseFloat(data.v0_ml) || 4.50;
+    const T0 = t0_c + 273.15;
+
+    // Số mol không khí giam giữ: n_kk = (p_atm * v0_ml) / (62400 * T0)
+    const n_kk = (p_atm * v0_ml) / (62400.0 * T0);
+
+    const rawPoints = Array.isArray(data.points) && data.points.length > 0 ? data.points : [
+      { t_c: 75.0, v_ml: 9.80 },
+      { t_c: 70.0, v_ml: 9.20 },
+      { t_c: 65.0, v_ml: 8.65 },
+      { t_c: 60.0, v_ml: 8.10 },
+      { t_c: 55.0, v_ml: 7.60 },
+      { t_c: 50.0, v_ml: 7.12 }
+    ];
+
+    const tableData = [];
+    const scatterPoints = [];
+    let sumX = 0, sumY = 0, sumX2 = 0, sumXY = 0, sumY2 = 0;
+    const N = rawPoints.length;
+
+    rawPoints.forEach(pt => {
+      const tc = parseFloat(pt.t_c) || 0;
+      const vi = parseFloat(pt.v_ml) || 1.0;
+      const Ti = tc + 273.15;
+      const invT = 1.0 / Ti;
+
+      // P_air = p_atm * (v0_ml / vi) * (Ti / T0)
+      const p_air = p_atm * (v0_ml / vi) * (Ti / T0);
+      const p_h2o = Math.max(0.1, p_atm - p_air);
+      const lg_p = Math.log10(p_h2o);
+
+      sumX += invT;
+      sumY += lg_p;
+      sumX2 += invT * invT;
+      sumXY += invT * lg_p;
+      sumY2 += lg_p * lg_p;
+
+      tableData.push({
+        t_c: tc,
+        T_k: Ti.toFixed(2),
+        inv_T: invT.toFixed(6),
+        v_ml: vi.toFixed(2),
+        p_air: p_air.toFixed(2),
+        p_h2o: p_h2o.toFixed(2),
+        lg_p: lg_p.toFixed(4)
+      });
+
+      scatterPoints.push({ x: invT, y: lg_p });
+    });
+
+    // Hồi quy tuyến tính: a = (N sumXY - sumX sumY) / (N sumX2 - (sumX)^2)
+    const denom = N * sumX2 - sumX * sumX;
+    const a = denom !== 0 ? (N * sumXY - sumX * sumY) / denom : -2278.0;
+    const b = (sumY - a * sumX) / N;
+
+    // R2
+    const num_r = Math.pow(N * sumXY - sumX * sumY, 2);
+    const denom_r = (N * sumX2 - sumX * sumX) * (N * sumY2 - sumY * sumY);
+    const r2 = denom_r > 0 ? num_r / denom_r : 0.998;
+
+    // Nhiệt hóa hơi mol: Delta H = - 2.303 * R * a (J/mol)
+    const R_const = 8.314;
+    const delta_h_j = - 2.303 * R_const * a;
+    const delta_h_kj = delta_h_j / 1000.0;
+
+    // Sai số so với lý thuyết (43.0 kJ/mol)
+    const delta_h_lt = 43.00;
+    const error_pct = Math.abs((delta_h_kj - delta_h_lt) / delta_h_lt) * 100.0;
+
+    // Mô hình sâu:
+    // (a) Chiều cao cột thủy tĩnh cực đại Δh_max ~ 120 mmH2O -> 8.82 mmHg (~ 1.16%)
+    const p_hyd_max = 120.0 / 13.6; // mmHg
+    const hyd_ratio_pct = (p_hyd_max / p_atm) * 100.0;
+
+    // (b) Hệ số Virial thứ 2 & Độ hoạt năng Fugacity hơi nước ở ~ 340 K (B ~ -370 cm^3/mol):
+    const B_virial = -370.0; // cm^3/mol
+    const fugacity_coeff = Math.exp((B_virial * (p_atm / 760.0 * 101325.0) * 1e-6) / (8.314 * 340.0));
+
+    // (c) Biến thiên Entropy bay hơi Trouton chuẩn:
+    const delta_S_vap = delta_h_j / 373.15;
+
+    const stepsLatex = [
+      {
+        title: "1. Số mol không khí khô nguồn ($n_{kk}$) tại mốc chuẩn thấp ($5^\\circ\\text{C}$)",
+        dataOrigin: `Áp kế phòng $P_{kk} = ${p_atm.toFixed(1)}\\text{ mmHg}$, $t_0 = ${t0_c.toFixed(1)}^\\circ\\text{C} \\implies T_0 = ${T0.toFixed(2)}\\text{ K}$, $V_0 = ${v0_ml.toFixed(2)}\\text{ mL}$`,
+        formula: "n_{kk} = \\frac{P_{kk} \\times V_0}{62400 \\times T_0} \quad (\\text{với } R = 62400\\text{ mL}\\cdot\\text{mmHg}/(\\text{mol}\\cdot\\text{K}))",
+        substituted: `n_{kk} = \\frac{${p_atm.toFixed(1)} \times ${v0_ml.toFixed(2)}}{62400 \times ${T0.toFixed(2)}} = ${(n_kk * 10000).toFixed(3)} \times 10^{-4}\\text{ mol}`,
+        result: `${(n_kk * 10000).toFixed(3)} × 10⁻⁴ mol`
+      },
+      {
+        title: "2. Phân tích Áp suất riêng phần Dalton và Tuyến tính hóa theo Nhiệt độ",
+        dataOrigin: "Bảo toàn số mol khí khô giãn nở nhiệt và cân bằng pha hơi nước bão hòa",
+        formula: "P_{\\text{air}, T_i} = P_{kk} \\times \\frac{V_0}{V_i} \\times \\frac{T_i}{T_0}; \quad P_{H_2O, T_i} = P_{kk} - P_{\\text{air}, T_i}; \quad Y_i = \\lg(P_{H_2O, T_i})",
+        substituted: `\\text{Ví dụ tại } 75^\\circ\\text{C}: P_{\\text{air}} = ${tableData[0].p_air}\\text{ mmHg} \implies P_{H_2O} = ${tableData[0].p_h2o}\\text{ mmHg} \implies \\lg P = ${tableData[0].lg_p}`,
+        result: `X_1 = ${tableData[0].inv_T} K⁻¹, Y_1 = ${tableData[0].lg_p}`
+      },
+      {
+        title: "3. Hồi quy Tuyến tính Bình phương tối thiểu & Hệ số góc ($a$)",
+        dataOrigin: `Dải ${N} mốc thực nghiệm từ $75^\\circ\\text{C}$ xuống $50^\\circ\\text{C}$, lập bảng tổng $\\sum X, \\sum Y, \\sum X^2, \\sum XY$`,
+        formula: "a = \\frac{N \\sum(X_i Y_i) - (\\sum X_i)(\\sum Y_i)}{N \\sum X_i^2 - (\\sum X_i)^2}; \quad b = \\frac{\\sum Y_i - a \\sum X_i}{N}",
+        substituted: `a = ${a.toFixed(1)}\\text{ K}, \quad b = ${b.toFixed(3)} \implies Y = ${a.toFixed(1)} X + ${b.toFixed(3)} \quad (R^2 = ${r2.toFixed(4)})`,
+        result: `a = ${a.toFixed(1)} K, R² = ${r2.toFixed(4)}`
+      },
+      {
+        title: "4. Enthalpy bay hơi mol ($\\Delta H_{\\text{bh}}$) và Đánh giá sai số",
+        dataOrigin: "Phương trình Clausius - Clapeyron tích phân & Mốc chuẩn lý thuyết $43{,}00\\text{ kJ/mol}$",
+        formula: "\\Delta H_{\\text{bh}} = -2{,}303 \\times R \\times a = -19{,}147 \\times a\\text{ (J/mol)}; \quad \\varepsilon\\% = \\frac{|\\Delta H_{\\text{bh}} - 43{,}00|}{43{,}00} \times 100\\%",
+        substituted: `\\Delta H_{\\text{bh}} = -19{,}147 \times (${a.toFixed(1)}) = ${delta_h_j.toFixed(0)}\\text{ J/mol} = ${delta_h_kj.toFixed(2)}\\text{ kJ/mol} \implies \\varepsilon\\% = ${error_pct.toFixed(2)}\\%`,
+        result: `ΔH_bh = ${delta_h_kj.toFixed(2)} kJ/mol (Sai số: ${error_pct.toFixed(2)}%)`
+      },
+      {
+        title: "5. Mô hình Hóa lý nâng cao: Áp suất thủy tĩnh, Độ hoạt năng Fugacity & Entropy",
+        dataOrigin: "Laplace-Torricelli capillary, Virial EOS hơi nước và định luật Trouton",
+        formula: "P_{\\text{hyd, max}} = \\frac{\\Delta h_{\\text{max}}}{13{,}6}; \quad \\phi \\approx \\exp\\left(\\frac{B P}{R T}\\right); \quad \\Delta S_{\\text{bh}}^0 = \\frac{\\Delta H_{\\text{bh}}}{373{,}15}",
+        substituted: `P_{\\text{hyd}} = ${p_hyd_max.toFixed(2)}\\text{ mmHg} (${hyd_ratio_pct.toFixed(2)}\\% P_{kk}); \quad \\phi \\approx ${fugacity_coeff.toFixed(3)}; \quad \\Delta S^0 = ${delta_S_vap.toFixed(1)}\\text{ J}/(\\text{mol}\\cdot\\text{K})`,
+        result: `P_hyd = ${p_hyd_max.toFixed(2)} mmHg (~1.1%), φ ≈ ${fugacity_coeff.toFixed(3)}, ΔS = ${delta_S_vap.toFixed(1)} J/(mol·K)`
+      }
+    ];
+
+    const polyaGraphSteps = {
+      title: "Hướng Dẫn Vẽ Đồ Thị Clausius - Clapeyron (lg P theo 1/T) - 4 Bước George Pólya",
+      generalRule: "Vẽ đường thẳng hồi quy tuyến tính nghịch biến biểu diễn quan hệ giữa lg P_H2O và 1/T trên giấy kẻ ô mm, phân bố đều các điểm thực nghiệm về 2 phía đường xu hướng.",
+      steps: [
+        {
+          stepNumber: "Bước 1",
+          stepName: "Hiểu bài toán (Understand the Problem)",
+          content: `* **Mục tiêu:** Tìm hệ số góc $a$ để tính nhiệt bay hơi $\\Delta H = -19{,}147 \\times a\\text{ (J/mol)}$.\n* **Trục tung $Y$:** $\\lg P_{H_2O}$ (dải $2{,}30 \\div 2{,}51$).\n* **Trục hoành $X$:** $1/T$ (dải $0{,}00287 \\div 0{,}00310\\text{ K}^{-1}$).`
+        },
+        {
+          stepNumber: "Bước 2",
+          stepName: "Lập kế hoạch (Devise a Plan)",
+          content: `* Bố trí hệ trục trên giấy kẻ ô mm, không cần lấy gốc $(0, 0)$ để phóng đại vùng điểm thực nghiệm.\n* Trục hoành: $1\\text{ cm} = 0{,}00005\\text{ K}^{-1}$ (từ $0{,}00280$ đến $0{,}00320$).\n* Trục tung: $1\\text{ cm} = 0{,}05$ đơn vị $\\lg P$ (từ $2{,}20$ đến $2{,}60$).`
+        },
+        {
+          stepNumber: "Bước 3",
+          stepName: "Thực hiện kế hoạch (Carry Out the Plan)",
+          content: `* Chấm ${N} điểm thực nghiệm bằng bút chì nhọn.\n* Đặt thước trong suốt vẽ đường thẳng tối ưu đi qua trọng tâm đám mây điểm.\n* Lấy 2 điểm chuẩn trên đường thẳng $(X_A, Y_A)$ và $(X_B, Y_B)$ cách xa nhau để tính $a = \\frac{Y_B - Y_A}{X_B - X_A} \\approx ${a.toFixed(0)}\\text{ K}$.`
+        },
+        {
+          stepNumber: "Bước 4",
+          stepName: "Nhìn lại & Đánh giá (Look Back)",
+          content: `* Tính $\\Delta H_{\\text{bh}} = -19{,}147 \\times (${a.toFixed(0)}) = ${delta_h_kj.toFixed(2)}\\text{ kJ/mol}$.\n* Kiểm tra: Sai số so với lý thuyết ($43{,}00\\text{ kJ/mol}$) đạt **${error_pct.toFixed(2)}\\%** (xuất sắc $< 5\\%$).`
+        }
+      ]
+    };
+
+    return {
+      success: true,
+      n_kk: n_kk.toExponential(3),
+      a: a.toFixed(1),
+      b: b.toFixed(3),
+      r2: r2.toFixed(4),
+      delta_h_j: delta_h_j.toFixed(0),
+      delta_h_kj: delta_h_kj.toFixed(2),
+      error_pct: error_pct.toFixed(2),
+      p_hyd_max: p_hyd_max.toFixed(2),
+      fugacity_coeff: fugacity_coeff.toFixed(3),
+      delta_S_vap: delta_S_vap.toFixed(1),
+      tableData,
+      scatterPoints,
+      stepsLatex,
+      polyaGraphSteps
+    };
+  }
+
 };
 
 
@@ -4159,6 +4669,91 @@ const ChartManager = {
       }
     });
   }
+,
+
+  // 4. Vẽ đồ thị Clausius - Clapeyron: lg P_H2O theo 1/T (Bài 11 Hóa lý)
+  renderClausiusClapeyronChart(canvasId, calcResult) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas || typeof Chart === 'undefined') return;
+    this.destroyChart(canvasId);
+
+    const colors = this.getThemeColors();
+    const pts = calcResult.scatterPoints || [];
+    const a = parseFloat(calcResult.a) || -2278.0;
+    const b = parseFloat(calcResult.b) || 9.09;
+
+    let minX = 0.00280, maxX = 0.00315;
+    if (pts.length > 0) {
+      const xs = pts.map(p => p.x);
+      minX = Math.min(...xs) - 0.00005;
+      maxX = Math.max(...xs) + 0.00005;
+    }
+    const lineData = [
+      { x: minX, y: a * minX + b },
+      { x: maxX, y: a * maxX + b }
+    ];
+
+    const ctx = canvas.getContext('2d');
+    this.activeCharts[canvasId] = new Chart(ctx, {
+      type: 'scatter',
+      data: {
+        datasets: [
+          {
+            label: 'Điểm thực nghiệm (1/T, lg P)',
+            data: pts,
+            backgroundColor: colors.rose,
+            borderColor: colors.rose,
+            pointRadius: 6,
+            pointHoverRadius: 8,
+            showLine: false
+          },
+          {
+            label: `Hồi quy: Y = ${a.toFixed(1)}X + ${b.toFixed(3)} (R² = ${calcResult.r2}, ΔH_bh = ${calcResult.delta_h_kj} kJ/mol)`,
+            data: lineData,
+            type: 'line',
+            borderColor: colors.primary,
+            borderWidth: 2,
+            borderDash: [5, 5],
+            fill: false,
+            pointRadius: 0
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: `Đồ thị Clausius - Clapeyron: lg P_H2O theo 1/T (ΔH_bh = ${calcResult.delta_h_kj} kJ/mol, Sai số: ${calcResult.error_pct}%)`,
+            color: colors.textColor,
+            font: { size: 14, weight: 'bold' }
+          },
+          legend: { labels: { color: colors.textColor } },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                return `1/T = ${ctx.parsed.x.toFixed(6)} K⁻¹, lg P = ${ctx.parsed.y.toFixed(4)}`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            title: { display: true, text: 'X = 1/T (K⁻¹)', color: colors.textColor },
+            grid: { color: colors.gridColor },
+            ticks: { color: colors.textColor }
+          },
+          y: {
+            title: { display: true, text: 'Y = lg P_H2O (mmHg)', color: colors.textColor },
+            grid: { color: colors.gridColor },
+            ticks: { color: colors.textColor }
+          }
+        }
+      }
+    });
+  }
+
 };
 
 
@@ -4953,6 +5548,223 @@ $$${step.substituted}$$
   },
 
   // Tổng hợp toàn bộ 12 báo cáo vào một văn bản A4 duy nhất
+
+  // 13. Báo cáo Hóa Đại Cương Bài 8: Pha chế dung dịch & Chuẩn độ Axit - Bazơ
+  generateReport_hdc8(data, info, includeAnswers = true) {
+    const res = Calculators.calc_hdc8(data);
+    let md = this.getHeader(info, "BÀI HÓA ĐẠI CƯƠNG 8: PHA CHẾ DUNG DỊCH & CHUẨN ĐỘ AXIT - BAZƠ", "Pha chế dung dịch theo nồng độ %, pha dd chuẩn HCl 0,1N từ 17% và chuẩn độ thể tích bằng NaOH");
+
+    md += `
+## I. NGUYÊN TẮC LÝ THUYẾT & MÔ HÌNH HÓA
+* **Bảo toàn khối lượng:** Quá trình pha loãng nước cất không làm thay đổi khối lượng chất tan: $m_{\\text{ct}} = m_{\\text{dd đầu}} \\times C_{\\text{đầu}}\\% = m_{\\text{dd sau}} \\times C_{\\text{sau}}\\%$.
+* **Quy tắc đường chéo:** Phối trộn dung dịch $C_1\\%$ và $C_2\\%$ ($0\\%$ với nước cất) cho tỉ lệ khối lượng: $\\frac{m_{\\text{dd1}}}{m_{\\text{dd2}}} = \\frac{|C_2 - C_{\\text{sau}}|}{|C_1 - C_{\\text{sau}}|}$.
+* **Đo tỉ khối bằng Phù kế:** Lực đẩy Archimedes cân bằng trọng lượng ($P = F_A = d \\times V_{\\text{chìm}}$). Dung dịch càng đậm đặc, phù kế nổi càng cao.
+* **Chuẩn độ thể tích:** Phản ứng trung hòa $\\text{HCl} + \\text{NaOH} \\rightarrow \\text{NaCl} + \\text{H}_2\\text{O}$ với chỉ thị phenolphthalein chuyển hồng nhạt tại bước nhảy pH ($pT \\approx 8{,}2$). Nồng độ xác định qua định luật đương lượng: $N_{\\text{HCl}} = \\frac{N_{\\text{NaOH}} \\times \\overline{V}_{\\text{NaOH}}}{V_{\\text{HCl}}}$.
+
+---
+
+## II. BẢNG SỐ LIỆU THỰC NGHIỆM & KẾT QUẢ ĐO ĐẠC
+
+### 1. Thí nghiệm 1, 2, 3: Pha loãng dung dịch theo quy tắc đường chéo
+| Đại lượng đo đạc & Tính toán | Ký hiệu | Giá trị thực nghiệm | Đơn vị |
+| :--- | :---: | :---: | :---: |
+| Thể tích dung dịch loãng cần pha | $V_{\\text{cần}}$ | **${data.v_can || 250.0}** | $\\text{mL}$ |
+| Nồng độ phần trăm mong muốn | $C_{\\text{sau}}\\%$ | **${data.c_sau || 7.0}** | $\%$ |
+| Nồng độ phần trăm axit gốc ban đầu | $C_{\\text{đầu}}\\%$ | **${data.c_dau || 10.0}** | $\%$ |
+| Tỉ khối dung dịch gốc đo bằng phù kế | $d_{\\text{gốc}}$ | **${data.d_goc || 1.047}** | $\\text{g/mL}$ |
+| Tỉ khối dung dịch pha xong đo bằng phù kế | $d_{\\text{sau}}$ | **${data.d_sau || 1.033}** | $\\text{g/mL}$ |
+| Khối lượng dung dịch loãng sau khi pha | $m_{\\text{dd sau}}$ | **${res.m_dd_sau}** | $\\text{g}$ |
+| Khối lượng chất tan $\\text{HCl}$ nguyên chất | $m_{\\text{ct}}$ | **${res.m_ct}** | $\\text{g}$ |
+| **Khối lượng dung dịch $\\text{HCl 10\\%}$ cần lấy** | $m_{\\text{dd đầu}}$ | **${res.m_dd_dau}** | $\\text{g}$ |
+| **Thể tích dung dịch $\\text{HCl 10\\%}$ cần đong** | $V_{\\text{đầu}}$ | **${res.v_dd_dau}** | $\\text{mL}$ |
+| **Thể tích nước cất cần thêm vào** | $V_{\\text{nước}}$ | **${res.v_nuoc}** | $\\text{mL}$ |
+
+### 2. Thí nghiệm 4: Pha $100\\text{ mL}$ dung dịch chuẩn $\\text{HCl } 0{,}1000\\text{ N}$ từ $\\text{HCl } 17\\%$
+| Thông số kỹ thuật | Ký hiệu | Giá trị thực nghiệm | Đơn vị |
+| :--- | :---: | :---: | :---: |
+| Thể tích bình định mức sử dụng | $V_{\\text{định mức}}$ | **${data.v_dinh_muc || 100.0}** | $\\text{mL}$ |
+| Nồng độ đương lượng mục tiêu | $N_{\\text{cần}}$ | **${data.n_can || 0.1000}** | $\\text{N}$ |
+| Nồng độ phần trăm axit $\\text{HCl}$ gốc | $C_{\\text{gốc}}\\%$ | **${data.c_goc || 17.0}** | $\%$ |
+| Tỉ khối axit $\\text{HCl } 17\\%$ ở nhiệt độ phòng | $d_{\\text{gốc 17}}$ | **${data.d_goc_17 || 1.083}** | $\\text{g/mL}$ |
+| Nồng độ đương lượng axit gốc tính toán | $N_{\\text{gốc}}$ | **${res.n_goc}** | $\\text{N}$ |
+| **Thể tích axit gốc cần hút chính xác** | $V_{\\text{hút}}$ | **${res.v_axit_goc}** | $\\text{mL}$ |
+
+### 3. Thí nghiệm 5: Chuẩn độ thể tích xác định nồng độ thực tế của $\\text{HCl}$
+| Thông số chuẩn độ thể tích | Ký hiệu | Giá trị thực tế | Đơn vị |
+| :--- | :---: | :---: | :---: |
+| Thể tích $\\text{HCl}$ lấy đi chuẩn độ (pipet) | $V_{\\text{HCl}}$ | **${data.v_hcl_pipet || 20.00}** | $\\text{mL}$ |
+| Nồng độ đương lượng dung dịch $\\text{NaOH}$ chuẩn | $N_{\\text{NaOH}}$ | **${data.n_naoh || 0.1000}** | $\\text{N}$ |
+| Thể tích buret $\\text{NaOH}$ lần 1 | $V_1$ | **${data.v1 || 20.10}** | $\\text{mL}$ |
+| Thể tích buret $\\text{NaOH}$ lần 2 | $V_2$ | **${data.v2 || 20.15}** | $\\text{mL}$ |
+| Thể tích buret $\\text{NaOH}$ lần 3 | $V_3$ | **${data.v3 || 20.05}** | $\\text{mL}$ |
+| **Thể tích $\\text{NaOH}$ tiêu tốn trung bình** | $\\overline{V}_{\\text{NaOH}}$ | **${res.v_naoh_tb}** | $\\text{mL}$ |
+| **Nồng độ đương lượng thực nghiệm của $\\text{HCl}$** | $N_{\\text{HCl, TN}}$ | **${res.n_hcl_tn}** | $\\text{N}$ |
+| **Sai số tương đối so với nồng độ mục tiêu ($0{,}1000\\text{ N}$)** | $\\varepsilon\\%$ | **${res.error_pct}\\%$** | $\%$ |
+| Tỉ khối hiệu chỉnh nhiệt độ về $20^\\circ\\text{C}$ | $d_{20}$ | **${res.d_20}** | $\\text{g/mL}$ |
+| Sai số chuyển màu chỉ thị Phenolphthalein | $\\Delta_{\\text{titr}}$ | **+${res.delta_titr_pct}\\%$** | $\%$ |
+| Hệ số hoạt độ ion trung bình Debye-Hückel Extended | $\\gamma_{\\pm}$ | **${res.gamma_pm}** | - |
+
+---
+
+## III. CHI TIẾT CÁC BƯỚC TÍNH TOÁN & CÔNG THỨC THAY SỐ
+`;
+
+    res.stepsLatex.forEach(step => {
+      md += `
+### ${step.title}
+* **Căn cứ & Nguồn số liệu:** ${step.dataOrigin}
+* **Công thức thiết lập:**
+$$${step.formula}$$
+* **Thay số & Biện luận:**
+$$${step.substituted}$$
+* **Kết luận:** **${step.result}**
+`;
+    });
+
+    if (includeAnswers) {
+      md += `
+---
+
+## IV. CÂU HỎI THẢO LUẬN & ĐÁNH GIÁ SAI SỐ CHUYÊN SÂU
+**Câu 1:** *Tại sao khi pha loãng dung dịch axit sulfuric đậm đặc ($H_2SO_4$) ta bắt buộc phải rót từ từ axit vào nước mà tuyệt đối không được làm ngược lại? Đối với axit clohidric ($HCl$) đậm đặc thì sao?*
+* **Trả lời:** Với $H_2SO_4$ đậm đặc: Quá trình hydrat hóa tỏa lượng nhiệt cực lớn (khoảng $880\\text{ kJ/mol}$). Nước nhẹ hơn axit nên nếu đổ nước vào axit, nước nổi lên trên bề mặt sôi đột ngột và bắn tung tóe kéo theo giọt axit gây bỏng nặng. Khi đổ từ từ axit vào nước, axit nặng hơn chìm xuống dưới, nhiệt lượng được lượng nước lớn xung quanh hấp thụ và phân tán an toàn. Với $HCl$ đậm đặc: Hòa tan khí $HCl$ cũng tỏa nhiệt và axit bốc khói nồng nặc khí độc hại đường hô hấp, do đó vẫn tuân thủ rót từ từ axit vào nước trong tủ hút để đảm bảo an toàn tuyệt đối.
+
+**Câu 2:** *Nêu nguyên tắc hoạt động của phù kế. Tại sao khi đọc giá trị tỉ khối trên phù kế, ta phải để phù kế nổi tự do và mắt phải đặt ngang tầm với mặt thoáng chất lỏng?*
+* **Trả lời:** Phù kế hoạt động dựa trên định luật đẩy Archimedes ($P = F_A = d \\cdot V_{\\text{chìm}} \\implies d = P / V_{\\text{chìm}}$). Dung dịch càng đặc, lực đẩy Archimedes càng lớn nên phù kế chìm càng ít và nổi càng cao. Phải để phù kế nổi hoàn toàn tự do ở giữa ống đong, không chạm vào thành hoặc đáy để tránh ma sát cản trở cân bằng thủy tĩnh. Mắt phải đặt ngang tầm mặt thoáng và đọc ở vạch đáy của đường khum chất lỏng (với chất lỏng trong suốt) để triệt tiêu sai số thị sai do hiện tượng mao dẫn kéo khum bám dính thành thủy tinh.
+
+**Câu 3:** *Viết phương trình phản ứng trung hòa khi chuẩn độ HCl bằng NaOH. Tại sao lại chọn phenolphthalein làm chất chỉ thị mà không dùng methyl da cam?*
+* **Trả lời:** Phản ứng trung hòa: $\\text{HCl} + \\text{NaOH} \\rightarrow \\text{NaCl} + \\text{H}_2\\text{O}$ (ion thu gọn: $\\text{H}_3\\text{O}^+ + \\text{OH}^- \\rightarrow 2\\text{H}_2\\text{O}$). Chuẩn độ axit mạnh bằng bazơ mạnh có điểm tương đương tại pH = 7 và bước nhảy pH rất rộng từ 4 đến 10. Phenolphthalein chuyển màu hồng nhạt ở pH khoảng 8,2 (nằm hoàn toàn trong bước nhảy pH sát nút điểm tương đương, sai số chuẩn độ $< 0{,}1\\%$, mắt rất dễ nhận biết giọt đổi màu từ không màu sang hồng nhạt). Methyl da cam đổi màu ở pH 3,1 - 4,4 (đỏ sang vàng) sẽ đổi màu từ quá sớm khi chưa đạt điểm tương đương, gây sai số thiếu hụt axit nghiêm trọng.
+
+**Câu 4:** *Thế nào là dung dịch nguyên chuẩn (dung dịch tiêu chuẩn)? Trình bày cách pha chế dung dịch chuẩn từ chất gốc (như axit oxalic) và từ fixanan có sẵn.*
+* **Trả lời:** Dung dịch nguyên chuẩn là dung dịch có nồng độ được xác định cực kỳ chính xác và ổn định, dùng làm mốc để xác định nồng độ các dung dịch khác. Pha từ chất gốc ($H_2C_2O_4 \\cdot 2H_2O$): Cân lượng chính xác trên cân phân tích 4 chữ số, hòa tan cốc mỏ bằng nước cất, chuyển định lượng vào bình định mức kèm tráng rửa nhiều lần, thêm nước cất đến sát vạch rồi dùng pipet nhỏ giọt chỉnh đáy khum trùng vạch định mức, đậy nút lắc đều. Pha từ ống Fixanan: Đập vỡ màng ống fixanan trên phễu lọc đặt trên bình định mức $1000\\text{ mL}$, dùng tia nước cất phun rửa sạch toàn bộ hóa chất vào bình, thêm nước cất định mức đến vạch và lắc đều.
+
+**Câu 5:** *Nếu trong quá trình chuẩn độ, trên thành trong của bình nón có dính giọt dung dịch từ buret hoặc tia nước cất tráng thành bình, điều này ảnh hưởng thế nào đến kết quả chuẩn độ?*
+* **Trả lời:** Với giọt kiềm từ buret bám thành bình: CÓ làm sai lệch kết quả. Lượng kiềm này buret đã ghi nhận xả ra nhưng chưa rơi xuống đáy phản ứng trung hòa axit, dẫn đến thể tích kiềm tiêu tốn ghi nhận bị thừa ra, tính ra nồng độ $N_{\\text{HCl}}$ bị cao hơn thực tế. Với nước cất tráng thành bình: KHÔNG làm sai lệch kết quả. Tia nước cất chỉ làm loãng dung dịch nhưng không làm thay đổi số mol ion $H^+$ ban đầu trong bình tam giác. Do số mol chất phản ứng không đổi, thể tích kiềm cần để đạt tương đương vẫn chính xác tuyệt đối.
+`;
+    }
+
+    return md;
+  },
+
+  // 14. Báo cáo Hóa Đại Cương Bài 11: Áp suất hơi bão hòa & Nhiệt bay hơi của nước
+  generateReport_hdc11(data, info, includeAnswers = true) {
+    return this.generateReport_hl11(data, info, includeAnswers);
+  },
+
+  generateReport_hl11(data, info, includeAnswers = true) {
+    const res = Calculators.calc_hl11(data);
+    let md = this.getHeader(info, "BÀI HÓA ĐẠI CƯƠNG 11: XÁC ĐỊNH ÁP SUẤT HƠI BÃO HÒA VÀ NHIỆT BAY HƠI CỦA NƯỚC", "Phương pháp bọt khí bị giam giữ & Hồi quy tuyến tính Clausius - Clapeyron");
+
+    md += `
+## I. NGUYÊN TẮC LÝ THUYẾT & CƠ SỞ TOÁN LÝ
+* **Cân bằng pha lỏng - hơi:** Áp suất hơi bão hòa $P_{H_2O}$ là áp suất hơi cân bằng động học với pha lỏng, chỉ phụ thuộc vào nhiệt độ và tăng theo hàm mũ khi nhiệt độ tăng.
+* **Phương pháp bọt khí bị giam giữ:** Ở nhiệt độ thấp ($t_0 \\approx 5^\\circ\\text{C}$), áp suất hơi nước bão hòa vô cùng nhỏ ($f \\approx 6{,}5\\text{ mmHg} \\ll P_{kk} \\approx 760\\text{ mmHg}$), coi bọt khí hoàn toàn là không khí khô để tính số mol gốc: $n_{kk} = \\frac{P_{kk} \\cdot V_0}{62400 \\cdot T_0}$.
+* **Định luật Dalton áp suất riêng phần:** Tại nhiệt độ $T_i$ bất kỳ: $P_{kk} = P_{\\text{air}, T_i} + P_{H_2O, T_i} \\implies P_{H_2O, T_i} = P_{kk} - P_{\\text{air}, T_i}$ với $P_{\\text{air}, T_i} = P_{kk} \\cdot \\frac{V_0}{V_i} \\cdot \\frac{T_i}{T_0}$.
+* **Phương trình Clausius - Clapeyron tích phân:** $\\lg P_{H_2O} = -\\frac{\\Delta H_{\\text{bh}}}{2{,}303 \\cdot R \\cdot T} + C$.
+  Hồi quy tuyến tính $Y = a \\cdot X + b$ với $Y = \\lg P_{H_2O}$ và $X = 1/T$ cho hệ số góc:
+  $$a = -\\frac{\\Delta H_{\\text{bh}}}{2{,}303 \\cdot R} \\implies \\Delta H_{\\text{bh}} = -19{,}147 \\times a\\text{ (J/mol)}$$
+
+---
+
+## II. BẢNG XỬ LÝ SỐ LIỆU THỰC NGHIỆM TRUNG GIAN
+
+* **Áp suất khí quyển phòng thí nghiệm:** $P_{kk} = \mathbf{${data.p_atm || 760.0}}\text{ mmHg}$.
+* **Mốc nhiệt độ làm lạnh thấp nhất:** $t_0 = \mathbf{${data.t0_c || 5.0}}^\circ\text{C} \implies T_0 = \mathbf{${((parseFloat(data.t0_c) || 5.0) + 273.15).toFixed(2)}}\text{ K}$.
+* **Thể tích bọt khí nhỏ nhất đọc được:** $V_0 = \mathbf{${data.v0_ml || 4.50}}\text{ mL}$.
+* **Số mol không khí khô nguồn bị giam giữ:** $n_{kk} = \mathbf{${res.n_kk}}\text{ mol}$.
+
+| Mốc $i$ | $t_i (^\circ\text{C})$ | $T_i (\text{K})$ | $X_i = 1/T_i (\text{K}^{-1})$ | $V_i (\text{mL})$ | $P_{\text{air}, T_i} (\text{mmHg})$ | $P_{H_2O, T_i} (\text{mmHg})$ | $Y_i = \lg P_{H_2O}$ |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+`;
+
+    (res.tableData || []).forEach((row, idx) => {
+      md += `| **${idx + 1}** | **${row.t_c}** | ${row.T_k} | ${row.inv_T} | **${row.v_ml}** | ${row.p_air} | **${row.p_h2o}** | **${row.lg_p}** |
+`;
+    });
+
+    md += `
+---
+
+## III. KẾT QUẢ HỒI QUY TUYẾN TÍNH & NHIỆT BAY HƠI
+
+* **Phương trình hồi quy tuyến tính:** $Y = \mathbf{${res.a}} \cdot X + \mathbf{${res.b}}$
+* **Hệ số xác định tương quan:** $R^2 = \mathbf{${res.r2}}$ (Mức độ tương thích tuyến tính hoàn hảo).
+* **Hệ số góc (độ dốc):** $a = \mathbf{${res.a}}\text{ K}$.
+* **Nhiệt bay hơi mol thực nghiệm:** $\\Delta H_{\\text{bh}} = \mathbf{${res.delta_h_kj}}\text{ kJ/mol}$ (${res.delta_h_j} J/mol).
+* **Giá trị chuẩn lý thuyết:** $\\Delta H_{\\text{LT}} = 43{,}00\text{ kJ/mol}$ (ở dải $50 \div 75^\circ\text{C}$).
+* **Sai số tương đối phần trăm:** $\\varepsilon\\% = \mathbf{${res.error_pct}\\%}$ (Đạt tiêu chuẩn xuất sắc $< 5\\%$).
+
+### Các thông số hóa lý nâng cao:
+* **Áp suất thủy tĩnh cột nước cực đại trong ống đong:** $P_{\\text{hyd, max}} = \mathbf{${res.p_hyd_max}}\text{ mmHg}$ (~ $1{,}16\\% P_{kk}$, giải thích cơ sở được phép bỏ qua $\\Delta h$).
+* **Hệ số hoạt năng Fugacity hơi nước ($\\phi$):** $\\phi \\approx \mathbf{${res.fugacity_coeff}}$ (Hơi nước ở áp suất thấp tiệm cận khí lý tưởng).
+* **Biến thiên Entropy bay hơi chuẩn Trouton:** $\\Delta S_{\\text{bh}}^0 = \mathbf{${res.delta_S_vap}}\text{ J}/(\text{mol}\cdot\text{K})$.
+
+---
+
+## IV. QUY TRÌNH TÍNH TOÁN CHI TIẾT
+`;
+
+    res.stepsLatex.forEach(step => {
+      md += `
+### ${step.title}
+* **Căn cứ & Nguồn số liệu:** ${step.dataOrigin}
+* **Công thức thiết lập:**
+$$${step.formula}$$
+* **Thay số & Biện luận:**
+$$${step.substituted}$$
+* **Kết luận:** **${step.result}**
+`;
+    });
+
+    if (res.polyaGraphSteps) {
+      const p = res.polyaGraphSteps;
+      md += `
+---
+
+## V. HƯỚNG DẪN VẼ ĐỒ THỊ TRÊN GIẤY KẺ Ô MM (4 BƯỚC GEORGE PÓLYA)
+* **Quy tắc cốt lõi:** ${p.generalRule}
+
+`;
+      p.steps.forEach(s => {
+        md += `### ${s.stepNumber}: ${s.stepName}
+${s.content}
+
+`;
+      });
+    }
+
+    if (includeAnswers) {
+      md += `
+---
+
+## VI. BỘ CÂU HỎI THẢO LUẬN & ĐÁNH GIÁ SAI SỐ CỐT LÕI (BÀI 11)
+**Câu 1:** *Áp suất hơi bão hòa của nước ở 30°C là 31,82 mmHg, 55°C là 118 mmHg, ở 70°C là 233,7 mmHg. Sử dụng phương trình Clausius-Clapeyron tìm giá trị ΔH bay hơi của nước theo 2 cách (đại số và đồ thị) và so sánh.*
+* **Trả lời:**
+  * *Cách 1 (Đại số):* Áp dụng $\\lg(P_2/P_1) = \\frac{\\Delta H}{2{,}303 R}(\\frac{1}{T_1} - \\frac{1}{T_2})$. Tính cho 3 cặp mốc nhiệt độ:
+    - Cặp $30^\\circ\\text{C} \\div 55^\\circ\\text{C}$: $\\Delta H_1 = 43{,}37\\text{ kJ/mol}$.
+    - Cặp $55^\\circ\\text{C} \\div 70^\\circ\\text{C}$: $\\Delta H_2 = 42{,}66\\text{ kJ/mol}$.
+    - Cặp $30^\\circ\\text{C} \\div 70^\\circ\\text{C}$: $\\Delta H_3 = 43{,}13\\text{ kJ/mol}$.
+    - Giá trị trung bình đại số: $\\Delta H_{\\text{TB}} \\approx 43{,}05\\text{ kJ/mol}$.
+  * *Cách 2 (Đồ thị):* Tuyến tính hóa 3 điểm $(1/T, \\lg P)$: $(3{,}2987 \\times 10^{-3}, 1{,}5027)$, $(3{,}0474 \\times 10^{-3}, 2{,}0719)$, $(2{,}9142 \\times 10^{-3}, 2{,}3687)$. Hồi quy tuyến tính cho hệ số góc $a \\approx -2250\\text{ K} \\implies \\Delta H_{\\text{bh}} = -19{,}147 \\times (-2250) \\approx 43{,}08\\text{ kJ/mol}$.
+  * *So sánh & Giải thích:* Hai phương pháp cho kết quả rất sát nhau (sai lệch $< 0{,}1\\%$). Phương pháp đồ thị có ưu điểm vượt trội vì san đều sai số ngẫu nhiên của toàn bộ các điểm thực nghiệm, trong khi phương pháp tính đại số từng cặp điểm đơn lẻ rất nhạy cảm với sai số đọc của bất kỳ mốc nhiệt độ nào.
+
+**Câu 2:** *Ngoài đơn vị mmHg, ta có thể tính áp suất theo atm, Pa, Bar được không? Như vậy có ảnh hưởng đến kết quả tính ΔH bay hơi không? Vì sao?*
+* **Trả lời:** Hoàn toàn có thể dùng bất kỳ đơn vị áp suất nào khác ($1\\text{ atm} = 760\\text{ mmHg} = 101325\\text{ Pa} = 1{,}01325\\text{ Bar}$). Việc đổi đơn vị áp suất TUYỆT ĐỐI KHÔNG làm thay đổi giá trị $\\Delta H_{\\text{bh}}$. Bản chất nhiệt động học: Khi đổi đơn vị áp suất từ $P$ sang $P' = k \\cdot P$ ($k$ là hằng số tỉ lệ chuyển đổi), khi lấy logarit ta có $\\lg P' = \\lg P + \\lg k$. Hằng số $\\lg k$ này chỉ làm tịnh tiến hệ số chặn tự do $b$ trên trục tung mà hoàn toàn GIỮ NGUYÊN ĐỘ DỐC (hệ số góc $a$). Vì $\\Delta H_{\\text{bh}} = -2{,}303 \\cdot R \\cdot a$, kết quả nhiệt hóa hơi cuối cùng hoàn toàn độc lập với đơn vị áp suất được lựa chọn.
+
+**Câu 3:** *Trong quá trình thí nghiệm, tại sao phải làm lạnh nước trong cốc tới nhiệt độ thấp (5°C)?*
+* **Trả lời:** Làm lạnh sâu xuống sát $5^\\circ\\text{C}$ là điều kiện tiên quyết mang tính kỹ thuật để: (1) Triệt tiêu áp suất hơi nước: Ở $5^\\circ\\text{C}$, áp suất hơi bão hòa chỉ khoảng $6{,}5\\text{ mmHg}$ (chưa đầy $0{,}8\\%$ áp suất khí quyển), cho phép áp dụng giả thiết coi toàn bộ thể tích bọt khí lúc này chỉ chứa không khí khô nguyên chất. (2) Xác định chính xác số mol không khí gốc $n_{kk}$: Cung cấp cặp chuẩn $(T_0, V_0)$ tin cậy để tính $n_{kk} = \\frac{P_{kk} V_0}{R T_0}$. Nếu không làm lạnh sâu, lượng hơi nước lẫn lớn sẽ gây sai số hệ thống lan truyền cho toàn bộ các phép tính ở nhiệt độ cao hơn.
+
+**Câu 4:** *Tại sao giá trị ΔH bay hơi tính được bằng phương pháp đồ thị hồi quy tuyến tính tổng thể lại chính xác hơn so với giải đại số từ từng cặp điểm?*
+* **Trả lời:** (1) Triệt tiêu sai số ngẫu nhiên: Mọi phép đo thể tích và nhiệt độ đều có sai số đọc và sai số trễ nhiệt. Phương pháp hồi quy bình phương tối thiểu tính toán và phân bổ đều độ lệch của toàn dải số liệu, triệt tiêu tối đa các sai số ngẫu nhiên này. (2) Hạn chế độ nhạy của phép chia vi phân: Khoảng hiệu $(1/T_1 - 1/T_2)$ ở mẫu số rất bé (cỡ $10^{-4}$), bất kỳ một sai số đọc nhỏ nào ở một điểm đơn lẻ cũng sẽ bị phóng đại lên rất nhiều lần, khiến kết quả tính từng cặp điểm riêng lẻ dao động mạnh và kém ổn định.
+
+**Câu 5:** *Tại sao trong thực tế thực nghiệm ta được phép bỏ qua biến thiên chiều cao cột nước Δh giữa trong và ngoài ống đong?*
+* **Trả lời:** (1) Áp suất cột nước cực kỳ nhỏ so với áp suất khí quyển: Chiều cao ống đong $10\\text{ mL}$ chỉ khoảng $120\\text{ mm}$, áp suất thủy tĩnh lớn nhất $\\Delta P_{\\text{thủy tĩnh, max}} = \\frac{120\\text{ mmH}_2\\text{O}}{13{,}6} \\approx 8{,}8\\text{ mmHg}$, chỉ chiếm tối đa khoảng $1\\%$ áp suất khí quyển ($760\\text{ mmHg}$) và giảm dần về 0 khi bọt khí giãn nở. (2) Nằm trong giới hạn sai số cho phép: Sai số $1\\%$ này nằm hoàn toàn trong dung sai vạch chia của dụng cụ đo (sai số ống đong $\\pm 0{,}1\\text{ mL}$ đã tương đương $1 \\div 2\\%$ thể tích bọt khí). Việc bỏ qua $\\Delta h$ giúp đơn giản hóa xử lý số liệu mà vẫn đảm bảo độ chính xác khoa học.
+`;
+    }
+
+    return md;
+  },
+
   generateFullSuiteReport(dataStore, info, includeAnswers = true) {
     let fullMd = `# TẬP BÁO CÁO TOÀN DIỆN THỰC HÀNH HÓA ĐẠI CƯƠNG VÀ HÓA LÝ
 ## TRƯỜNG ĐẠI HỌC SƯ PHẠM HÀ NỘI - KHOA HÓA HỌC
@@ -4970,6 +5782,8 @@ $$${step.substituted}$$
       { id: 'hdc4', name: 'Hóa Đại cương Bài 4: Khối lượng phân tử Carbon Dioxide (CO2)', fn: this.generateReport_hdc4 },
       { id: 'hdc5', name: 'Hóa Đại cương Bài 5: Khối lượng phân tử Ethanol', fn: this.generateReport_hdc5 },
       { id: 'hdc7', name: 'Hóa Đại cương Bài 7: Đương lượng Magiê (Mg)', fn: this.generateReport_hdc7 },
+      { id: 'hdc8', name: 'Hóa Đại cương Bài 8: Pha chế dung dịch & Chuẩn độ Axit - Bazơ', fn: this.generateReport_hdc8 },
+      { id: 'hdc11', name: 'Hóa Đại cương Bài 11: Áp suất hơi bão hòa & Nhiệt bay hơi của nước', fn: this.generateReport_hdc11 },
       { id: 'hl1', name: 'Hóa Lý Bài 1: Nhiệt hòa tan & Nhiệt hydrat hóa CuSO4', fn: this.generateReport_hl1 },
       { id: 'hl3', name: 'Hóa Lý Bài 3: Cân bằng KI & I2 (Phân bố pha CCl4/H2O)', fn: this.generateReport_hl3 },
       { id: 'hl4', name: 'Hóa Lý Bài 4: Hấp phụ Axit Axetic trên Than hoạt tính', fn: this.generateReport_hl4 },
@@ -5017,7 +5831,10 @@ let AppState = {
   hl3: JSON.parse(JSON.stringify(LAB_PRESETS.hl3)),
   hl4: JSON.parse(JSON.stringify(LAB_PRESETS.hl4)),
   hl9: JSON.parse(JSON.stringify(LAB_PRESETS.hl9)),
-  hl10: JSON.parse(JSON.stringify(LAB_PRESETS.hl10))
+  hl10: JSON.parse(JSON.stringify(LAB_PRESETS.hl10)),
+  hdc8: { ...LAB_PRESETS.hdc8 },
+  hl11: JSON.parse(JSON.stringify(LAB_PRESETS.hl11)),
+  hdc11: JSON.parse(JSON.stringify(LAB_PRESETS.hdc11 || LAB_PRESETS.hl11))
 };
 
 // Khởi động ứng dụng
@@ -5052,6 +5869,15 @@ function loadStateFromLocalStorage() {
     // Migrate modules if missing in saved state
     if (!AppState.hdc7) {
       AppState.hdc7 = { ...LAB_PRESETS.hdc7 };
+    }
+    if (!AppState.hdc8) {
+      AppState.hdc8 = { ...LAB_PRESETS.hdc8 };
+    }
+    if (!AppState.hl11) {
+      AppState.hl11 = JSON.parse(JSON.stringify(LAB_PRESETS.hl11));
+    }
+    if (!AppState.hdc11) {
+      AppState.hdc11 = JSON.parse(JSON.stringify(LAB_PRESETS.hdc11 || LAB_PRESETS.hl11));
     }
     // Migrate to Trịnh Xuân Hùng if empty or old default
     if (AppState.general.studentName === "Nguyễn Văn An" || !AppState.general.studentName) {
@@ -5951,6 +6777,143 @@ function renderCalculatorTab(mod) {
       `;
       chartHtml = `<div class="chart-container"><canvas id="chart-kinetics-hl10"></canvas></div>`;
       break;
+
+    case "hdc8": {
+      formHtml = `
+        <div class="card-subtitle" style="margin-bottom: 12px; font-weight: 600; color: var(--ink-blue);">
+          <i class="fa-solid fa-flask"></i> 1. Thí nghiệm 1-3: Pha loãng dung dịch & Đo tỉ khối bằng Phù kế
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label"><span><b>$V_{\\text{cần}}$:</b> Thể tích dd loãng cần pha</span> <span class="unit">(mL)</span></label>
+            <input type="number" step="10" class="form-control hdc8-inp" data-field="v_can" value="${data.v_can || 250.0}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$C_{\\text{sau}}\\%$:</b> Nồng độ % mong muốn</span> <span class="unit">(%)</span></label>
+            <input type="number" step="0.5" class="form-control hdc8-inp" data-field="c_sau" value="${data.c_sau || 7.0}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$C_{\\text{đầu}}\\%$:</b> Nồng độ % axit HCl gốc</span> <span class="unit">(%)</span></label>
+            <input type="number" step="0.5" class="form-control hdc8-inp" data-field="c_dau" value="${data.c_dau || 10.0}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$d_{\\text{gốc}}$:</b> Tỉ khối axit gốc phù kế</span> <span class="unit">(g/mL)</span></label>
+            <input type="number" step="0.001" class="form-control hdc8-inp" data-field="d_goc" value="${data.d_goc || 1.047}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$d_{\\text{sau}}$:</b> Tỉ khối dd sau pha phù kế</span> <span class="unit">(g/mL)</span></label>
+            <input type="number" step="0.001" class="form-control hdc8-inp" data-field="d_sau" value="${data.d_sau || 1.033}">
+          </div>
+        </div>
+
+        <div class="card-subtitle" style="margin: 18px 0 12px 0; font-weight: 600; color: var(--ink-blue);">
+          <i class="fa-solid fa-vial"></i> 2. Thí nghiệm 4: Pha $100\\text{ mL}$ dd chuẩn $\\text{HCl } 0{,}1000\\text{ N}$ từ $\\text{HCl } 17\\%$
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label"><span><b>$V_{\\text{định mức}}$:</b> Thể tích bình định mức</span> <span class="unit">(mL)</span></label>
+            <input type="number" step="10" class="form-control hdc8-inp" data-field="v_dinh_muc" value="${data.v_dinh_muc || 100.0}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$N_{\\text{cần}}$:</b> Nồng độ đương lượng mục tiêu</span> <span class="unit">(N)</span></label>
+            <input type="number" step="0.001" class="form-control hdc8-inp" data-field="n_can" value="${data.n_can || 0.1000}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$C_{\\text{gốc}}\\%$:</b> Nồng độ % HCl gốc</span> <span class="unit">(%)</span></label>
+            <input type="number" step="0.5" class="form-control hdc8-inp" data-field="c_goc" value="${data.c_goc || 17.0}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$d_{\\text{gốc 17}}$:</b> Tỉ khối HCl 17%</span> <span class="unit">(g/mL)</span></label>
+            <input type="number" step="0.001" class="form-control hdc8-inp" data-field="d_goc_17" value="${data.d_goc_17 || 1.083}">
+          </div>
+        </div>
+
+        <div class="card-subtitle" style="margin: 18px 0 12px 0; font-weight: 600; color: var(--ink-blue);">
+          <i class="fa-solid fa-eye-dropper"></i> 3. Thí nghiệm 5: Chuẩn độ thể tích HCl bằng $\\text{NaOH } 0{,}1000\\text{ N}$
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label"><span><b>$V_{\\text{HCl}}$:</b> Pipet hút HCl chuẩn độ</span> <span class="unit">(mL)</span></label>
+            <input type="number" step="0.1" class="form-control hdc8-inp" data-field="v_hcl_pipet" value="${data.v_hcl_pipet || 20.00}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$N_{\\text{NaOH}}$:</b> Nồng độ dd chuẩn NaOH</span> <span class="unit">(N)</span></label>
+            <input type="number" step="0.0001" class="form-control hdc8-inp" data-field="n_naoh" value="${data.n_naoh || 0.1000}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$V_1$:</b> Thể tích NaOH buret Lần 1</span> <span class="unit">(mL)</span></label>
+            <input type="number" step="0.05" class="form-control hdc8-inp" data-field="v1" value="${data.v1 || 20.10}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$V_2$:</b> Thể tích NaOH buret Lần 2</span> <span class="unit">(mL)</span></label>
+            <input type="number" step="0.05" class="form-control hdc8-inp" data-field="v2" value="${data.v2 || 20.15}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$V_3$:</b> Thể tích NaOH buret Lần 3</span> <span class="unit">(mL)</span></label>
+            <input type="number" step="0.05" class="form-control hdc8-inp" data-field="v3" value="${data.v3 || 20.05}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$t$:</b> Nhiệt độ phòng đo tỉ khối</span> <span class="unit">(°C)</span></label>
+            <input type="number" step="0.5" class="form-control hdc8-inp" data-field="tempC" value="${data.tempC || 25.0}">
+          </div>
+        </div>
+      `;
+      break;
+    }
+
+    case "hdc11":
+    case "hl11": {
+      const pts = Array.isArray(data.points) ? data.points : [];
+      let rowsHtml = pts.map((pt, idx) => `
+        <tr>
+          <td><strong>${idx + 1}</strong></td>
+          <td>
+            <input type="number" step="0.5" class="form-control hl11-pt-inp" data-idx="${idx}" data-field="t_c" value="${pt.t_c}">
+          </td>
+          <td>
+            <input type="number" step="0.05" class="form-control hl11-pt-inp" data-idx="${idx}" data-field="v_ml" value="${pt.v_ml}">
+          </td>
+        </tr>
+      `).join("");
+
+      formHtml = `
+        <div class="form-grid" style="margin-bottom: 18px;">
+          <div class="form-group">
+            <label class="form-label"><span><b>$P_{kk}$:</b> Áp suất khí quyển phòng</span> <span class="unit">(mmHg)</span></label>
+            <input type="number" step="0.5" class="form-control hl11-inp" data-field="p_atm" value="${data.p_atm || 760.0}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$t_0$:</b> Nhiệt độ làm lạnh sâu</span> <span class="unit">(°C)</span></label>
+            <input type="number" step="0.5" class="form-control hl11-inp" data-field="t0_c" value="${data.t0_c || 5.0}">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>$V_0$:</b> Thể tích bọt khí ở $t_0$</span> <span class="unit">(mL)</span></label>
+            <input type="number" step="0.05" class="form-control hl11-inp" data-field="v0_ml" value="${data.v0_ml || 4.50}">
+          </div>
+        </div>
+
+        <div class="card-subtitle" style="margin-bottom: 10px; font-weight: 600; color: var(--ink-blue);">
+          <i class="fa-solid fa-chart-line"></i> Dải Thực Nghiệm Biến Thiên Thể Tích Bọt Khí Ẩm theo Nhiệt Độ ($75^\\circ\\text{C} \\rightarrow 50^\\circ\\text{C}$)
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 60px;">Mốc</th>
+                <th>Nhiệt độ $t_i$ (°C)</th>
+                <th>Thể tích bọt khí đọc trên ống đo $V_i$ (mL)</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHtml}
+            </tbody>
+          </table>
+        </div>
+      `;
+      chartHtml = `<div class="chart-container" style="height: 380px; position: relative;"><canvas id="chart-clausius-clapeyron"></canvas></div>`;
+      break;
+    }
+
   }
 
   // Execute Math Calculation to generate LaTeX steps
@@ -6186,7 +7149,37 @@ function bindCalculatorInputs(modId) {
   document.getElementById("hl10-v0-t2")?.addEventListener("input", (e) => {
     AppState.hl10.v0_t2 = parseFloat(e.target.value) || 18.5;
     triggerUpdate();
+  
+  // HDC8 inputs
+  container.querySelectorAll(".hdc8-inp").forEach(inp => {
+    inp.addEventListener("input", (e) => {
+      const field = e.target.getAttribute("data-field");
+      if (AppState.hdc8) {
+        AppState.hdc8[field] = parseFloat(e.target.value) || 0;
+        triggerUpdate();
+      }
+    });
   });
+
+  // HL11 inputs
+  container.querySelectorAll(".hl11-inp").forEach(inp => {
+    inp.addEventListener("input", (e) => {
+      const field = e.target.getAttribute("data-field");
+      if (AppState.hl11) AppState.hl11[field] = parseFloat(e.target.value) || 0;
+      if (AppState.hdc11) AppState.hdc11[field] = parseFloat(e.target.value) || 0;
+      triggerUpdate();
+    });
+  });
+  container.querySelectorAll(".hl11-pt-inp").forEach(inp => {
+    inp.addEventListener("input", (e) => {
+      const idx = parseInt(e.target.getAttribute("data-idx"));
+      const field = e.target.getAttribute("data-field");
+      if (AppState.hl11 && AppState.hl11.points && AppState.hl11.points[idx]) AppState.hl11.points[idx][field] = parseFloat(e.target.value) || 0;
+      if (AppState.hdc11 && AppState.hdc11.points && AppState.hdc11.points[idx]) AppState.hdc11.points[idx][field] = parseFloat(e.target.value) || 0;
+      triggerUpdate();
+    });
+  });
+});
 }
 
 // Vẽ lại biểu đồ khi chuyển tab hoặc đổi dữ liệu
@@ -6206,6 +7199,8 @@ function triggerChartRedraw() {
     ChartManager.renderKineticsChart("chart-kinetics-hl9", res);
   } else if (modId === "hl10" && document.getElementById("chart-kinetics-hl10")) {
     ChartManager.renderAcetoneKineticsChart("chart-kinetics-hl10", res);
+  } else if ((modId === "hdc11" || modId === "hl11") && document.getElementById("chart-clausius-clapeyron")) {
+    ChartManager.renderClausiusClapeyronChart("chart-clausius-clapeyron", res);
   }
 }
 
