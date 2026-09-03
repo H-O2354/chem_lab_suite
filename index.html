@@ -253,6 +253,87 @@ body {
   flex-direction: column;
   gap: 12px;
   flex-shrink: 0;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              padding 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.2s ease,
+              border-color 0.25s ease;
+}
+
+.app-sidebar.collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  border-right: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+
+/* Mobile Drawer Header */
+.sidebar-drawer-header {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px 12px 6px;
+  border-bottom: 1px solid var(--border-line);
+  margin-bottom: 4px;
+}
+
+.sidebar-drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink-blue);
+}
+
+/* Backdrop Overlay for Mobile */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 180;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mobile Floating Action Button */
+.mobile-fab-toggle {
+  display: none;
+  position: fixed;
+  bottom: 18px;
+  left: 18px;
+  z-index: 95;
+  background: var(--ink-blue);
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  padding: 9px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mobile-fab-toggle:active {
+  transform: scale(0.95);
 }
 
 .sidebar-search-box {
@@ -1281,22 +1362,80 @@ body {
 
 /* Mobile Responsive */
 @media (max-width: 800px) {
+  .sidebar-drawer-header {
+    display: flex;
+  }
+
   .app-sidebar {
     position: fixed;
     top: 0;
     bottom: 0;
-    left: -290px;
-    z-index: 150;
-    transition: left 0.2s ease;
-  }
-  .app-sidebar.open {
     left: 0;
+    width: 290px;
+    max-width: 86vw;
+    z-index: 200;
+    transform: translateX(-100%);
+    box-shadow: none;
+    padding-top: 14px;
+    background: var(--bg-surface);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
   }
+
+  .app-sidebar.open {
+    transform: translateX(0);
+    box-shadow: 5px 0 28px rgba(0, 0, 0, 0.35);
+  }
+
+  .app-sidebar.collapsed {
+    width: 290px !important;
+    max-width: 86vw !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    overflow-y: auto !important;
+  }
+
   .app-main {
-    padding: 12px;
+    padding: 10px 8px;
   }
+
   #btn-toggle-sidebar {
     display: flex !important;
+  }
+
+  .mobile-fab-toggle {
+    display: flex;
+  }
+
+  /* Top Taskbar / Header Responsive compaction */
+  .app-header {
+    padding: 0 10px;
+  }
+
+  .brand-titles p {
+    display: none;
+  }
+
+  .brand-titles h1 {
+    font-size: 13px;
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .student-info-chip {
+    padding: 4px 8px;
+    font-size: 11px;
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .student-info-chip span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -1306,7 +1445,7 @@ body {
   <!-- Header thanh công cụ -->
   <header class="app-header">
     <div class="brand-section">
-      <button class="btn-icon" id="btn-toggle-sidebar" title="Mở danh mục menu" style="display:none;">
+      <button class="btn-icon" id="btn-toggle-sidebar" title="Thu gọn / Mở rộng danh mục (Ctrl + B)">
         <i class="fa-solid fa-bars"></i>
       </button>
       <div class="brand-logo-badge">
@@ -1342,6 +1481,17 @@ body {
   <div class="app-container">
     <!-- Sidebar Danh mục 11 bài -->
     <aside class="app-sidebar">
+      <!-- Mobile Drawer Header with Close / Collapse button -->
+      <div class="sidebar-drawer-header">
+        <div class="sidebar-drawer-brand">
+          <i class="fa-solid fa-flask-vial"></i>
+          <span>Danh Mục Bài Lab</span>
+        </div>
+        <button class="btn-icon btn-close-sidebar" id="btn-close-sidebar" title="Thu gọn danh mục">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
       <div class="sidebar-search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="sidebar-search" placeholder="Tìm bài lab, hóa chất, $f(t)$...">
@@ -1448,6 +1598,8 @@ body {
         </a>
       </div>
     </aside>
+    <!-- Backdrop Overlay for Mobile Drawer -->
+    <div class="sidebar-overlay" id="sidebar-overlay" title="Chạm để đóng danh mục"></div>
 
     <!-- Khu vực hiển thị bài đang chọn -->
     <main class="app-main">
@@ -5994,7 +6146,12 @@ function setupNavigation() {
         item.classList.add("active");
         renderCurrentView();
         // Close mobile drawer if open
-        document.querySelector(".app-sidebar")?.classList.remove("open");
+        if (typeof closeMobileSidebar === 'function') {
+          closeMobileSidebar();
+        } else {
+          document.querySelector(".app-sidebar")?.classList.remove("open");
+          document.getElementById("sidebar-overlay")?.classList.remove("active");
+        }
       }
     });
   });
@@ -6022,10 +6179,96 @@ function setupNavigation() {
     });
   });
 
-  // Mobile sidebar toggle button
-  document.getElementById("btn-toggle-sidebar")?.addEventListener("click", () => {
-    document.querySelector(".app-sidebar")?.classList.toggle("open");
+  // Sidebar Collapse / Expand Controller (Mobile & Desktop)
+  function toggleSidebar(forceState) {
+    const isMobile = window.innerWidth <= 800;
+    const sidebar = document.querySelector(".app-sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
+    const toggleBtn = document.getElementById("btn-toggle-sidebar");
+    const toggleIcon = document.querySelector("#btn-toggle-sidebar i");
+    const fabToggle = document.getElementById("mobile-fab-toggle");
+    const fabIcon = document.querySelector("#mobile-fab-toggle i");
+
+    if (!sidebar) return;
+
+    if (isMobile) {
+      // Mobile behavior: toggle drawer slide-in and backdrop overlay
+      const shouldOpen = typeof forceState === "boolean" ? forceState : !sidebar.classList.contains("open");
+      sidebar.classList.toggle("open", shouldOpen);
+      overlay?.classList.toggle("active", shouldOpen);
+
+      if (toggleIcon) {
+        toggleIcon.className = shouldOpen ? "fa-solid fa-xmark" : "fa-solid fa-bars";
+      }
+      if (fabIcon) {
+        fabIcon.className = shouldOpen ? "fa-solid fa-xmark" : "fa-solid fa-bars";
+      }
+    } else {
+      // Desktop behavior: toggle collapsed state
+      const shouldCollapse = typeof forceState === "boolean" ? !forceState : !sidebar.classList.contains("collapsed");
+      sidebar.classList.toggle("collapsed", shouldCollapse);
+      try { localStorage.setItem("sidebarCollapsed", shouldCollapse ? "true" : "false"); } catch (e) {}
+
+      if (toggleIcon) {
+        toggleIcon.className = shouldCollapse ? "fa-solid fa-chevron-right" : "fa-solid fa-bars";
+      }
+      if (toggleBtn) {
+        toggleBtn.title = shouldCollapse ? "Mở rộng danh mục (Ctrl + B)" : "Thu gọn danh mục (Ctrl + B)";
+      }
+      // Re-trigger chart resize after transition
+      setTimeout(() => {
+        if (typeof triggerChartRedraw === 'function') triggerChartRedraw();
+      }, 260);
+    }
+  }
+
+  function closeMobileSidebar() {
+    const sidebar = document.querySelector(".app-sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
+    const toggleIcon = document.querySelector("#btn-toggle-sidebar i");
+    const fabIcon = document.querySelector("#mobile-fab-toggle i");
+
+    sidebar?.classList.remove("open");
+    overlay?.classList.remove("active");
+    if (toggleIcon) toggleIcon.className = "fa-solid fa-bars";
+    if (fabIcon) fabIcon.className = "fa-solid fa-bars";
+  }
+
+  window.toggleSidebar = toggleSidebar;
+  window.closeMobileSidebar = closeMobileSidebar;
+
+  // Header toggle button
+  document.getElementById("btn-toggle-sidebar")?.addEventListener("click", () => toggleSidebar());
+
+  // Mobile drawer close button
+  document.getElementById("btn-close-sidebar")?.addEventListener("click", closeMobileSidebar);
+
+  // Mobile overlay click to close
+  document.getElementById("sidebar-overlay")?.addEventListener("click", closeMobileSidebar);
+
+  // Mobile floating button
+  document.getElementById("mobile-fab-toggle")?.addEventListener("click", () => toggleSidebar());
+
+  // Keyboard shortcut: Ctrl + B to toggle sidebar, Escape to close mobile drawer
+  document.addEventListener("keydown", (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "b") {
+      e.preventDefault();
+      toggleSidebar();
+    } else if (e.key === "Escape") {
+      closeMobileSidebar();
+    }
   });
+
+  // Restore saved desktop collapse preference on load
+  if (window.innerWidth > 800) {
+    try {
+      if (localStorage.getItem("sidebarCollapsed") === "true") {
+        document.querySelector(".app-sidebar")?.classList.add("collapsed");
+        const toggleIcon = document.querySelector("#btn-toggle-sidebar i");
+        if (toggleIcon) toggleIcon.className = "fa-solid fa-chevron-right";
+      }
+    } catch (e) {}
+  }
 }
 
 // Thiết lập các nút điều khiển chung
