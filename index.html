@@ -2319,33 +2319,67 @@ const LAB_MODULES = [
 /* ========================================================================= */
 // js/data/solution_prep_data.js
 // Cơ sở dữ liệu hóa chất và thông số chuẩn phục vụ pha chế dung dịch
+// Đầy đủ hóa chất và thuốc thử tương thích với 11 bài thực hành Hóa Đại Cương & Hóa Lý
 
 const REAGENTS_SOLID = [
-  { name: "Natri hidroxit", formulaText: "NaOH", formulaLatex: "\\text{NaOH}", mw: 40.00, z: 1, desc: "Chất rắn hút ẩm mạnh, dùng trong chuẩn độ axit-bazo" },
-  { name: "Natri clorua", formulaText: "NaCl", formulaLatex: "\\text{NaCl}", mw: 58.44, z: 1, desc: "Muối ăn tinh khiết" },
-  { name: "Kali nitrat", formulaText: "KNO₃", formulaLatex: "\\text{KNO}_3", mw: 101.10, z: 1, desc: "Chất chuẩn nhiệt lượng kế" },
-  { name: "Đồng(II) sunfat ngậm 5 nước", formulaText: "CuSO₄·5H₂O", formulaLatex: "\\text{CuSO}_4\\cdot 5\\text{H}_2\\text{O}", mw: 249.68, z: 2, desc: "Tinh thể màu xanh lam" },
-  { name: "Đồng(II) sunfat khan", formulaText: "CuSO₄", formulaLatex: "\\text{CuSO}_4", mw: 159.61, z: 2, desc: "Bột màu trắng xám hút ẩm mạnh" },
-  { name: "Natri thiosunfat ngậm 5 nước", formulaText: "Na₂S₂O₃·5H₂O", formulaLatex: "\\text{Na}_2\\text{S}_2\\text{O}_3\\cdot 5\\text{H}_2\\text{O}", mw: 248.18, z: 1, desc: "Chất chuẩn trong phép chuẩn độ Iod" },
-  { name: "Kali pemanganat", formulaText: "KMnO₄", formulaLatex: "\\text{KMnO}_4", mw: 158.03, z: 5, desc: "Chất oxi hóa mạnh trong môi trường axit (z=5)" },
-  { name: "Natri cacbonat khan", formulaText: "Na₂CO₃", formulaLatex: "\\text{Na}_2\\text{CO}_3", mw: 105.99, z: 2, desc: "Chất chuẩn gốc định phân axit" },
-  { name: "Axit oxalic ngậm 2 nước", formulaText: "H₂C₂O₄·2H₂O", formulaLatex: "\\text{H}_2\\text{C}_2\\text{O}_4\\cdot 2\\text{H}_2\\text{O}", mw: 126.07, z: 2, desc: "Chất chuẩn gốc định phân bazo và KMnO4" },
-  { name: "Bari clorua ngậm 2 nước", formulaText: "BaCl₂·2H₂O", formulaLatex: "\\text{BaCl}_2\\cdot 2\\text{H}_2\\text{O}", mw: 244.26, z: 2, desc: "Thuốc thử tạo kết tủa SO4(2-)" },
-  { name: "Kali iodua", formulaText: "KI", formulaLatex: "\\text{KI}", mw: 166.00, z: 1, desc: "Thuốc thử tạo phức KI3" }
+  { name: "Natri hidroxit", formulaText: "NaOH", formulaLatex: "\\text{NaOH}", mw: 40.00, z: 1, desc: "Chất rắn hút ẩm mạnh, dùng trong chuẩn độ axit-bazơ (Bài 8 HĐC, Bài 9 Hóa lý)" },
+  { name: "Natri clorua", formulaText: "NaCl", formulaLatex: "\\text{NaCl}", mw: 58.44, z: 1, desc: "Muối ăn tinh khiết (Kỹ thuật 2)" },
+  { name: "Kali nitrat", formulaText: "KNO₃", formulaLatex: "\\text{KNO}_3", mw: 101.10, z: 1, desc: "Chất chuẩn nhiệt lượng kế xác định hệ số W (Bài 1 Hóa lý)" },
+  { name: "Đồng(II) sunfat ngậm 5 nước", formulaText: "CuSO₄·5H₂O", formulaLatex: "\\text{CuSO}_4\\cdot 5\\text{H}_2\\text{O}", mw: 249.68, z: 2, desc: "Tinh thể xanh lam dùng đo nhiệt hòa tan & hydrat hóa (Bài 1 Hóa lý)" },
+  { name: "Đồng(II) sunfat khan", formulaText: "CuSO₄", formulaLatex: "\\text{CuSO}_4", mw: 159.61, z: 2, desc: "Bột màu xám trắng hút ẩm cực mạnh (Bài 1 Hóa lý)" },
+  { name: "Natri thiosunfat ngậm 5 nước", formulaText: "Na₂S₂O₃·5H₂O", formulaLatex: "\\text{Na}_2\\text{S}_2\\text{O}_3\\cdot 5\\text{H}_2\\text{O}", mw: 248.18, z: 1, desc: "Chất chuẩn trong phép chuẩn độ Iod (Bài 3 & 10 Hóa lý)" },
+  { name: "Iot nguyên chất tinh thể", formulaText: "I₂", formulaLatex: "\\text{I}_2", mw: 253.81, z: 2, desc: "Tinh thể tím đen thăng hoa (E = 126.90 g/eq), dùng trong Bài 3 & 10 Hóa lý" },
+  { name: "Kali iodua", formulaText: "KI", formulaLatex: "\\text{KI}", mw: 166.00, z: 1, desc: "Thuốc thử tạo phức KI3 hòa tan Iot (Bài 3 & 10 Hóa lý)" },
+  { name: "Axit oxalic ngậm 2 nước", formulaText: "H₂C₂O₄·2H₂O", formulaLatex: "\\text{H}_2\\text{C}_2\\text{O}_4\\cdot 2\\text{H}_2\\text{O}", mw: 126.07, z: 2, desc: "Chất chuẩn gốc định phân bazơ NaOH và KMnO4 (Bài 8 HĐC)" },
+  { name: "Natri cacbonat khan", formulaText: "Na₂CO₃", formulaLatex: "\\text{Na}_2\\text{CO}_3", mw: 105.99, z: 2, desc: "Chất chuẩn gốc định phân axit HCl" },
+  { name: "Natri hidrocacbonat", formulaText: "NaHCO₃", formulaLatex: "\\text{NaHCO}_3", mw: 84.01, z: 1, desc: "Bột trắng kiềm nhẹ dập tắt phản ứng iốt hóa axeton (Bài 10 Hóa lý)" },
+  { name: "Kali pemanganat", formulaText: "KMnO₄", formulaLatex: "\\text{KMnO}_4", mw: 158.03, z: 5, desc: "Chất oxi hóa mạnh trong môi trường axit (z=5, E = 31.60 g/eq)" },
+  { name: "Bari clorua ngậm 2 nước", formulaText: "BaCl₂·2H₂O", formulaLatex: "\\text{BaCl}_2\\cdot 2\\text{H}_2\\text{O}", mw: 244.26, z: 2, desc: "Thuốc thử tạo kết tủa BaSO4 nhận biết ion sunfat" },
+  { name: "Magiê kim loại tinh khiết", formulaText: "Mg", formulaLatex: "\\text{Mg}", mw: 24.31, z: 2, desc: "Mảnh/dải kim loại trắng bạc xác định đương lượng (Bài 7 HĐC)" },
+  { name: "Chỉ thị Phenolphthalein", formulaText: "C₂₀H₁₄O₄", formulaLatex: "\\text{C}_{20}\\text{H}_{14}\\text{O}_4", mw: 318.32, z: 1, desc: "Chỉ thị axit-bazơ chuyển hồng ở pH 8.2 (pha 0.1% - 1% trong cồn)" },
+  { name: "Chỉ thị Metyl da cam", formulaText: "C₁₄H₁₄N₃NaO₃S", formulaLatex: "\\text{C}_{14}\\text{H}_{14}\\text{N}_3\\text{NaO}_3\\text{S}", mw: 327.33, z: 1, desc: "Chỉ thị axit-bazơ chuyển vàng ở pH 3.1 - 4.4 (pha 0.1% trong nước)" }
 ];
 
 const REAGENTS_LIQUID = [
-  { name: "Axit clohidric đặc (HCl 37%)", formulaText: "HCl 37%", formulaLatex: "\\text{HCl 37\\%}", c_percent: 37.0, density: 1.19, mw: 36.46, z: 1, safety: "Axit bốc khói, ăn mòn da và đường hô hấp, bắt buộc thao tác trong tủ hút" },
-  { name: "Axit sunfuric đặc (H₂SO₄ 98%)", formulaText: "H₂SO₄ 98%", formulaLatex: "\\text{H}_2\\text{SO}_4\\text{ 98\\%}", c_percent: 98.0, density: 1.84, mw: 98.08, z: 2, safety: "TỎA NHIỆT CỰC LỚN KHI HÒA TAN. TUYỆT ĐỐI RÓT TỪ TỪ AXIT VÀO NƯỚC, KHÔNG ĐƯỢC RÓT NƯỚC VÀO AXIT ĐẶC!" },
-  { name: "Axit nitric đặc (HNO₃ 68%)", formulaText: "HNO₃ 68%", formulaLatex: "\\text{HNO}_3\\text{ 68\\%}", c_percent: 68.0, density: 1.40, mw: 63.01, z: 1, safety: "Axit bốc khói vàng độc (NO2), tính oxi hóa cực mạnh" },
-  { name: "Axit axetic băng (CH₃COOH 99.5%)", formulaText: "CH₃COOH 99.5%", formulaLatex: "\\text{CH}_3\\text{COOH 99,5\\%}", c_percent: 99.5, density: 1.05, mw: 60.05, z: 1, safety: "Axit dễ đông đặc ở < 16.6°C, mùi giấm xốc mạnh" },
-  { name: "Amoniac đặc (NH₃ 25%)", formulaText: "NH₃ 25%", formulaLatex: "\\text{NH}_3\\text{ 25\\%}", c_percent: 25.0, density: 0.91, mw: 17.03, z: 1, safety: "Khí NH3 bay hơi xốc mạnh làm cay mắt, thao tác trong tủ hút" },
-  { name: "Dung dịch NaOH 40%", formulaText: "NaOH 40%", formulaLatex: "\\text{NaOH 40\\%}", c_percent: 40.0, density: 1.43, mw: 40.00, z: 1, safety: "Kiềm ăn da mạnh, sinh nhiệt khi hòa tan" }
+  { name: "Axit clohidric đặc (HCl 37%)", formulaText: "HCl 37%", formulaLatex: "\\text{HCl 37\\%}", c_percent: 37.0, density: 1.19, mw: 36.46, z: 1, safety: "Axit bốc khói nồng nặc, ăn mòn da và niêm mạc, bắt buộc thao tác trong tủ hút" },
+  { name: "Axit clohidric phòng lab (HCl 17%)", formulaText: "HCl 17%", formulaLatex: "\\text{HCl 17\\%}", c_percent: 17.0, density: 1.083, mw: 36.46, z: 1, safety: "Dung dịch axit chuẩn bị sẵn để pha HCl 0.1 N (Bài 8 HĐC Thí nghiệm 4)" },
+  { name: "Axit clohidric loãng (HCl 10%)", formulaText: "HCl 10%", formulaLatex: "\\text{HCl 10\\%}", c_percent: 10.0, density: 1.047, mw: 36.46, z: 1, safety: "Dung dịch dùng pha loãng theo quy tắc đường chéo thành 7% (Bài 8 HĐC Thí nghiệm 1-3)" },
+  { name: "Axit sunfuric đặc (H₂SO₄ 98%)", formulaText: "H₂SO₄ 98%", formulaLatex: "\\text{H}_2\\text{SO}_4\\text{ 98\\%}", c_percent: 98.0, density: 1.84, mw: 98.08, z: 2, safety: "TỎA NHIỆT CỰC LỚN! LUÔN RÓT TỪ TỪ AXIT VÀO NƯỚC, TUYỆT ĐỐI KHÔNG ĐƯỢC RÓT NƯỚC VÀO AXIT ĐẶC!" },
+  { name: "Axit nitric đặc (HNO₃ 68%)", formulaText: "HNO₃ 68%", formulaLatex: "\\text{HNO}_3\\text{ 68\\%}", c_percent: 68.0, density: 1.40, mw: 63.01, z: 1, safety: "Axit bốc khói nâu độc (NO2), tính oxi hóa cực mạnh" },
+  { name: "Axit axetic băng (CH₃COOH 99.5%)", formulaText: "CH₃COOH 99.5%", formulaLatex: "\\text{CH}_3\\text{COOH 99,5\\%}", c_percent: 99.5, density: 1.05, mw: 60.05, z: 1, safety: "Mùi giấm xốc cay mắt, đông đặc ở < 16.6°C, dùng trong Bài 4 Hóa lý (hấp phụ)" },
+  { name: "Amoniac đặc (NH₃ 25%)", formulaText: "NH₃ 25%", formulaLatex: "\\text{NH}_3\\text{ 25\\%}", c_percent: 25.0, density: 0.91, mw: 17.03, z: 1, safety: "Khí NH3 bay hơi xốc mạnh làm cay mắt mũi, thao tác trong tủ hút" },
+  { name: "Dung dịch NaOH 40%", formulaText: "NaOH 40%", formulaLatex: "\\text{NaOH 40\\%}", c_percent: 40.0, density: 1.43, mw: 40.00, z: 1, safety: "Kiềm ăn da mạnh, sinh nhiệt khi hòa tan" },
+  { name: "Ethanol tuyệt đối (C₂H₅OH 99.7%)", formulaText: "C₂H₅OH 99.7%", formulaLatex: "\\text{C}_2\\text{H}_5\\text{OH 99,7\\%}", c_percent: 99.7, density: 0.789, mw: 46.07, z: 1, safety: "Chất lỏng dễ cháy, dễ bay hơi, dùng xác định khối lượng mol xy-lanh (Bài 5 HĐC)" },
+  { name: "Ethyl Acetate tinh khiết (CH₃COOC₂H₅ 99.5%)", formulaText: "CH₃COOC₂H₅ 99.5%", formulaLatex: "\\text{CH}_3\\text{COOC}_2\\text{H}_5\\text{ 99,5\\%}", c_percent: 99.5, density: 0.902, mw: 88.11, z: 1, safety: "Este dễ bắt cháy, mùi quả chín, dùng nghiên cứu động học thủy phân bậc nhất (Bài 9 Hóa lý)" },
+  { name: "Acetone tinh khiết (CH₃COCH₃ 99.5%)", formulaText: "CH₃COCH₃ 99.5%", formulaLatex: "\\text{CH}_3\\text{COCH}_3\\text{ 99,5\\%}", c_percent: 99.5, density: 0.784, mw: 58.08, z: 1, safety: "Dung môi bay hơi nhanh và rất dễ bắt cháy, dùng trong động học iốt hóa (Bài 10 Hóa lý)" },
+  { name: "Carbon Tetrachloride (CCl₄ 99.5%)", formulaText: "CCl₄ 99.5%", formulaLatex: "\\text{CCl}_4\\text{ 99,5\\%}", c_percent: 99.5, density: 1.594, mw: 153.82, z: 1, safety: "Dung môi hữu cơ nặng, độc đối với gan, bắt buộc thao tác trong tủ hút (Bài 3 Hóa lý)" }
+];
+
+const REAGENTS_INDICATORS = [
+  {
+    name: "Phenolphthalein 0.1% trong cồn",
+    use: "Chỉ thị chuẩn độ Axit mạnh - Bazơ mạnh, Axit yếu - Bazơ mạnh",
+    pH_range: "8.2 - 10.0 (Không màu sang Hồng nhạt)",
+    prep: "Cân 0.10 g Phenolphthalein hòa tan trong 80 mL Ethanol 96°, thêm nước cất vừa đủ 100 mL trong bình định mức."
+  },
+  {
+    name: "Metyl da cam (Methyl Orange) 0.1% trong nước",
+    use: "Chỉ thị chuẩn độ Bazơ yếu - Axit mạnh, Axit mạnh - Bazơ mạnh",
+    pH_range: "3.1 - 4.4 (Đỏ sang Vàng da cam)",
+    prep: "Cân 0.10 g Metyl da cam hòa tan trong 80 mL nước cất nóng (60°C), khuấy tan hoàn toàn, để nguội rồi thêm nước cất định mức 100 mL."
+  },
+  {
+    name: "Hồ tinh bột 1% (Starch Indicator)",
+    use: "Chỉ thị nhận biết điểm tương đương trong phép chuẩn độ Iod - Thiosunfat",
+    pH_range: "Tạo phức xanh đậm với I3(-)",
+    prep: "Khuấy đều 1.0 g tinh bột hòa tan với 10 mL nước lạnh. Rót từ từ huyền phù này vào 90 mL nước cất đang sôi, đun tiếp 1-2 phút cho dung dịch trong suốt, để nguội."
+  }
 ];
 
 if (typeof window !== 'undefined') {
   window.REAGENTS_SOLID = REAGENTS_SOLID;
   window.REAGENTS_LIQUID = REAGENTS_LIQUID;
+  window.REAGENTS_INDICATORS = REAGENTS_INDICATORS;
 }
 
 
@@ -7006,6 +7040,16 @@ function renderCalculatorTab(mod) {
   // Bind input change events for instant reactive calculation
   bindCalculatorInputs(mod.id);
   renderMath(container);
+
+  if (activeId) {
+    const el = document.getElementById(activeId);
+    if (el) {
+      el.focus();
+      if (selStart !== null && typeof el.setSelectionRange === 'function') {
+        try { el.setSelectionRange(selStart, selEnd); } catch (e) {}
+      }
+    }
+  }
 }
 
 // Bắt sự kiện thay đổi dữ liệu nhập trên Form
@@ -7637,6 +7681,11 @@ let SolPrepState = {
 };
 
 function renderSolutionPrepView() {
+  const activeEl = document.activeElement;
+  const activeId = activeEl && activeEl.id ? activeEl.id : null;
+  const selStart = (activeEl && typeof activeEl.selectionStart === 'number') ? activeEl.selectionStart : null;
+  const selEnd = (activeEl && typeof activeEl.selectionEnd === 'number') ? activeEl.selectionEnd : null;
+
   document.getElementById("workspace-container").style.display = "none";
   const container = document.getElementById("special-view-container");
   container.style.display = "block";
@@ -7654,6 +7703,9 @@ function renderSolutionPrepView() {
       </button>
       <button class="tab-btn ${subTab === 'cheatsheet' ? 'active' : ''}" onclick="switchSolPrepTab('cheatsheet')">
         <i class="fa-solid fa-book-bookmark"></i> 3. Bảng Quy Đổi Nồng Độ & Công Thức
+      </button>
+      <button class="tab-btn ${subTab === 'indicators' ? 'active' : ''}" onclick="switchSolPrepTab('indicators')">
+        <i class="fa-solid fa-flask-vial"></i> 4. Pha Chế Chỉ Thị & Thuốc Thử
       </button>
     </div>
   `;
@@ -7865,6 +7917,38 @@ function renderSolutionPrepView() {
         </div>
       </div>
     `;
+  } else if (subTab === "indicators") {
+    const indicators = (typeof REAGENTS_INDICATORS !== 'undefined') ? REAGENTS_INDICATORS : [];
+    mainBodyHtml = `
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="fa-solid fa-vial-circle-check"></i> Quy Trình Pha Chế Các Chỉ Thị & Thuốc Thử Chuẩn Phòng Lab</div>
+        </div>
+        <p style="color: var(--text-muted); margin-bottom: 18px;">
+          Các chất chỉ thị màu đóng vai trò quyết định độ chính xác của phép chuẩn độ thể tích trong toàn bộ các bài thực hành Hóa Đại Cương (Bài 8) và Hóa Lý (Bài 3, 9, 10). Dưới đây là hướng dẫn pha chế chuẩn phân tích.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          ${indicators.map((ind, idx) => `
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-left: 4px solid var(--ink-blue); border-radius: 8px; padding: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <h4 style="margin: 0; color: var(--ink-blue); font-size: 16px;">
+                  <i class="fa-solid fa-eye-dropper"></i> ${idx + 1}. ${ind.name}
+                </h4>
+                <span class="badge" style="background: var(--bg-secondary); color: var(--text-main); font-size: 12px; padding: 4px 8px; border-radius: 4px;">
+                  ${ind.pH_range}
+                </span>
+              </div>
+              <div style="margin-bottom: 8px; font-size: 13px; color: var(--text-muted);">
+                <strong>Ứng dụng chính:</strong> ${ind.use}
+              </div>
+              <div style="background: var(--bg-secondary); padding: 10px 14px; border-radius: 6px; font-size: 13px; line-height: 1.6; color: var(--text-main);">
+                <strong><i class="fa-solid fa-circle-info"></i> Quy trình pha chế chuẩn:</strong> ${ind.prep}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
   } else {
     // Cheatsheet
     mainBodyHtml = `
@@ -8009,6 +8093,16 @@ function renderSolutionPrepView() {
   `;
 
   renderMath(container);
+
+  if (activeId) {
+    const el = document.getElementById(activeId);
+    if (el) {
+      el.focus();
+      if (selStart !== null && typeof el.setSelectionRange === 'function') {
+        try { el.setSelectionRange(selStart, selEnd); } catch (e) {}
+      }
+    }
+  }
 }
 
 function switchSolPrepTab(tab) {
