@@ -4215,37 +4215,37 @@ $$F(C_x) = \\lg\\left[\\frac{C_{\\text{H}^+}(C_A - C_x)}{C_A(C_{\\text{H}^+} + C
     const stepsLatex = [
       {
         title: "1. Thí nghiệm 1-3: Tính toán lượng hóa chất pha loãng theo Quy tắc đường chéo",
-        dataOrigin: `Đo tỉ khối phù kế: $d_{\\text{gốc}} = ${d_goc.toFixed(3)}\\text{ g/mL}$, $d_{\\text{sau}} = ${d_sau.toFixed(3)}\\text{ g/mL}$, $V_{\\text{cần}} = ${v_can.toFixed(1)}\\text{ mL}$`,
-        formula: "m_{\\text{dd sau}} = V \times d_{\\text{sau}}; \quad m_{\\text{ct}} = \\frac{m_{\\text{dd sau}} \times C_{\\text{sau}}\\%}{100}; \quad V_{\\text{đầu}} = \\frac{m_{\\text{dd đầu}}}{d_{\\text{gốc}}}",
-        substituted: `m_{\\text{dd sau}} = ${v_can.toFixed(1)} \times ${d_sau.toFixed(3)} = ${m_dd_sau.toFixed(2)}\\text{ g} \implies m_{\\text{HCl 10\\%}} = ${m_dd_dau.toFixed(2)}\\text{ g} \implies V_{\\text{đầu}} = \\frac{${m_dd_dau.toFixed(2)}}{${d_goc.toFixed(3)}} = ${v_dd_dau.toFixed(2)}\\text{ mL}`,
+        dataOrigin: `Đo tỉ khối phù kế: $d_1 = ${d_goc.toFixed(3)}\\text{ g/mL}$, $d_2 = ${d_sau.toFixed(3)}\\text{ g/mL}$, $V_2 = ${v_can.toFixed(1)}\\text{ mL}$`,
+        formula: "m_{\\text{dd, 2}} = V_2 \\times d_2; \\quad m_{\\text{ct}} = \\frac{m_{\\text{dd, 2}} \\times C_2\\%}{100}; \\quad V_1 = \\frac{m_{\\text{dd, 1}}}{d_1}",
+        substituted: `m_{\\text{dd, 2}} = ${v_can.toFixed(1)} \\times ${d_sau.toFixed(3)} = ${m_dd_sau.toFixed(2)}\\text{ g} \\implies m_{\\text{dd, 1}} = ${m_dd_dau.toFixed(2)}\\text{ g} \\implies V_1 = \\frac{${m_dd_dau.toFixed(2)}}{${d_goc.toFixed(3)}} = ${v_dd_dau.toFixed(2)}\\text{ mL}`,
         result: `V_HCl(10%) = ${v_dd_dau.toFixed(2)} mL, V_nước = ${v_nuoc.toFixed(1)} mL`
       },
       {
         title: "2. Thí nghiệm 4: Nồng độ đương lượng axit gốc và Thể tích hút pha HCl 0,1N",
-        dataOrigin: `Axit gốc $\\text{HCl } 17\\%$, $d = ${d_goc_17.toFixed(3)}\\text{ g/mL}$, $E_{\\text{HCl}} = 36{,}46\\text{ g/eq}$, bình định mức $V = ${v_dinh_muc.toFixed(0)}\\text{ mL}$`,
-        formula: "N_{\\text{gốc}} = \\frac{10 \times d \times C\\%}{E_{\\text{HCl}}}; \quad V_{\\text{hút}} = \\frac{N_{\\text{cần}} \times V_{\\text{định mức}}}{N_{\\text{gốc}}}",
-        substituted: `N_{\\text{gốc}} = \\frac{10 \times ${d_goc_17.toFixed(3)} \times ${c_goc.toFixed(1)}}{${e_hcl.toFixed(2)}} = ${n_goc.toFixed(2)}\\text{ N} \implies V_{\\text{hút}} = \\frac{${n_can.toFixed(4)} \times ${v_dinh_muc.toFixed(0)}}{${n_goc.toFixed(2)}} = ${v_axit_goc.toFixed(2)}\\text{ mL}`,
+        dataOrigin: `Axit gốc $\\text{HCl } 17\\%$, $d = ${d_goc_17.toFixed(3)}\\text{ g/mL}$, $E_{\\text{HCl}} = 36{,}46\\text{ g/eq}$, bình định mức $V_{\\text{dm}} = ${v_dinh_muc.toFixed(0)}\\text{ mL}$`,
+        formula: "N_{\\text{goc}} = \\frac{10 \\times d \\times C\\%}{E_{\\text{HCl}}}; \\quad V_{\\text{hut}} = \\frac{N_2 \\times V_{\\text{dm}}}{N_{\\text{goc}}}",
+        substituted: `N_{\\text{goc}} = \\frac{10 \\times ${d_goc_17.toFixed(3)} \\times ${c_goc.toFixed(1)}}{${e_hcl.toFixed(2)}} = ${n_goc.toFixed(2)}\\text{ N} \\implies V_{\\text{hut}} = \\frac{${n_can.toFixed(4)} \\times ${v_dinh_muc.toFixed(0)}}{${n_goc.toFixed(2)}} = ${v_axit_goc.toFixed(2)}\\text{ mL}`,
         result: `N_gốc = ${n_goc.toFixed(2)} N, V_axit_goc = ${v_axit_goc.toFixed(2)} mL`
       },
       {
         title: "3. Thí nghiệm 5: Chuẩn độ xác định nồng độ thực tế & Sai số tương đối",
         dataOrigin: `Pipet $V_{\\text{HCl}} = ${v_hcl_pipet.toFixed(2)}\\text{ mL}$, dung dịch chuẩn $\\text{NaOH } ${n_naoh.toFixed(4)}\\text{ N}$, đọc buret: ${v1.toFixed(2)}, ${v2.toFixed(2)}, ${v3.toFixed(2)}\\text{ mL}$`,
-        formula: "\\overline{V}_{\\text{NaOH}} = \\frac{V_1 + V_2 + V_3}{3}; \quad N_{\\text{HCl, TN}} = \\frac{N_{\\text{NaOH}} \times \\overline{V}_{\\text{NaOH}}}{V_{\\text{HCl}}}; \quad \\varepsilon\\% = \\frac{|N_{\\text{cần}} - N_{\\text{TN}}|}{N_{\\text{cần}}} \times 100\\%",
-        substituted: `\\overline{V}_{\\text{NaOH}} = ${v_naoh_tb.toFixed(2)}\\text{ mL} \implies N_{\\text{HCl, TN}} = \\frac{${n_naoh.toFixed(4)} \times ${v_naoh_tb.toFixed(2)}}{${v_hcl_pipet.toFixed(2)}} = ${n_hcl_tn.toFixed(4)}\\text{ N} \implies \\varepsilon\\% = ${error_pct.toFixed(2)}\\%`,
+        formula: "\\overline{V}_{\\text{NaOH}} = \\frac{V_1 + V_2 + V_3}{3}; \\quad N_{\\text{HCl, TN}} = \\frac{N_{\\text{NaOH}} \\times \\overline{V}_{\\text{NaOH}}}{V_{\\text{HCl}}}; \\quad \\varepsilon\\% = \\frac{|N_{\\text{chuan}} - N_{\\text{TN}}|}{N_{\\text{chuan}}} \\times 100\\%",
+        substituted: `\\overline{V}_{\\text{NaOH}} = ${v_naoh_tb.toFixed(2)}\\text{ mL} \\implies N_{\\text{HCl, TN}} = \\frac{${n_naoh.toFixed(4)} \\times ${v_naoh_tb.toFixed(2)}}{${v_hcl_pipet.toFixed(2)}} = ${n_hcl_tn.toFixed(4)}\\text{ N} \\implies \\varepsilon\\% = ${error_pct.toFixed(2)}\\%`,
         result: `N_HCl(TN) = ${n_hcl_tn.toFixed(4)} N (Sai số: ${error_pct.toFixed(2)}%)`
       },
       {
         title: "4. Hiệu chỉnh nhiệt độ cho tỉ khối đọc trên Phù kế",
         dataOrigin: `Phù kế chuẩn $20^\\circ\\text{C}$, nhiệt độ phòng đo thực tế $t = ${tempC.toFixed(1)}^\\circ\\text{C}$, $d_t = ${d_t.toFixed(3)}\\text{ g/mL}$`,
-        formula: "d_{20} = d_t + \\alpha \times (t - 20) \quad (\\alpha \\approx 0{,}0003\\text{ g}/(\\text{mL}\\cdot^\\circ\\text{C}))",
-        substituted: `d_{20} = ${d_t.toFixed(3)} + 0{,}0003 \times (${tempC.toFixed(1)} - 20) = ${d_20.toFixed(4)}\\text{ g/mL}`,
+        formula: "d_{20} = d_t + \\alpha \\times (t - 20) \\quad (\\alpha \\approx 0{,}0003\\text{ g}/(\\text{mL}\\cdot^\\circ\\text{C}))",
+        substituted: `d_{20} = ${d_t.toFixed(3)} + 0{,}0003 \\times (${tempC.toFixed(1)} - 20) = ${d_20.toFixed(4)}\\text{ g/mL}`,
         result: `d_20 = ${d_20.toFixed(4)} g/mL`
       },
       {
         title: "5. Mô hình Hóa lý nâng cao: Sai số chỉ thị Phenolphthalein & Hệ số hoạt độ ion",
         dataOrigin: "Cân bằng ion tại điểm tương đương, $pT = 8{,}2$, phương trình mở rộng Debye-Hückel",
-        formula: "\\Delta_{\\text{titr}}\\% = \\frac{10^{-(14-pT)} - 10^{-pT}}{C_{\\text{equiv}}} \times 100\\%; \quad \\log_{10} \\gamma_{\\pm} = -\\frac{0{,}509 \\sqrt{I}}{1 + 1{,}32 \\sqrt{I}} + 0{,}1 I",
-        substituted: `\\Delta_{\\text{titr}}\\% = +${delta_titr_pct.toFixed(4)}\\% \implies \\text{Lượng kiềm dư chuyển màu cực nhỏ}; \quad \\gamma_{\\pm} = ${gamma_pm.toFixed(3)}`,
+        formula: "\\Delta_{\\text{titr}}\\% = \\frac{10^{-(14-pT)} - 10^{-pT}}{C_{\\text{equiv}}} \\times 100\\%; \\quad \\log_{10} \\gamma_{\\pm} = -\\frac{0{,}509 \\sqrt{I}}{1 + 1{,}32 \\sqrt{I}} + 0{,}1 I",
+        substituted: `\\Delta_{\\text{titr}}\\% = +${delta_titr_pct.toFixed(4)}\\% \\implies \\gamma_{\\pm} = ${gamma_pm.toFixed(3)}`,
         result: `Δ_chỉ thị = +${delta_titr_pct.toFixed(4)}%, γ_± = ${gamma_pm.toFixed(3)}`
       }
     ];
@@ -4363,39 +4363,40 @@ $$F(C_x) = \\lg\\left[\\frac{C_{\\text{H}^+}(C_A - C_x)}{C_A(C_{\\text{H}^+} + C
       {
         title: "1. Số mol không khí khô nguồn ($n_{kk}$) tại mốc chuẩn thấp ($5^\\circ\\text{C}$)",
         dataOrigin: `Áp kế phòng $P_{kk} = ${p_atm.toFixed(1)}\\text{ mmHg}$, $t_0 = ${t0_c.toFixed(1)}^\\circ\\text{C} \\implies T_0 = ${T0.toFixed(2)}\\text{ K}$, $V_0 = ${v0_ml.toFixed(2)}\\text{ mL}$`,
-        formula: "n_{kk} = \\frac{P_{kk} \\times V_0}{62400 \\times T_0} \quad (\\text{với } R = 62400\\text{ mL}\\cdot\\text{mmHg}/(\\text{mol}\\cdot\\text{K}))",
-        substituted: `n_{kk} = \\frac{${p_atm.toFixed(1)} \times ${v0_ml.toFixed(2)}}{62400 \times ${T0.toFixed(2)}} = ${(n_kk * 10000).toFixed(3)} \times 10^{-4}\\text{ mol}`,
+        formula: "n_{kk} = \\frac{P_{kk} \\times V_0}{62400 \\times T_0} \\quad (R = 62400\\text{ mL}\\cdot\\text{mmHg}/(\\text{mol}\\cdot\\text{K}))",
+        substituted: `n_{kk} = \\frac{${p_atm.toFixed(1)} \\times ${v0_ml.toFixed(2)}}{62400 \\times ${T0.toFixed(2)}} = ${(n_kk * 10000).toFixed(3)} \\times 10^{-4}\\text{ mol}`,
         result: `${(n_kk * 10000).toFixed(3)} × 10⁻⁴ mol`
       },
       {
         title: "2. Phân tích Áp suất riêng phần Dalton và Tuyến tính hóa theo Nhiệt độ",
         dataOrigin: "Bảo toàn số mol khí khô giãn nở nhiệt và cân bằng pha hơi nước bão hòa",
-        formula: "P_{\\text{air}, T_i} = P_{kk} \\times \\frac{V_0}{V_i} \\times \\frac{T_i}{T_0}; \quad P_{H_2O, T_i} = P_{kk} - P_{\\text{air}, T_i}; \quad Y_i = \\lg(P_{H_2O, T_i})",
-        substituted: `\\text{Ví dụ tại } 75^\\circ\\text{C}: P_{\\text{air}} = ${tableData[0].p_air}\\text{ mmHg} \implies P_{H_2O} = ${tableData[0].p_h2o}\\text{ mmHg} \implies \\lg P = ${tableData[0].lg_p}`,
+        formula: "P_{\\text{air}, T_i} = P_{kk} \\times \\frac{V_0}{V_i} \\times \\frac{T_i}{T_0}; \\quad P_{H_2O, T_i} = P_{kk} - P_{\\text{air}, T_i}; \\quad Y_i = \\lg(P_{H_2O, T_i})",
+        substituted: `\\text{Tại } 75^\\circ\\text{C}: P_{\\text{air}} = ${tableData[0].p_air}\\text{ mmHg} \\implies P_{H_2O} = ${tableData[0].p_h2o}\\text{ mmHg} \\implies \\lg P = ${tableData[0].lg_p}`,
         result: `X_1 = ${tableData[0].inv_T} K⁻¹, Y_1 = ${tableData[0].lg_p}`
       },
       {
         title: "3. Hồi quy Tuyến tính Bình phương tối thiểu & Hệ số góc ($a$)",
         dataOrigin: `Dải ${N} mốc thực nghiệm từ $75^\\circ\\text{C}$ xuống $50^\\circ\\text{C}$, lập bảng tổng $\\sum X, \\sum Y, \\sum X^2, \\sum XY$`,
-        formula: "a = \\frac{N \\sum(X_i Y_i) - (\\sum X_i)(\\sum Y_i)}{N \\sum X_i^2 - (\\sum X_i)^2}; \quad b = \\frac{\\sum Y_i - a \\sum X_i}{N}",
-        substituted: `a = ${a.toFixed(1)}\\text{ K}, \quad b = ${b.toFixed(3)} \implies Y = ${a.toFixed(1)} X + ${b.toFixed(3)} \quad (R^2 = ${r2.toFixed(4)})`,
+        formula: "a = \\frac{N \\sum(X_i Y_i) - (\\sum X_i)(\\sum Y_i)}{N \\sum X_i^2 - (\\sum X_i)^2}; \\quad b = \\frac{\\sum Y_i - a \\sum X_i}{N}",
+        substituted: `a = ${a.toFixed(1)}\\text{ K}; \\quad b = ${b.toFixed(3)} \\implies Y = ${a.toFixed(1)} X + ${b.toFixed(3)} \\quad (R^2 = ${r2.toFixed(4)})`,
         result: `a = ${a.toFixed(1)} K, R² = ${r2.toFixed(4)}`
       },
       {
         title: "4. Enthalpy bay hơi mol ($\\Delta H_{\\text{bh}}$) và Đánh giá sai số",
         dataOrigin: "Phương trình Clausius - Clapeyron tích phân & Mốc chuẩn lý thuyết $43{,}00\\text{ kJ/mol}$",
-        formula: "\\Delta H_{\\text{bh}} = -2{,}303 \\times R \\times a = -19{,}147 \\times a\\text{ (J/mol)}; \quad \\varepsilon\\% = \\frac{|\\Delta H_{\\text{bh}} - 43{,}00|}{43{,}00} \times 100\\%",
-        substituted: `\\Delta H_{\\text{bh}} = -19{,}147 \times (${a.toFixed(1)}) = ${delta_h_j.toFixed(0)}\\text{ J/mol} = ${delta_h_kj.toFixed(2)}\\text{ kJ/mol} \implies \\varepsilon\\% = ${error_pct.toFixed(2)}\\%`,
+        formula: "\\Delta H_{\\text{bh}} = -2{,}303 \\times R \\times a = -19{,}147 \\times a\\text{ (J/mol)}; \\quad \\varepsilon\\% = \\frac{|\\Delta H_{\\text{bh}} - 43{,}00|}{43{,}00} \\times 100\\%",
+        substituted: `\\Delta H_{\\text{bh}} = -19{,}147 \\times (${a.toFixed(1)}) = ${delta_h_j.toFixed(0)}\\text{ J/mol} = ${delta_h_kj.toFixed(2)}\\text{ kJ/mol} \\implies \\varepsilon\\% = ${error_pct.toFixed(2)}\\%`,
         result: `ΔH_bh = ${delta_h_kj.toFixed(2)} kJ/mol (Sai số: ${error_pct.toFixed(2)}%)`
       },
       {
         title: "5. Mô hình Hóa lý nâng cao: Áp suất thủy tĩnh, Độ hoạt năng Fugacity & Entropy",
         dataOrigin: "Laplace-Torricelli capillary, Virial EOS hơi nước và định luật Trouton",
-        formula: "P_{\\text{hyd, max}} = \\frac{\\Delta h_{\\text{max}}}{13{,}6}; \quad \\phi \\approx \\exp\\left(\\frac{B P}{R T}\\right); \quad \\Delta S_{\\text{bh}}^0 = \\frac{\\Delta H_{\\text{bh}}}{373{,}15}",
-        substituted: `P_{\\text{hyd}} = ${p_hyd_max.toFixed(2)}\\text{ mmHg} (${hyd_ratio_pct.toFixed(2)}\\% P_{kk}); \quad \\phi \\approx ${fugacity_coeff.toFixed(3)}; \quad \\Delta S^0 = ${delta_S_vap.toFixed(1)}\\text{ J}/(\\text{mol}\\cdot\\text{K})`,
+        formula: "P_{\\text{hyd, max}} = \\frac{\\Delta h_{\\text{max}}}{13{,}6}; \\quad \\phi \\approx \\exp\\left(\\frac{B P}{R T}\\right); \\quad \\Delta S_{\\text{bh}}^0 = \\frac{\\Delta H_{\\text{bh}}}{373{,}15}",
+        substituted: `P_{\\text{hyd}} = ${p_hyd_max.toFixed(2)}\\text{ mmHg} (${hyd_ratio_pct.toFixed(2)}\\% P_{kk}); \\quad \\phi \\approx ${fugacity_coeff.toFixed(3)}; \\quad \\Delta S^0 = ${delta_S_vap.toFixed(1)}\\text{ J}/(\\text{mol}\\cdot\\text{K})`,
         result: `P_hyd = ${p_hyd_max.toFixed(2)} mmHg (~1.1%), φ ≈ ${fugacity_coeff.toFixed(3)}, ΔS = ${delta_S_vap.toFixed(1)} J/(mol·K)`
       }
     ];
+
 
     const polyaGraphSteps = {
       title: "Hướng Dẫn Vẽ Đồ Thị Clausius - Clapeyron (lg P theo 1/T) - 4 Bước George Pólya",
@@ -4705,7 +4706,7 @@ const ChartManager = {
   }
 ,
 
-  // 4. Vẽ đồ thị Clausius - Clapeyron: lg P_H2O theo 1/T (Bài 11 Hóa lý)
+  // 4. Vẽ đồ thị Clausius - Clapeyron: lg P_H2O theo 1/T (Bài 11)
   renderClausiusClapeyronChart(canvasId, calcResult) {
     const canvas = document.getElementById(canvasId);
     if (!canvas || typeof Chart === 'undefined') return;
@@ -4717,14 +4718,23 @@ const ChartManager = {
     const b = parseFloat(calcResult.b) || 9.09;
 
     let minX = 0.00280, maxX = 0.00315;
+    let minY = 1.90, maxY = 2.55;
     if (pts.length > 0) {
       const xs = pts.map(p => p.x);
-      minX = Math.min(...xs) - 0.00005;
-      maxX = Math.max(...xs) + 0.00005;
+      const ys = pts.map(p => p.y);
+      minX = Math.min(...xs);
+      maxX = Math.max(...xs);
+      minY = Math.min(...ys);
+      maxY = Math.max(...ys);
     }
+    const padX = (maxX - minX) * 0.15 || 0.00005;
+    const padY = (maxY - minY) * 0.15 || 0.08;
+    const plotMinX = minX - padX;
+    const plotMaxX = maxX + padX;
+
     const lineData = [
-      { x: minX, y: a * minX + b },
-      { x: maxX, y: a * maxX + b }
+      { x: plotMinX, y: a * plotMinX + b },
+      { x: plotMaxX, y: a * plotMaxX + b }
     ];
 
     const ctx = canvas.getContext('2d');
@@ -4737,16 +4747,17 @@ const ChartManager = {
             data: pts,
             backgroundColor: colors.rose,
             borderColor: colors.rose,
-            pointRadius: 6,
-            pointHoverRadius: 8,
+            pointRadius: 7,
+            pointHoverRadius: 9,
             showLine: false
           },
           {
             label: `Hồi quy: Y = ${a.toFixed(1)}X + ${b.toFixed(3)} (R² = ${calcResult.r2}, ΔH_bh = ${calcResult.delta_h_kj} kJ/mol)`,
             data: lineData,
             type: 'line',
+            showLine: true,
             borderColor: colors.primary,
-            borderWidth: 2,
+            borderWidth: 2.5,
             borderDash: [5, 5],
             fill: false,
             pointRadius: 0
@@ -4767,21 +4778,33 @@ const ChartManager = {
           tooltip: {
             callbacks: {
               label: function(ctx) {
-                return `1/T = ${ctx.parsed.x.toFixed(6)} K⁻¹, lg P = ${ctx.parsed.y.toFixed(4)}`;
+                return `1/T = ${Number(ctx.parsed.x).toFixed(6)} K⁻¹, lg P = ${Number(ctx.parsed.y).toFixed(4)}`;
               }
             }
           }
         },
         scales: {
           x: {
+            type: 'linear',
+            min: plotMinX,
+            max: plotMaxX,
             title: { display: true, text: 'X = 1/T (K⁻¹)', color: colors.textColor },
             grid: { color: colors.gridColor },
-            ticks: { color: colors.textColor }
+            ticks: {
+              color: colors.textColor,
+              callback: function(val) { return Number(val).toFixed(5); }
+            }
           },
           y: {
+            type: 'linear',
+            min: Math.max(0, minY - padY),
+            max: maxY + padY,
             title: { display: true, text: 'Y = lg P_H2O (mmHg)', color: colors.textColor },
             grid: { color: colors.gridColor },
-            ticks: { color: colors.textColor }
+            ticks: {
+              color: colors.textColor,
+              callback: function(val) { return Number(val).toFixed(2); }
+            }
           }
         }
       }
@@ -6819,23 +6842,23 @@ function renderCalculatorTab(mod) {
         </div>
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label"><span><b>$V_{\\text{cần}}$:</b> Thể tích dd loãng cần pha</span> <span class="unit">(mL)</span></label>
+            <label class="form-label"><span><b>$V_2$ (cần pha):</b> Thể tích dd loãng cần pha</span> <span class="unit">(mL)</span></label>
             <input type="number" step="10" class="form-control hdc8-inp" data-field="v_can" value="${data.v_can || 250.0}">
           </div>
           <div class="form-group">
-            <label class="form-label"><span><b>$C_{\\text{sau}}\\%$:</b> Nồng độ % mong muốn</span> <span class="unit">(%)</span></label>
+            <label class="form-label"><span><b>$C_2$ (mong muốn):</b> Nồng độ % mong muốn</span> <span class="unit">(%)</span></label>
             <input type="number" step="0.5" class="form-control hdc8-inp" data-field="c_sau" value="${data.c_sau || 7.0}">
           </div>
           <div class="form-group">
-            <label class="form-label"><span><b>$C_{\\text{đầu}}\\%$:</b> Nồng độ % axit HCl gốc</span> <span class="unit">(%)</span></label>
+            <label class="form-label"><span><b>$C_1$ (axit gốc):</b> Nồng độ % axit HCl gốc</span> <span class="unit">(%)</span></label>
             <input type="number" step="0.5" class="form-control hdc8-inp" data-field="c_dau" value="${data.c_dau || 10.0}">
           </div>
           <div class="form-group">
-            <label class="form-label"><span><b>$d_{\\text{gốc}}$:</b> Tỉ khối axit gốc phù kế</span> <span class="unit">(g/mL)</span></label>
+            <label class="form-label"><span><b>$d_1$ (tỉ khối gốc):</b> Tỉ khối axit gốc phù kế</span> <span class="unit">(g/mL)</span></label>
             <input type="number" step="0.001" class="form-control hdc8-inp" data-field="d_goc" value="${data.d_goc || 1.047}">
           </div>
           <div class="form-group">
-            <label class="form-label"><span><b>$d_{\\text{sau}}$:</b> Tỉ khối dd sau pha phù kế</span> <span class="unit">(g/mL)</span></label>
+            <label class="form-label"><span><b>$d_2$ (tỉ khối sau):</b> Tỉ khối dd sau pha phù kế</span> <span class="unit">(g/mL)</span></label>
             <input type="number" step="0.001" class="form-control hdc8-inp" data-field="d_sau" value="${data.d_sau || 1.033}">
           </div>
         </div>
@@ -6845,19 +6868,19 @@ function renderCalculatorTab(mod) {
         </div>
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label"><span><b>$V_{\\text{định mức}}$:</b> Thể tích bình định mức</span> <span class="unit">(mL)</span></label>
+            <label class="form-label"><span><b>$V_{\\text{dm}}$:</b> Thể tích bình định mức</span> <span class="unit">(mL)</span></label>
             <input type="number" step="10" class="form-control hdc8-inp" data-field="v_dinh_muc" value="${data.v_dinh_muc || 100.0}">
           </div>
           <div class="form-group">
-            <label class="form-label"><span><b>$N_{\\text{cần}}$:</b> Nồng độ đương lượng mục tiêu</span> <span class="unit">(N)</span></label>
+            <label class="form-label"><span><b>$N_2$ (mục tiêu):</b> Nồng độ đương lượng mục tiêu</span> <span class="unit">(N)</span></label>
             <input type="number" step="0.001" class="form-control hdc8-inp" data-field="n_can" value="${data.n_can || 0.1000}">
           </div>
           <div class="form-group">
-            <label class="form-label"><span><b>$C_{\\text{gốc}}\\%$:</b> Nồng độ % HCl gốc</span> <span class="unit">(%)</span></label>
+            <label class="form-label"><span><b>$C_{\\text{goc}}\\%$:</b> Nồng độ % HCl gốc</span> <span class="unit">(%)</span></label>
             <input type="number" step="0.5" class="form-control hdc8-inp" data-field="c_goc" value="${data.c_goc || 17.0}">
           </div>
           <div class="form-group">
-            <label class="form-label"><span><b>$d_{\\text{gốc 17}}$:</b> Tỉ khối HCl 17%</span> <span class="unit">(g/mL)</span></label>
+            <label class="form-label"><span><b>$d_{\\text{goc}}$:</b> Tỉ khối HCl 17%</span> <span class="unit">(g/mL)</span></label>
             <input type="number" step="0.001" class="form-control hdc8-inp" data-field="d_goc_17" value="${data.d_goc_17 || 1.083}">
           </div>
         </div>
@@ -7041,6 +7064,12 @@ function renderCalculatorTab(mod) {
   bindCalculatorInputs(mod.id);
   renderMath(container);
 
+  if (mod.id === "hdc11" || mod.id === "hl11" || mod.id === "hl4" || mod.id === "hl9" || mod.id === "hl10") {
+    setTimeout(() => {
+      triggerChartRedraw();
+    }, 50);
+  }
+
   if (activeId) {
     const el = document.getElementById(activeId);
     if (el) {
@@ -7193,7 +7222,8 @@ function bindCalculatorInputs(modId) {
   document.getElementById("hl10-v0-t2")?.addEventListener("input", (e) => {
     AppState.hl10.v0_t2 = parseFloat(e.target.value) || 18.5;
     triggerUpdate();
-  
+  });
+
   // HDC8 inputs
   container.querySelectorAll(".hdc8-inp").forEach(inp => {
     inp.addEventListener("input", (e) => {
@@ -7205,7 +7235,7 @@ function bindCalculatorInputs(modId) {
     });
   });
 
-  // HL11 inputs
+  // HL11 / HDC11 inputs
   container.querySelectorAll(".hl11-inp").forEach(inp => {
     inp.addEventListener("input", (e) => {
       const field = e.target.getAttribute("data-field");
@@ -7223,7 +7253,6 @@ function bindCalculatorInputs(modId) {
       triggerUpdate();
     });
   });
-});
 }
 
 // Vẽ lại biểu đồ khi chuyển tab hoặc đổi dữ liệu
