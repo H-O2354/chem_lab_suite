@@ -1452,6 +1452,61 @@ body {
   font-family: KaTeX_Math, 'Times New Roman', serif;
 }
 
+/* Solution Preparation Switcher Pills & Matrix UI */
+.switcher-pill-group {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-secondary);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-line);
+}
+.switcher-pill {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.switcher-pill:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+}
+.switcher-pill.active {
+  background: var(--ink-blue);
+  color: #ffffff !important;
+  box-shadow: 0 2px 5px rgba(0, 51, 102, 0.25);
+}
+.triplet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.triplet-box {
+  background: var(--bg-sidebar);
+  border: 1px solid var(--border-line);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+}
+.triplet-box .label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.triplet-box .val {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink-blue);
+}
+
+
   </style>
 </head>
 <body>
@@ -2497,37 +2552,417 @@ const LAB_MODULES = [
 // Đầy đủ hóa chất và thuốc thử tương thích với 11 bài thực hành Hóa Đại Cương & Hóa Lý
 
 const REAGENTS_SOLID = [
-  { name: "Natri hidroxit", formulaText: "NaOH", formulaLatex: "\\text{NaOH}", mw: 40.00, z: 1, desc: "Chất rắn hút ẩm mạnh, dùng trong chuẩn độ axit-bazơ (Bài 8 HĐC, Bài 9 Hóa lý)" },
-  { name: "Natri clorua", formulaText: "NaCl", formulaLatex: "\\text{NaCl}", mw: 58.44, z: 1, desc: "Muối ăn tinh khiết (Kỹ thuật 2)" },
-  { name: "Kali nitrat", formulaText: "KNO₃", formulaLatex: "\\text{KNO}_3", mw: 101.10, z: 1, desc: "Chất chuẩn nhiệt lượng kế xác định hệ số W (Bài 1 Hóa lý)" },
-  { name: "Đồng(II) sunfat ngậm 5 nước", formulaText: "CuSO₄·5H₂O", formulaLatex: "\\text{CuSO}_4\\cdot 5\\text{H}_2\\text{O}", mw: 249.68, z: 2, desc: "Tinh thể xanh lam dùng đo nhiệt hòa tan & hydrat hóa (Bài 1 Hóa lý)" },
-  { name: "Đồng(II) sunfat khan", formulaText: "CuSO₄", formulaLatex: "\\text{CuSO}_4", mw: 159.61, z: 2, desc: "Bột màu xám trắng hút ẩm cực mạnh (Bài 1 Hóa lý)" },
-  { name: "Natri thiosunfat ngậm 5 nước", formulaText: "Na₂S₂O₃·5H₂O", formulaLatex: "\\text{Na}_2\\text{S}_2\\text{O}_3\\cdot 5\\text{H}_2\\text{O}", mw: 248.18, z: 1, desc: "Chất chuẩn trong phép chuẩn độ Iod (Bài 3 & 10 Hóa lý)" },
-  { name: "Iot nguyên chất tinh thể", formulaText: "I₂", formulaLatex: "\\text{I}_2", mw: 253.81, z: 2, desc: "Tinh thể tím đen thăng hoa (E = 126.90 g/eq), dùng trong Bài 3 & 10 Hóa lý" },
-  { name: "Kali iodua", formulaText: "KI", formulaLatex: "\\text{KI}", mw: 166.00, z: 1, desc: "Thuốc thử tạo phức KI3 hòa tan Iot (Bài 3 & 10 Hóa lý)" },
-  { name: "Axit oxalic ngậm 2 nước", formulaText: "H₂C₂O₄·2H₂O", formulaLatex: "\\text{H}_2\\text{C}_2\\text{O}_4\\cdot 2\\text{H}_2\\text{O}", mw: 126.07, z: 2, desc: "Chất chuẩn gốc định phân bazơ NaOH và KMnO4 (Bài 8 HĐC)" },
-  { name: "Natri cacbonat khan", formulaText: "Na₂CO₃", formulaLatex: "\\text{Na}_2\\text{CO}_3", mw: 105.99, z: 2, desc: "Chất chuẩn gốc định phân axit HCl" },
-  { name: "Natri hidrocacbonat", formulaText: "NaHCO₃", formulaLatex: "\\text{NaHCO}_3", mw: 84.01, z: 1, desc: "Bột trắng kiềm nhẹ dập tắt phản ứng iốt hóa axeton (Bài 10 Hóa lý)" },
-  { name: "Kali pemanganat", formulaText: "KMnO₄", formulaLatex: "\\text{KMnO}_4", mw: 158.03, z: 5, desc: "Chất oxi hóa mạnh trong môi trường axit (z=5, E = 31.60 g/eq)" },
-  { name: "Bari clorua ngậm 2 nước", formulaText: "BaCl₂·2H₂O", formulaLatex: "\\text{BaCl}_2\\cdot 2\\text{H}_2\\text{O}", mw: 244.26, z: 2, desc: "Thuốc thử tạo kết tủa BaSO4 nhận biết ion sunfat" },
-  { name: "Magiê kim loại tinh khiết", formulaText: "Mg", formulaLatex: "\\text{Mg}", mw: 24.31, z: 2, desc: "Mảnh/dải kim loại trắng bạc xác định đương lượng (Bài 7 HĐC)" },
-  { name: "Chỉ thị Phenolphthalein", formulaText: "C₂₀H₁₄O₄", formulaLatex: "\\text{C}_{20}\\text{H}_{14}\\text{O}_4", mw: 318.32, z: 1, desc: "Chỉ thị axit-bazơ chuyển hồng ở pH 8.2 (pha 0.1% - 1% trong cồn)" },
-  { name: "Chỉ thị Metyl da cam", formulaText: "C₁₄H₁₄N₃NaO₃S", formulaLatex: "\\text{C}_{14}\\text{H}_{14}\\text{N}_3\\text{NaO}_3\\text{S}", mw: 327.33, z: 1, desc: "Chỉ thị axit-bazơ chuyển vàng ở pH 3.1 - 4.4 (pha 0.1% trong nước)" }
+  {
+    name: "Natri hidroxit",
+    formulaText: "NaOH",
+    formulaLatex: "\\text{NaOH}",
+    mw: 40.00,
+    mw_anhydrous: 40.00,
+    mw_hydrated: 40.00,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 1,
+    desc: "Chất rắn hút ẩm mạnh, dùng trong chuẩn độ axit-bazơ (Bài 8 HĐC, Bài 9 Hóa lý)"
+  },
+  {
+    name: "Natri clorua",
+    formulaText: "NaCl",
+    formulaLatex: "\\text{NaCl}",
+    mw: 58.44,
+    mw_anhydrous: 58.44,
+    mw_hydrated: 58.44,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 1,
+    desc: "Muối ăn tinh khiết (Kỹ thuật 2)"
+  },
+  {
+    name: "Axit oxalic ngậm 2 nước",
+    formulaText: "H₂C₂O₄·2H₂O",
+    formulaLatex: "\\text{H}_2\\text{C}_2\\text{O}_4\\cdot 2\\text{H}_2\\text{O}",
+    mw: 126.07,
+    mw_anhydrous: 90.03,
+    mw_hydrated: 126.07,
+    is_hydrated: true,
+    water_moles: 2,
+    z: 2,
+    desc: "Chất chuẩn gốc định phân bazơ NaOH và KMnO4 (z = 2, E = 63.03 g/eq, Bài 8 HĐC)"
+  },
+  {
+    name: "Canxi clorua ngậm 6 nước",
+    formulaText: "CaCl₂·6H₂O",
+    formulaLatex: "\\text{CaCl}_2\\cdot 6\\text{H}_2\\text{O}",
+    mw: 219.08,
+    mw_anhydrous: 110.98,
+    mw_hydrated: 219.08,
+    is_hydrated: true,
+    water_moles: 6,
+    z: 2,
+    desc: "Tinh thể ngậm nước pha dung dịch CaCl2 30% (Bài 8 HĐC, Bài thực hành pha chế)"
+  },
+  {
+    name: "Canxi clorua khan",
+    formulaText: "CaCl₂",
+    formulaLatex: "\\text{CaCl}_2",
+    mw: 110.98,
+    mw_anhydrous: 110.98,
+    mw_hydrated: 110.98,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 2,
+    desc: "Chất hút ẩm mạnh, dùng pha dung dịch canxi clorua chuẩn"
+  },
+  {
+    name: "Đồng(II) sunfat ngậm 5 nước",
+    formulaText: "CuSO₄·5H₂O",
+    formulaLatex: "\\text{CuSO}_4\\cdot 5\\text{H}_2\\text{O}",
+    mw: 249.68,
+    mw_anhydrous: 159.61,
+    mw_hydrated: 249.68,
+    is_hydrated: true,
+    water_moles: 5,
+    z: 2,
+    desc: "Tinh thể xanh lam dùng đo nhiệt hòa tan & hydrat hóa (Bài 1 Hóa lý)"
+  },
+  {
+    name: "Đồng(II) sunfat khan",
+    formulaText: "CuSO₄",
+    formulaLatex: "\\text{CuSO}_4",
+    mw: 159.61,
+    mw_anhydrous: 159.61,
+    mw_hydrated: 159.61,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 2,
+    desc: "Bột màu xám trắng hút ẩm cực mạnh (Bài 1 Hóa lý)"
+  },
+  {
+    name: "Kali nitrat",
+    formulaText: "KNO₃",
+    formulaLatex: "\\text{KNO}_3",
+    mw: 101.10,
+    mw_anhydrous: 101.10,
+    mw_hydrated: 101.10,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 1,
+    desc: "Chất chuẩn nhiệt lượng kế xác định hệ số W (Bài 1 Hóa lý)"
+  },
+  {
+    name: "Natri thiosunfat ngậm 5 nước",
+    formulaText: "Na₂S₂O₃·5H₂O",
+    formulaLatex: "\\text{Na}_2\\text{S}_2\\text{O}_3\\cdot 5\\text{H}_2\\text{O}",
+    mw: 248.18,
+    mw_anhydrous: 158.11,
+    mw_hydrated: 248.18,
+    is_hydrated: true,
+    water_moles: 5,
+    z: 1,
+    desc: "Chất chuẩn trong phép chuẩn độ Iod (Bài 3 & 10 Hóa lý)"
+  },
+  {
+    name: "Iot nguyên chất tinh thể",
+    formulaText: "I₂",
+    formulaLatex: "\\text{I}_2",
+    mw: 253.81,
+    mw_anhydrous: 253.81,
+    mw_hydrated: 253.81,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 2,
+    desc: "Tinh thể tím đen thăng hoa (E = 126.90 g/eq), dùng trong Bài 3 & 10 Hóa lý"
+  },
+  {
+    name: "Kali iodua",
+    formulaText: "KI",
+    formulaLatex: "\\text{KI}",
+    mw: 166.00,
+    mw_anhydrous: 166.00,
+    mw_hydrated: 166.00,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 1,
+    desc: "Thuốc thử tạo phức KI3 hòa tan Iot (Bài 3 & 10 Hóa lý)"
+  },
+  {
+    name: "Natri cacbonat khan",
+    formulaText: "Na₂CO₃",
+    formulaLatex: "\\text{Na}_2\\text{CO}_3",
+    mw: 105.99,
+    mw_anhydrous: 105.99,
+    mw_hydrated: 105.99,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 2,
+    desc: "Chất chuẩn gốc định phân axit HCl (z = 2, E = 53.00 g/eq)"
+  },
+  {
+    name: "Natri hidrocacbonat",
+    formulaText: "NaHCO₃",
+    formulaLatex: "\\text{NaHCO}_3",
+    mw: 84.01,
+    mw_anhydrous: 84.01,
+    mw_hydrated: 84.01,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 1,
+    desc: "Bột trắng kiềm nhẹ dập tắt phản ứng iốt hóa axeton (Bài 10 Hóa lý)"
+  },
+  {
+    name: "Kali pemanganat",
+    formulaText: "KMnO₄",
+    formulaLatex: "\\text{KMnO}_4",
+    mw: 158.03,
+    mw_anhydrous: 158.03,
+    mw_hydrated: 158.03,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 5,
+    desc: "Chất oxi hóa mạnh trong môi trường axit (z=5, E = 31.60 g/eq)"
+  },
+  {
+    name: "Bari clorua ngậm 2 nước",
+    formulaText: "BaCl₂·2H₂O",
+    formulaLatex: "\\text{BaCl}_2\\cdot 2\\text{H}_2\\text{O}",
+    mw: 244.26,
+    mw_anhydrous: 208.23,
+    mw_hydrated: 244.26,
+    is_hydrated: true,
+    water_moles: 2,
+    z: 2,
+    desc: "Thuốc thử tạo kết tủa BaSO4 nhận biết ion sunfat"
+  },
+  {
+    name: "Sắt(II) sunfat ngậm 7 nước",
+    formulaText: "FeSO₄·7H₂O",
+    formulaLatex: "\\text{FeSO}_4\\cdot 7\\text{H}_2\\text{O}",
+    mw: 278.02,
+    mw_anhydrous: 151.91,
+    mw_hydrated: 278.02,
+    is_hydrated: true,
+    water_moles: 7,
+    z: 1,
+    desc: "Muối sắt ngậm nước dùng trong phép chuẩn độ pemanganat (z = 1)"
+  },
+  {
+    name: "Magiê kim loại tinh khiết",
+    formulaText: "Mg",
+    formulaLatex: "\\text{Mg}",
+    mw: 24.31,
+    mw_anhydrous: 24.31,
+    mw_hydrated: 24.31,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 2,
+    desc: "Mảnh/dải kim loại trắng bạc xác định đương lượng (Bài 7 HĐC)"
+  },
+  {
+    name: "Chỉ thị Phenolphthalein",
+    formulaText: "C₂₀H₁₄O₄",
+    formulaLatex: "\\text{C}_{20}\\text{H}_{14}\\text{O}_4",
+    mw: 318.32,
+    mw_anhydrous: 318.32,
+    mw_hydrated: 318.32,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 1,
+    desc: "Chỉ thị axit-bazơ chuyển hồng ở pH 8.2 (pha 0.1% - 1% trong cồn)"
+  },
+  {
+    name: "Chỉ thị Metyl da cam",
+    formulaText: "C₁₄H₁₄N₃NaO₃S",
+    formulaLatex: "\\text{C}_{14}\\text{H}_{14}\\text{N}_3\\text{NaO}_3\\text{S}",
+    mw: 327.33,
+    mw_anhydrous: 327.33,
+    mw_hydrated: 327.33,
+    is_hydrated: false,
+    water_moles: 0,
+    z: 1,
+    desc: "Chỉ thị axit-bazơ chuyển vàng ở pH 3.1 - 4.4 (pha 0.1% trong nước)"
+  }
 ];
 
 const REAGENTS_LIQUID = [
-  { name: "Axit clohidric đặc (HCl 37%)", formulaText: "HCl 37%", formulaLatex: "\\text{HCl 37\\%}", c_percent: 37.0, density: 1.19, mw: 36.46, z: 1, safety: "Axit bốc khói nồng nặc, ăn mòn da và niêm mạc, bắt buộc thao tác trong tủ hút" },
-  { name: "Axit clohidric phòng lab (HCl 17%)", formulaText: "HCl 17%", formulaLatex: "\\text{HCl 17\\%}", c_percent: 17.0, density: 1.083, mw: 36.46, z: 1, safety: "Dung dịch axit chuẩn bị sẵn để pha HCl 0.1 N (Bài 8 HĐC Thí nghiệm 4)" },
-  { name: "Axit clohidric loãng (HCl 10%)", formulaText: "HCl 10%", formulaLatex: "\\text{HCl 10\\%}", c_percent: 10.0, density: 1.047, mw: 36.46, z: 1, safety: "Dung dịch dùng pha loãng theo quy tắc đường chéo thành 7% (Bài 8 HĐC Thí nghiệm 1-3)" },
-  { name: "Axit sunfuric đặc (H₂SO₄ 98%)", formulaText: "H₂SO₄ 98%", formulaLatex: "\\text{H}_2\\text{SO}_4\\text{ 98\\%}", c_percent: 98.0, density: 1.84, mw: 98.08, z: 2, safety: "TỎA NHIỆT CỰC LỚN! LUÔN RÓT TỪ TỪ AXIT VÀO NƯỚC, TUYỆT ĐỐI KHÔNG ĐƯỢC RÓT NƯỚC VÀO AXIT ĐẶC!" },
-  { name: "Axit nitric đặc (HNO₃ 68%)", formulaText: "HNO₃ 68%", formulaLatex: "\\text{HNO}_3\\text{ 68\\%}", c_percent: 68.0, density: 1.40, mw: 63.01, z: 1, safety: "Axit bốc khói nâu độc (NO2), tính oxi hóa cực mạnh" },
-  { name: "Axit axetic băng (CH₃COOH 99.5%)", formulaText: "CH₃COOH 99.5%", formulaLatex: "\\text{CH}_3\\text{COOH 99,5\\%}", c_percent: 99.5, density: 1.05, mw: 60.05, z: 1, safety: "Mùi giấm xốc cay mắt, đông đặc ở < 16.6°C, dùng trong Bài 4 Hóa lý (hấp phụ)" },
-  { name: "Amoniac đặc (NH₃ 25%)", formulaText: "NH₃ 25%", formulaLatex: "\\text{NH}_3\\text{ 25\\%}", c_percent: 25.0, density: 0.91, mw: 17.03, z: 1, safety: "Khí NH3 bay hơi xốc mạnh làm cay mắt mũi, thao tác trong tủ hút" },
-  { name: "Dung dịch NaOH 40%", formulaText: "NaOH 40%", formulaLatex: "\\text{NaOH 40\\%}", c_percent: 40.0, density: 1.43, mw: 40.00, z: 1, safety: "Kiềm ăn da mạnh, sinh nhiệt khi hòa tan" },
-  { name: "Ethanol tuyệt đối (C₂H₅OH 99.7%)", formulaText: "C₂H₅OH 99.7%", formulaLatex: "\\text{C}_2\\text{H}_5\\text{OH 99,7\\%}", c_percent: 99.7, density: 0.789, mw: 46.07, z: 1, safety: "Chất lỏng dễ cháy, dễ bay hơi, dùng xác định khối lượng mol xy-lanh (Bài 5 HĐC)" },
-  { name: "Ethyl Acetate tinh khiết (CH₃COOC₂H₅ 99.5%)", formulaText: "CH₃COOC₂H₅ 99.5%", formulaLatex: "\\text{CH}_3\\text{COOC}_2\\text{H}_5\\text{ 99,5\\%}", c_percent: 99.5, density: 0.902, mw: 88.11, z: 1, safety: "Este dễ bắt cháy, mùi quả chín, dùng nghiên cứu động học thủy phân bậc nhất (Bài 9 Hóa lý)" },
-  { name: "Acetone tinh khiết (CH₃COCH₃ 99.5%)", formulaText: "CH₃COCH₃ 99.5%", formulaLatex: "\\text{CH}_3\\text{COCH}_3\\text{ 99,5\\%}", c_percent: 99.5, density: 0.784, mw: 58.08, z: 1, safety: "Dung môi bay hơi nhanh và rất dễ bắt cháy, dùng trong động học iốt hóa (Bài 10 Hóa lý)" },
-  { name: "Carbon Tetrachloride (CCl₄ 99.5%)", formulaText: "CCl₄ 99.5%", formulaLatex: "\\text{CCl}_4\\text{ 99,5\\%}", c_percent: 99.5, density: 1.594, mw: 153.82, z: 1, safety: "Dung môi hữu cơ nặng, độc đối với gan, bắt buộc thao tác trong tủ hút (Bài 3 Hóa lý)" }
+  {
+    name: "Axit clohidric đặc (HCl 37%)",
+    formulaText: "HCl 37%",
+    formulaLatex: "\\text{HCl 37\\%}",
+    c_percent: 37.0,
+    density: 1.19,
+    mw: 36.46,
+    z: 1,
+    safety: "Axit bốc khói nồng nặc, ăn mòn da và niêm mạc, bắt buộc thao tác trong tủ hút"
+  },
+  {
+    name: "Axit clohidric phòng lab (HCl 17%)",
+    formulaText: "HCl 17%",
+    formulaLatex: "\\text{HCl 17\\%}",
+    c_percent: 17.0,
+    density: 1.083,
+    mw: 36.46,
+    z: 1,
+    safety: "Dung dịch axit chuẩn bị sẵn để pha HCl 0.1 N (Bài 8 HĐC Thí nghiệm 4)"
+  },
+  {
+    name: "Axit clohidric loãng (HCl 10%)",
+    formulaText: "HCl 10%",
+    formulaLatex: "\\text{HCl 10\\%}",
+    c_percent: 10.0,
+    density: 1.047,
+    mw: 36.46,
+    z: 1,
+    safety: "Dung dịch dùng pha loãng theo quy tắc đường chéo thành 7% (Bài 8 HĐC Thí nghiệm 1-3)"
+  },
+  {
+    name: "Axit clohidric 1.0 M (HCl 1M)",
+    formulaText: "HCl 1.0 M",
+    formulaLatex: "\\text{HCl 1{,}0 M}",
+    c_percent: 3.59,
+    density: 1.016,
+    mw: 36.46,
+    z: 1,
+    safety: "Axit nồng độ 1.0 M dùng làm dung dịch mẹ pha loãng xúc tác (Bài 10 Hóa lý)"
+  },
+  {
+    name: "Axit sunfuric đặc (H₂SO₄ 98%)",
+    formulaText: "H₂SO₄ 98%",
+    formulaLatex: "\\text{H}_2\\text{SO}_4\\text{ 98\\%}",
+    c_percent: 98.0,
+    density: 1.84,
+    mw: 98.08,
+    z: 2,
+    safety: "TỎA NHIỆT CỰC LỚN! LUÔN RÓT TỪ TỪ AXIT VÀO NƯỚC, TUYỆT ĐỐI KHÔNG ĐƯỢC RÓT NƯỚC VÀO AXIT ĐẶC!"
+  },
+  {
+    name: "Axit sunfuric loãng (H₂SO₄ 10%)",
+    formulaText: "H₂SO₄ 10%",
+    formulaLatex: "\\text{H}_2\\text{SO}_4\\text{ 10\\%}",
+    c_percent: 10.0,
+    density: 1.066,
+    mw: 98.08,
+    z: 2,
+    safety: "Dung dịch axit dùng tạo môi trường axit trong chuẩn độ oxi hóa khử"
+  },
+  {
+    name: "Axit nitric đặc (HNO₃ 68%)",
+    formulaText: "HNO₃ 68%",
+    formulaLatex: "\\text{HNO}_3\\text{ 68\\%}",
+    c_percent: 68.0,
+    density: 1.40,
+    mw: 63.01,
+    z: 1,
+    safety: "Axit bốc khói nâu độc (NO2), tính oxi hóa cực mạnh"
+  },
+  {
+    name: "Axit axetic băng (CH₃COOH 99.5%)",
+    formulaText: "CH₃COOH 99.5%",
+    formulaLatex: "\\text{CH}_3\\text{COOH 99,5\\%}",
+    c_percent: 99.5,
+    density: 1.05,
+    mw: 60.05,
+    z: 1,
+    safety: "Mùi giấm xốc cay mắt, đông đặc ở < 16.6°C, dùng trong Bài 4 Hóa lý (hấp phụ)"
+  },
+  {
+    name: "Axit axetic 2.0 M (CH₃COOH 2M)",
+    formulaText: "CH₃COOH 2.0 M",
+    formulaLatex: "\\text{CH}_3\\text{COOH 2{,}0 M}",
+    c_percent: 11.84,
+    density: 1.014,
+    mw: 60.05,
+    z: 1,
+    safety: "Dung dịch mẹ 2.0 M dùng trong chuỗi pha loãng liên tiếp một nửa (Bài 4 Hóa lý)"
+  },
+  {
+    name: "Dung dịch Canxi clorua 40% (CaCl₂ 40%)",
+    formulaText: "CaCl₂ 40%",
+    formulaLatex: "\\text{CaCl}_2\\text{ 40\\%}",
+    c_percent: 40.0,
+    density: 1.396,
+    mw: 110.98,
+    z: 2,
+    safety: "Dung dịch mẹ đậm đặc dùng trong quy tắc đường chéo pha chế dung dịch 30% (Bài 8 HĐC)"
+  },
+  {
+    name: "Dung dịch Canxi clorua 20% (CaCl₂ 20%)",
+    formulaText: "CaCl₂ 20%",
+    formulaLatex: "\\text{CaCl}_2\\text{ 20\\%}",
+    c_percent: 20.0,
+    density: 1.178,
+    mw: 110.98,
+    z: 2,
+    safety: "Dung dịch dùng pha trộn đường chéo (Bài 8 HĐC)"
+  },
+  {
+    name: "Dung dịch NaOH 40%",
+    formulaText: "NaOH 40%",
+    formulaLatex: "\\text{NaOH 40\\%}",
+    c_percent: 40.0,
+    density: 1.43,
+    mw: 40.00,
+    z: 1,
+    safety: "Kiềm ăn da mạnh, sinh nhiệt khi hòa tan"
+  },
+  {
+    name: "Dung dịch NaOH 1.0 M",
+    formulaText: "NaOH 1.0 M",
+    formulaLatex: "\\text{NaOH 1{,}0 M}",
+    c_percent: 3.85,
+    density: 1.040,
+    mw: 40.00,
+    z: 1,
+    safety: "Dung dịch kiềm chuẩn bị sẵn pha loãng thành NaOH 0.1 N (Bài 8 HĐC)"
+  },
+  {
+    name: "Amoniac đặc (NH₃ 25%)",
+    formulaText: "NH₃ 25%",
+    formulaLatex: "\\text{NH}_3\\text{ 25\\%}",
+    c_percent: 25.0,
+    density: 0.91,
+    mw: 17.03,
+    z: 1,
+    safety: "Khí NH3 bay hơi xốc mạnh làm cay mắt mũi, thao tác trong tủ hút"
+  },
+  {
+    name: "Ethanol tuyệt đối (C₂H₅OH 99.7%)",
+    formulaText: "C₂H₅OH 99.7%",
+    formulaLatex: "\\text{C}_2\\text{H}_5\\text{OH 99,7\\%}",
+    c_percent: 99.7,
+    density: 0.789,
+    mw: 46.07,
+    z: 1,
+    safety: "Chất lỏng dễ cháy, dễ bay hơi, dùng xác định khối lượng mol xy-lanh (Bài 5 HĐC)"
+  },
+  {
+    name: "Ethyl Acetate tinh khiết (CH₃COOC₂H₅ 99.5%)",
+    formulaText: "CH₃COOC₂H₅ 99.5%",
+    formulaLatex: "\\text{CH}_3\\text{COOC}_2\\text{H}_5\\text{ 99,5\\%}",
+    c_percent: 99.5,
+    density: 0.902,
+    mw: 88.11,
+    z: 1,
+    safety: "Este dễ bắt cháy, mùi quả chín, dùng nghiên cứu động học thủy phân bậc nhất (Bài 9 Hóa lý)"
+  },
+  {
+    name: "Acetone tinh khiết (CH₃COCH₃ 99.5%)",
+    formulaText: "CH₃COCH₃ 99.5%",
+    formulaLatex: "\\text{CH}_3\\text{COCH}_3\\text{ 99,5\\%}",
+    c_percent: 99.5,
+    density: 0.784,
+    mw: 58.08,
+    z: 1,
+    safety: "Dung môi bay hơi nhanh và rất dễ bắt cháy, dùng trong động học iốt hóa (Bài 10 Hóa lý)"
+  },
+  {
+    name: "Carbon Tetrachloride (CCl₄ 99.5%)",
+    formulaText: "CCl₄ 99.5%",
+    formulaLatex: "\\text{CCl}_4\\text{ 99,5\\%}",
+    c_percent: 99.5,
+    density: 1.594,
+    mw: 153.82,
+    z: 1,
+    safety: "Dung môi hữu cơ nặng, độc đối với gan, bắt buộc thao tác trong tủ hút (Bài 3 Hóa lý)"
+  }
 ];
 
 const REAGENTS_INDICATORS = [
@@ -2551,10 +2986,75 @@ const REAGENTS_INDICATORS = [
   }
 ];
 
+const SOLUTION_PREP_HANDBOOK = {
+  polyaSteps: [
+    {
+      step: 1,
+      title: "Hiểu bài toán & Xác định các biến số đầu vào",
+      desc: "Xác định trạng thái chất tan gốc (rắn khan, muối ngậm nước, hay chất lỏng mẹ thương mại), dung môi hòa tan, loại nồng độ mục tiêu ($C_M$, $C_N$, hay $C\\%$) và các hằng số vật lý ($M$, $z$, $d$, nhiệt độ phòng $t$)."
+    },
+    {
+      step: 2,
+      title: "Thiết lập mô hình toán học từ First Principles",
+      desc: "Dựa trên nguyên lý bảo toàn khối lượng chất tan ($m_{\\text{đầu}} = m_{\\text{cuối}}$) hoặc bảo toàn số đương lượng gam ($N_1 V_1 = N_2 V_2$) để lập hệ phương trình chuyển đổi nồng độ chuẩn xác."
+    },
+    {
+      step: 3,
+      title: "Thực thi tính toán trung gian & Thao tác vật lý",
+      desc: "Tính toán chính xác khối lượng chất rắn cần cân hoặc thể tích chất lỏng cần hút. Thực hiện cân trên cân phân tích 4 số lẻ và đong hút bằng dụng cụ Class A (bình định mức, pipet bầu)."
+    },
+    {
+      step: 4,
+      title: "Kiểm tra, Hiệu chỉnh & Đánh giá sai số",
+      desc: "Đo lại tỉ khối bằng phù kế hoặc tiến hành chuẩn độ thể tích lại bằng dung dịch chuẩn để tìm hệ số hiệu chỉnh $K = N_{\\text{thực tế}} / N_{\\text{đích}}$ và sai số tương đối $\\varepsilon\\%$."
+    }
+  ],
+  firstPrinciples: [
+    {
+      title: "Mối quan hệ giữa nồng độ đương lượng $C_N$ và nồng độ phần trăm $C\\%$",
+      formula: "C_N = \\frac{10 \\times d \\times C\\%}{E} = \\frac{10 \\times d \\times C\\%}{M / z}",
+      proof: "Khối lượng chất tan trong $V_{\\text{mL}}$ dung dịch: $m_{\\text{ct}} = \\frac{C\\% \\times V_{\\text{mL}} \\times d}{100}$. Thay vào định nghĩa nồng độ đương lượng: $C_N = \\frac{1000 \\times m_{\\text{ct}}}{E \\times V_{\\text{mL}}} = \\frac{1000 \\times (C\\% \\cdot V_{\\text{mL}} \\cdot d / 100)}{E \\cdot V_{\\text{mL}}} = \\frac{10 \\times d \\times C\\%}{E}$."
+    },
+    {
+      title: "Quy tắc đường chéo (Pearson's Square Rule) trong pha trộn thể tích/khối lượng",
+      formula: "\\frac{m_1}{m_2} = \\frac{|C_2 - C_3|}{|C_3 - C_1|}",
+      proof: "Bảo toàn khối lượng chất tan khi trộn 2 dung dịch: $m_1 C_1 + m_2 C_2 = (m_1 + m_2) C_3 \\iff m_2 (C_2 - C_3) = m_1 (C_3 - C_1) \\iff \\frac{m_1}{m_2} = \\frac{C_2 - C_3}{C_3 - C_1}$."
+    },
+    {
+      title: "Bù nước kết tinh khi pha từ muối ngậm nước ($A \\cdot k\\text{H}_2\\text{O}$)",
+      formula: "m_{\\text{cân, lt}} = m_{\\text{ct, khan}} \\times \\frac{M_{\\text{ngậm}}}{M_{\\text{khan}}} \\times \\frac{100}{P\\%}; \\quad V_{\\text{nước}} = m_{\\text{dd}} - m_{\\text{cân}}",
+      proof: "Trong $1\\text{ mol}$ muối ngậm có chứa đúng $1\\text{ mol}$ muối khan. Tỉ số khối lượng phân tử $\\frac{M_{\\text{ngậm}}}{M_{\\text{khan}}} > 1$ phản ánh phần khối lượng nước kết tinh đi kèm tinh thể."
+    }
+  ],
+  qaList: [
+    {
+      q: "Tại sao nồng độ đương lượng (N) lại được ưa chuộng hơn nồng độ mol (M) trong các phép chuẩn độ thể tích?",
+      a: "Trong phân tích thể tích, nếu dùng nồng độ mol ($C_M$), ta bắt buộc phải cân bằng phương trình phản ứng hóa học để tìm tỉ lệ số mol phản ứng ($a\\text{A} + b\\text{B} \\rightarrow \\text{sản phẩm} \\implies n_A = \\frac{a}{b} n_B$). Ngược lại, khi sử dụng nồng độ đương lượng ($C_N$), theo Định luật Đương lượng, các chất luôn phản ứng với nhau theo tỉ lệ đương lượng đúng 1:1 ($N_A V_A = N_B V_B$) bất kể phương trình phản ứng phức tạp thế nào, giúp triệt tiêu hoàn toàn sự nhầm lẫn stoichiometric."
+    },
+    {
+      q: "Khi pha loãng các axit đậm đặc như H2SO4 hay HCl, tại sao luôn phải tuân thủ nguyên tắc 'rót axit vào nước' mà không được làm ngược lại?",
+      a: "Quá trình hidrat hóa các phân tử axit mạnh là phản ứng tỏa nhiệt cực kỳ mãnh liệt ($\\Delta H_{\\text{sol}} \\ll 0$). Nếu rót nước vào axit đặc, nước có khối lượng riêng nhỏ hơn sẽ nổi lên bề mặt; nhiệt tỏa ra cực lớn tại ranh giới tiếp xúc sẽ làm sôi cục bộ lượng nước ít ỏi này, gây nổ hơi và bắn axit đặc ra xung quanh. Ngược lại, khi rót axit vào nước, axit chìm xuống đáy vì nặng hơn, đồng thời lượng nước dồi dào có nhiệt dung riêng rất lớn ($C_p \\approx 4{,}18\\text{ J/g}\\cdot\\text{K}$) sẽ hấp thụ và phân tán nhiệt an toàn."
+    },
+    {
+      q: "Nhiệt độ phòng thí nghiệm ảnh hưởng thế nào đến nồng độ dung dịch? Định mức ở nhiệt độ cao/thấp hơn nhiệt độ chuẩn 20°C gây ra sai số gì?",
+      a: "Dụng cụ đo thể tích Class A được hiệu chuẩn nghiêm ngặt ở $20^\\circ\\text{C}$. Nếu định mức khi dung dịch còn nóng (ví dụ $30^\\circ\\text{C}$ sau hòa tan tỏa nhiệt), dung dịch và thủy tinh đều giãn nở; khi nguội về $20^\\circ\\text{C}$, thể tích dung dịch co lại ($V_{\\text{thực}} < V_{\\text{đm}}$), khiến nồng độ thực tế cao hơn lý thuyết. Ngược lại, định mức ở nhiệt độ lạnh hơn $20^\\circ\\text{C}$ sẽ làm nồng độ bị loãng hơn lý thuyết khi đưa về nhiệt độ phòng."
+    },
+    {
+      q: "Phân biệt bản chất và ưu thế giữa 'pha loãng thông thường' (Simple Dilution) và 'pha loãng liên tiếp' (Serial Dilution)?",
+      a: "Pha loãng thông thường hút thể tích từ dung dịch gốc và thêm dung môi trực tiếp trong 1 bước duy nhất (ưu điểm: sai số độc lập không lây lan; nhược điểm: không thể pha chính xác nồng độ cực nhỏ dưới giới hạn đo của pipet). Pha loãng liên tiếp pha theo chuỗi bậc thang, dung dịch loãng bước trước làm dung dịch mẹ cho bước sau (ưu điểm: pha được nồng độ cực loãng tới hàng triệu lần với độ chính xác cao và tiết kiệm hóa chất; nhược điểm: sai số bước đầu sẽ tích lũy lũy tiến sang các bước sau)."
+    },
+    {
+      q: "Nếu dùng bình định mức chứa sẵn một ít nước cất để pha chế dung dịch từ chất lỏng đặc hoặc chất rắn hòa tan sơ bộ, có gây sai số không?",
+      a: "Hoàn toàn KHÔNG gây sai số, mà còn là thao tác kỹ thuật được khuyến khích để đảm bảo an toàn. Lượng chất tan được khống chế chính xác bằng lượng cân hoặc thể tích pipet hút; thể tích dung dịch cuối cùng được cố định chính xác bằng vạch định mức của bình. Nước cất có sẵn ban đầu chỉ đóng vai trò đệm hòa tan, không làm thay đổi tổng lượng chất tan và không ảnh hưởng đến thể tích vạch mức cuối cùng."
+    }
+  ]
+};
+
 if (typeof window !== 'undefined') {
   window.REAGENTS_SOLID = REAGENTS_SOLID;
   window.REAGENTS_LIQUID = REAGENTS_LIQUID;
   window.REAGENTS_INDICATORS = REAGENTS_INDICATORS;
+  window.SOLUTION_PREP_HANDBOOK = SOLUTION_PREP_HANDBOOK;
 }
 
 
@@ -4201,134 +4701,378 @@ $$F(C_x) = \\lg\\left[\\frac{C_{\\text{H}^+}(C_A - C_x)}{C_A(C_{\\text{H}^+} + C
     };
   },
 
-  // 13. Công cụ Pha chế dung dịch phòng Lab: Từ chất rắn
+  // 13. Công cụ Pha chế dung dịch phòng Lab: Từ chất rắn (Khan & Ngậm nước)
   calc_solution_prep_solid(data) {
     data = data || {};
-    const mw = parseFloat(data.mw) || 40.00;
+    const mw_anhydrous = parseFloat(data.mw_anhydrous || data.mw) || 40.00;
+    const is_hydrated = Boolean(data.is_hydrated);
+    const mw_hydrated = is_hydrated ? (parseFloat(data.mw_hydrated) || mw_anhydrous) : mw_anhydrous;
+    const water_moles = is_hydrated ? (parseInt(data.water_moles) || 0) : 0;
     const z = parseInt(data.z) || 1;
-    const v_ml = parseFloat(data.v_ml) || 250;
-    const conc_type = data.conc_type || "cm";
+    const v_ml = parseFloat(data.v_ml) || 250.0;
+    const conc_type = data.conc_type || "cm"; // "cm", "cn", "percent"
     const target_conc = parseFloat(data.target_conc) || 0.1;
     const purity = parseFloat(data.purity) || 100.0;
     const density = parseFloat(data.density) || 1.0;
 
-    let m_pure = 0;
-    let m_actual = 0;
-    let formulaStr = "";
-    let subStr = "";
+    const E = z > 0 ? mw_anhydrous / z : mw_anhydrous;
+
+    // 1. Tính toán lượng chất tan khan cần thiết (m_ct_khan)
+    let m_pure_anhydrous = 0;
+    let cm = 0, cn = 0, c_percent = 0;
+    let formulaStr1 = "", subStr1 = "";
 
     if (conc_type === "cm") {
-      m_pure = target_conc * (v_ml / 1000.0) * mw;
-      m_actual = purity > 0 ? (m_pure / (purity / 100.0)) : 0;
-      formulaStr = "m_{\\text{can}} = C_M \\times \\frac{V}{1000} \\times M \\times \\frac{100}{P\\%}";
-      subStr = `m_{\\text{can}} = ${target_conc} \\times \\frac{${v_ml}}{1000} \\times ${mw} \\times \\frac{100}{${purity}} = ${m_actual.toFixed(4)}\\text{ g}`;
+      cm = target_conc;
+      cn = z * cm;
+      m_pure_anhydrous = cm * (v_ml / 1000.0) * mw_anhydrous;
+      c_percent = (cm * mw_anhydrous) / (10.0 * density);
+      formulaStr1 = "m_{\text{ct, khan}} = C_M \times \frac{V}{1000} \times M_{\text{khan}}";
+      subStr1 = `m_{\text{ct, khan}} = ${cm} \times \frac{${v_ml}}{1000} \times ${mw_anhydrous.toFixed(2)} = ${m_pure_anhydrous.toFixed(4)}\text{ g}`;
     } else if (conc_type === "cn") {
-      const E = z > 0 ? mw / z : mw;
-      m_pure = target_conc * (v_ml / 1000.0) * E;
-      m_actual = purity > 0 ? (m_pure / (purity / 100.0)) : 0;
-      formulaStr = "m_{\\text{can}} = C_N \\times \\frac{V}{1000} \\times \\left(\\frac{M}{z}\\right) \\times \\frac{100}{P\\%}";
-      subStr = `m_{\\text{can}} = ${target_conc} \\times \\frac{${v_ml}}{1000} \\times \\left(\\frac{${mw}}{${z}}\\right) \\times \\frac{100}{${purity}} = ${m_actual.toFixed(4)}\\text{ g}`;
+      cn = target_conc;
+      cm = cn / z;
+      m_pure_anhydrous = cn * (v_ml / 1000.0) * E;
+      c_percent = (cn * E) / (10.0 * density);
+      formulaStr1 = "m_{\text{ct, khan}} = C_N \times \frac{V}{1000} \times E = C_N \times \frac{V}{1000} \times \left(\frac{M_{\text{khan}}}{z}\right)";
+      subStr1 = `m_{\text{ct, khan}} = ${cn} \times \frac{${v_ml}}{1000} \times ${E.toFixed(2)} = ${m_pure_anhydrous.toFixed(4)}\text{ g}`;
     } else {
+      c_percent = target_conc;
       const m_dd = v_ml * density;
-      m_pure = (target_conc * m_dd) / 100.0;
-      m_actual = purity > 0 ? (m_pure / (purity / 100.0)) : 0;
-      formulaStr = "m_{\\text{can}} = \\frac{C\\% \\times (V \\times d)}{100} \\times \\frac{100}{P\\%}";
-      subStr = `m_{\\text{can}} = \\frac{${target_conc} \\times (${v_ml} \\times ${density})}{100} \\times \\frac{100}{${purity}} = ${m_actual.toFixed(4)}\\text{ g}`;
+      m_pure_anhydrous = (c_percent * m_dd) / 100.0;
+      cm = (10.0 * c_percent * density) / mw_anhydrous;
+      cn = z * cm;
+      formulaStr1 = "m_{\text{ct, khan}} = \frac{C\% \times (V \times d)}{100}";
+      subStr1 = `m_{\text{ct, khan}} = \frac{${c_percent} \times (${v_ml} \times ${density})}{100} = ${m_pure_anhydrous.toFixed(4)}\text{ g}`;
     }
+
+    // 2. Tính khối lượng muối ngậm nước lý thuyết và thực tế (bù nước kết tinh & độ tinh khiết)
+    const hydration_factor = mw_anhydrous > 0 ? (mw_hydrated / mw_anhydrous) : 1.0;
+    const m_theor = m_pure_anhydrous * hydration_factor;
+    const m_actual = purity > 0 ? (m_theor / (purity / 100.0)) : 0;
+
+    let formulaStr2 = "m_{\text{cân, tt}} = m_{\text{ct, khan}} \times \frac{M_{\text{ngậm}}}{M_{\text{khan}}} \times \frac{100}{P\%}";
+    let subStr2 = `m_{\text{cân, tt}} = ${m_pure_anhydrous.toFixed(4)} \times \frac{${mw_hydrated.toFixed(2)}}{${mw_anhydrous.toFixed(2)}} \times \frac{100}{${purity}} = ${m_actual.toFixed(4)}\text{ g}`;
+    if (!is_hydrated) {
+      formulaStr2 = "m_{\text{cân, tt}} = m_{\text{ct, khan}} \times \frac{100}{P\%}";
+      subStr2 = `m_{\text{cân, tt}} = ${m_pure_anhydrous.toFixed(4)} \times \frac{100}{${purity}} = ${m_actual.toFixed(4)}\text{ g}`;
+    }
+
+    // 3. Lượng nước cất cần thêm
+    const m_dd_total = v_ml * density;
+    const v_water = Math.max(0, m_dd_total - m_actual);
 
     const stepsLatex = [
       {
-        title: "1. Khối lượng chất tan tinh khiết cần thiết ($m_{\\text{ct}}$)",
-        dataOrigin: "Công thức nồng độ và thể tích bình định mức $V = " + v_ml + "\\text{ mL}$",
-        formula: formulaStr,
-        substituted: subStr,
+        title: "1. Khối lượng chất tan khan cần thiết ($m_{\text{ct, khan}}$)",
+        dataOrigin: `Bảo toàn lượng chất tan trong bình định mức $V = ${v_ml}\text{ mL}$`,
+        formula: formulaStr1,
+        substituted: subStr1,
+        result: `${m_pure_anhydrous.toFixed(4)} g (khan)`
+      },
+      {
+        title: is_hydrated ? "2. Khối lượng muối ngậm nước cần cân bù nước kết tinh ($m_{\text{cân}}$)" : "2. Khối lượng chất rắn thực tế cần cân theo độ tinh khiết ($m_{\text{cân}}$)",
+        dataOrigin: is_hydrated ? `Muối ngậm $k = ${water_moles}\text{ H}_2\text{O}$ ($M_{\text{ngậm}} = ${mw_hydrated.toFixed(2)}\text{ g/mol}$, $P = ${purity}\%$)` : `Hóa chất độ tinh khiết $P = ${purity}\%$`,
+        formula: formulaStr2,
+        substituted: subStr2,
         result: `${m_actual.toFixed(4)} g`
+      },
+      {
+        title: "3. Lượng nước cất cần đong & Bộ 3 nồng độ tương đương thành phẩm",
+        dataOrigin: `Tổng khối lượng dung dịch $m_{\text{dd}} = V \times d = ${v_ml} \times ${density} = ${m_dd_total.toFixed(1)}\text{ g}$`,
+        formula: "V_{\text{nước}} \approx m_{\text{dd}} - m_{\text{cân}}; \quad C_M = " + cm.toFixed(4) + "\text{ M}; \quad C_N = " + cn.toFixed(4) + "\text{ N}; \quad C\% = " + c_percent.toFixed(2) + "\%",
+        substituted: `V_{\text{nước}} \approx ${m_dd_total.toFixed(1)} - ${m_actual.toFixed(4)} = ${v_water.toFixed(1)}\text{ mL}`,
+        result: `V(nước) ~ ${v_water.toFixed(1)} mL; C_M = ${cm.toFixed(4)} M; C_N = ${cn.toFixed(4)} N; C% = ${c_percent.toFixed(2)}%`
       }
     ];
 
     const procedureSteps = [
-      "1. Sử dụng cân phân tích/kỹ thuật cân chính xác " + m_actual.toFixed(4) + " g hóa chất trên mặt kính đồng hồ hoặc cốc cân.",
-      "2. Rót khoảng 80 - 100 mL nước cất vào cốc becher, trút toàn bộ lượng hóa chất đã cân vào và dùng đũa thủy tinh khuấy tan hoàn toàn.",
-      "3. Đặt phễu thủy tinh vào miệng bình định mức dung tích " + v_ml + " mL, rót dung dịch từ từ theo thân đũa vào bình.",
-      "4. Dùng bình tia nước cất tráng rửa cốc và đũa 3 lần (mỗi lần ~10 mL), rót toàn bộ nước tráng vào bình định mức.",
-      "5. Thêm nước cất đến cách vạch định mức ~1 cm, sau đó dùng ống nhỏ giọt thêm từng giọt cho đến khi đáy vòm khum chạm đúng vạch.",
-      "6. Đậy chặt nút bình, dốc ngược và đảo đều 5 - 6 lần để thu được dung dịch đồng nhất hoàn toàn."
+      "1. Sử dụng cân phân tích/kỹ thuật cân chính xác **" + m_actual.toFixed(4) + " g** hóa chất " + (is_hydrated ? "(dạng ngậm nước)" : "") + " trên mặt kính đồng hồ hoặc cốc cân khô.",
+      "2. Rót khoảng " + (v_ml * 0.4).toFixed(0) + " mL nước cất vào cốc becher, trút toàn bộ lượng hóa chất đã cân vào và dùng đũa thủy tinh khuấy tan hoàn toàn.",
+      "3. Đặt phễu thủy tinh cuống dài vào miệng bình định mức " + v_ml + " mL, rót dung dịch từ từ theo thân đũa thủy tinh vào bình.",
+      "4. Dùng bình tia nước cất tráng rửa kỹ cốc mỏ và đũa thủy tinh ít nhất 3 lần (mỗi lần ~10 mL), rót toàn bộ nước tráng vào bình định mức.",
+      "5. Thêm nước cất vào bình định mức đến cách vạch ~1 cm, sau đó dùng ống nhỏ giọt thêm từng giọt cho đến khi đáy của vòm khum chạm đúng vạch định mức.",
+      "6. Đậy chặt nút bình định mức, dốc ngược và đảo đều 8 - 10 lần để thu được dung dịch đồng nhất hoàn toàn."
     ];
 
     return {
       success: true,
-      m_pure: m_pure.toFixed(4),
+      m_pure_anhydrous: m_pure_anhydrous.toFixed(4),
+      m_theor: m_theor.toFixed(4),
       m_actual: m_actual.toFixed(4),
+      v_water: v_water.toFixed(1),
+      cm: cm.toFixed(4),
+      cn: cn.toFixed(4),
+      c_percent: c_percent.toFixed(2),
+      is_hydrated,
       stepsLatex,
       procedureSteps
     };
   },
 
-  // 14. Công cụ Pha chế dung dịch phòng Lab: Pha loãng từ dung dịch đậm đặc
+  // 14. Công cụ Pha chế dung dịch phòng Lab: Pha loãng Đa năng với Bộ Switcher Input -> Output Matrix
   calc_solution_prep_dilution(data) {
     data = data || {};
-    const c1_percent = parseFloat(data.c1_percent) || 37.0;
-    const density1 = parseFloat(data.density1) || 1.19;
     const mw = parseFloat(data.mw) || 36.46;
     const z = parseInt(data.z) || 1;
-    const v2_ml = parseFloat(data.v2_ml) || 500.0;
-    const conc_type2 = data.conc_type2 || "cm";
-    const target_conc2 = parseFloat(data.target_conc2) || 0.1;
+    const E = z > 0 ? mw / z : mw;
+    const d1 = parseFloat(data.density1 || data.d1) || 1.19;
+    const d2 = parseFloat(data.density2 || data.d2) || 1.00;
+    const v2_ml = parseFloat(data.v2_ml || data.v2) || 100.0;
 
-    // Nồng độ dung dịch gốc C_M1 và C_N1
-    const cm1 = mw > 0 ? (10.0 * c1_percent * density1) / mw : 0;
-    const cn1 = cm1 * z;
+    // Switcher modes: input_type ("percent", "cm", "cn"), output_type ("cn", "cm", "percent")
+    const input_type = data.input_type || "percent";
+    const output_type = data.output_type || (data.conc_type2 || "cn");
 
-    let v1 = 0;
-    let formulaStr = "";
-    let subStr = "";
+    let input_val = data.input_val !== undefined ? parseFloat(data.input_val) : (parseFloat(data.c1_percent) || 37.0);
+    if (isNaN(input_val)) input_val = 37.0;
 
-    if (conc_type2 === "cm") {
-      v1 = cm1 > 0 ? (target_conc2 * v2_ml) / cm1 : 0;
-      formulaStr = "C_{M1} = \\frac{10 \\times C_1\\% \\times d_1}{M}; \\quad V_1 = \\frac{C_{M2} \\times V_2}{C_{M1}}";
-      subStr = `C_{M1} = \\frac{10 \\times ${c1_percent} \\times ${density1}}{${mw}} = ${cm1.toFixed(2)}\\text{ M} \\implies V_1 = \\frac{${target_conc2} \\times ${v2_ml}}{${cm1.toFixed(2)}} = ${v1.toFixed(2)}\\text{ mL}`;
-    } else if (conc_type2 === "cn") {
-      v1 = cn1 > 0 ? (target_conc2 * v2_ml) / cn1 : 0;
-      formulaStr = "C_{N1} = C_{M1} \\times z; \\quad V_1 = \\frac{C_{N2} \\times V_2}{C_{N1}}";
-      subStr = `C_{N1} = ${cm1.toFixed(2)} \\times ${z} = ${cn1.toFixed(2)}\\text{ N} \\implies V_1 = \\frac{${target_conc2} \\times ${v2_ml}}{${cn1.toFixed(2)}} = ${v1.toFixed(2)}\\text{ mL}`;
+    let output_val = data.output_val !== undefined ? parseFloat(data.output_val) : (parseFloat(data.target_conc2) || 0.1);
+    if (isNaN(output_val)) output_val = 0.1;
+
+    // 1. Xác định bộ 3 nồng độ của Dung dịch 1 (Gốc)
+    let cm1 = 0, cn1 = 0, c1_pct = 0;
+    let formulaIn = "", subIn = "";
+    if (input_type === "percent") {
+      c1_pct = input_val;
+      cm1 = mw > 0 ? (10.0 * c1_pct * d1) / mw : 0;
+      cn1 = z * cm1;
+      formulaIn = "C_{M1} = \frac{10 \times C_1\% \times d_1}{M}; \quad C_{N1} = z \times C_{M1} = \frac{10 \times d_1 \times C_1\%}{E}";
+      subIn = `C_{M1} = \frac{10 \times ${c1_pct} \times ${d1}}{${mw.toFixed(2)}} = ${cm1.toFixed(4)}\text{ M} \implies C_{N1} = ${cn1.toFixed(4)}\text{ N}`;
+    } else if (input_type === "cm") {
+      cm1 = input_val;
+      cn1 = z * cm1;
+      c1_pct = d1 > 0 ? (cm1 * mw) / (10.0 * d1) : 0;
+      formulaIn = "C_{N1} = z \times C_{M1}; \quad C_1\% = \frac{C_{M1} \times M}{10 \times d_1}";
+      subIn = `C_{N1} = ${z} \times ${cm1} = ${cn1.toFixed(4)}\text{ N} \implies C_1\% = \frac{${cm1} \times ${mw.toFixed(2)}}{10 \times ${d1}} = ${c1_pct.toFixed(2)}\%`;
     } else {
-      const m_target = (target_conc2 * v2_ml) / 100.0;
-      const m_sol1 = c1_percent > 0 ? m_target / (c1_percent / 100.0) : 0;
-      v1 = density1 > 0 ? m_sol1 / density1 : 0;
-      formulaStr = "V_1 = \\frac{C_2\\% \\times V_2 \\times d_2}{C_1\\% \\times d_1}";
-      subStr = `V_1 = ${v1.toFixed(2)}\\text{ mL}`;
+      cn1 = input_val;
+      cm1 = z > 0 ? cn1 / z : cn1;
+      c1_pct = d1 > 0 ? (cn1 * E) / (10.0 * d1) : 0;
+      formulaIn = "C_{M1} = \frac{C_{N1}}{z}; \quad C_1\% = \frac{C_{N1} \times E}{10 \times d_1}";
+      subIn = `C_{M1} = \frac{${cn1}}{${z}} = ${cm1.toFixed(4)}\text{ M} \implies C_1\% = \frac{${cn1} \times ${E.toFixed(2)}}{10 \times ${d1}} = ${c1_pct.toFixed(2)}\%`;
     }
 
+    // 2. Xác định bộ 3 nồng độ của Dung dịch 2 (Đích)
+    let cm2 = 0, cn2 = 0, c2_pct = 0;
+    if (output_type === "cm") {
+      cm2 = output_val;
+      cn2 = z * cm2;
+      c2_pct = d2 > 0 ? (cm2 * mw) / (10.0 * d2) : 0;
+    } else if (output_type === "cn") {
+      cn2 = output_val;
+      cm2 = z > 0 ? cn2 / z : cn2;
+      c2_pct = d2 > 0 ? (cn2 * E) / (10.0 * d2) : 0;
+    } else {
+      c2_pct = output_val;
+      cm2 = mw > 0 ? (10.0 * c2_pct * d2) / mw : 0;
+      cn2 = z * cm2;
+    }
+
+    // 3. Tính toán thể tích dung dịch mẹ cần hút V1 theo bảo toàn số mol/đương lượng
+    let v1 = 0;
+    let formulaV1 = "", subV1 = "";
+    if (cm1 > 0) {
+      v1 = (cm2 * v2_ml) / cm1;
+      formulaV1 = "V_1 = \frac{C_{M2} \times V_2}{C_{M1}} = \frac{C_{N2} \times V_2}{C_{N1}}";
+      subV1 = `V_1 = \frac{${cm2.toFixed(4)} \times ${v2_ml}}{${cm1.toFixed(4)}} = ${v1.toFixed(2)}\text{ mL}`;
+    }
+
+    const f_dilution = v1 > 0 ? (v2_ml / v1) : 0;
     const v_water = Math.max(0, v2_ml - v1);
 
     const stepsLatex = [
       {
-        title: "1. Nồng độ gốc ($C_1$) & Thể tích dung dịch đặc cần hút ($V_1$)",
-        dataOrigin: "Bảo toàn số mol/đương lượng $C_1 V_1 = C_2 V_2$",
-        formula: formulaStr,
-        substituted: subStr,
-        result: `${v1.toFixed(2)} mL`
+        title: `1. Xác lập nồng độ dung dịch gốc (${input_type.toUpperCase()} $\rightarrow$ Bộ 3 nồng độ)`,
+        dataOrigin: `Dữ liệu dung dịch mẹ ($d_1 = ${d1}\text{ g/mL}$, $M = ${mw.toFixed(2)}\text{ g/mol}$, $z = ${z}$)`,
+        formula: formulaIn,
+        substituted: subIn,
+        result: `C_M1 = ${cm1.toFixed(4)} M; C_N1 = ${cn1.toFixed(4)} N; C_1% = ${c1_pct.toFixed(2)}%`
+      },
+      {
+        title: `2. Tính thể tích dung dịch mẹ cần hút ($V_1$) cho dung dịch đích (${output_type.toUpperCase()})`,
+        dataOrigin: `Bảo toàn số mol/đương lượng $C_1 V_1 = C_2 V_2$ trong bình định mức $V_2 = ${v2_ml}\text{ mL}$`,
+        formula: formulaV1,
+        substituted: subV1,
+        result: `${v1.toFixed(2)} mL (Hệ số pha loãng f = ${f_dilution.toFixed(2)} lần)`
+      },
+      {
+        title: "3. Bộ 3 nồng độ dung dịch sau pha & Thể tích dung môi ước tính",
+        dataOrigin: `Dung dịch đích $V_2 = ${v2_ml}\text{ mL}$, tỉ khối ước tính $d_2 = ${d2}\text{ g/mL}$`,
+        formula: "V_{\text{nước}} \approx V_2 - V_1; \quad f = \frac{V_2}{V_1}",
+        substituted: `V_{\text{nước}} \approx ${v2_ml} - ${v1.toFixed(2)} = ${v_water.toFixed(2)}\text{ mL}; \quad f = \frac{${v2_ml}}{${v1.toFixed(2)}} = ${f_dilution.toFixed(2)}`,
+        result: `C_M2 = ${cm2.toFixed(4)} M; C_N2 = ${cn2.toFixed(4)} N; C_2% = ${c2_pct.toFixed(2)}%; V(nước) ~ ${v_water.toFixed(1)} mL`
       }
     ];
 
     const procedureSteps = [
-      "1. Mang đầy đủ bảo hộ (găng tay nitrile, kính bảo hộ, áo choàng). Thao tác trong tủ hút khí độc đối với axit/bazo bốc khói.",
-      "2. Rót sẵn khoảng " + (v2_ml * 0.4).toFixed(0) + " mL nước cất vào bình định mức dung tích " + v2_ml + " mL.",
-      "3. Dùng pipet chính xác kết hợp quả bóp cao su hút đúng " + v1.toFixed(2) + " mL dung dịch gốc đậm đặc.",
-      "4. Rót từ từ dung dịch đặc theo thành bình vào nước cất (NGUYÊN TẮC: Luôn rót axit vào nước, TUYỆT ĐỐI KHÔNG làm ngược lại).",
-      "5. Lắc nhẹ và để bình nguội tự nhiên về nhiệt độ phòng (25°C) nếu có hiện tượng tỏa nhiệt.",
-      "6. Bổ sung nước cất đến đúng vạch định mức, đậy nút và dốc ngược bình 5 - 6 lần cho đồng nhất hoàn toàn."
+      "1. Mang trang bị bảo hộ lao động (áo choàng, găng tay nitrile, kính bảo hộ). Thao tác trong tủ hút khí độc nếu làm việc với axit bốc khói (HCl, HNO3, NH3).",
+      "2. Rót sẵn một lượng nước cất khoảng " + (v2_ml * 0.35).toFixed(0) + " mL vào bình định mức " + v2_ml + " mL (NGUYÊN TẮC VÀNG: Luôn rót axit vào nước, không làm ngược lại).",
+      "3. Dùng pipet bầu (hoặc micropipet/buret) hút chính xác **" + v1.toFixed(2) + " mL** dung dịch mẹ đậm đặc.",
+      "4. Bơm từ từ dung dịch dọc theo thành bình định mức vào lượng nước cất có sẵn, lắc xoay nhẹ bình để phân tán nhiệt.",
+      "5. Để bình nguội hoàn toàn về nhiệt độ phòng (20°C - 25°C) trước khi định mức (tránh sai số giãn nở nhiệt).",
+      "6. Thêm nước cất tới cách vạch 1 cm, dùng ống nhỏ giọt thêm từng giọt cho đáy vòm khum chạm đúng vạch, đậy nút và đảo dốc ngược 10 lần."
     ];
 
     return {
       success: true,
-      cm1: cm1.toFixed(2),
-      cn1: cn1.toFixed(2),
       v1_ml: v1.toFixed(2),
       v1: v1.toFixed(2),
       v_water: v_water.toFixed(1),
+      f_dilution: f_dilution.toFixed(2),
+      cm1: cm1.toFixed(4),
+      cn1: cn1.toFixed(4),
+      c1_pct: c1_pct.toFixed(2),
+      cm2: cm2.toFixed(4),
+      cn2: cn2.toFixed(4),
+      c2_pct: c2_pct.toFixed(2),
+      input_type,
+      output_type,
       stepsLatex,
       procedureSteps
+    };
+  },
+
+  // 15. Công cụ Pha trộn Dung dịch theo Quy tắc Đường chéo (Pearson's Square)
+  calc_solution_prep_pearson_square(data) {
+    data = data || {};
+    const c1 = parseFloat(data.conc1) || 40.0; // Nồng độ dung dịch 1 (cao hơn hoặc thấp hơn)
+    const c2 = parseFloat(data.conc2) || 20.0; // Nồng độ dung dịch 2 (hoặc nước = 0)
+    const c3 = parseFloat(data.conc_target) || 30.0; // Nồng độ mong muốn
+    const target_amount = parseFloat(data.target_amount) || 250.0; // Thể tích (mL) hoặc khối lượng (g)
+    const amount_type = data.amount_type || "volume"; // "volume" (mL) or "mass" (g)
+    const conc_unit = data.conc_unit || "%"; // "%", "M", "N"
+
+    const min_c = Math.min(c1, c2);
+    const max_c = Math.max(c1, c2);
+
+    if (c3 <= min_c || c3 >= max_c) {
+      return {
+        success: false,
+        error: `Nồng độ mục tiêu (${c3}${conc_unit}) phải nằm giữa hai nồng độ ban đầu (${min_c}${conc_unit} và ${max_c}${conc_unit})!`
+      };
+    }
+
+    // Quy tắc đường chéo:
+    // Dung dịch 1 (C1)  -->  phần 1 = |C2 - C3|
+    //               \   /
+    //                C3
+    //               /   \
+    // Dung dịch 2 (C2)  -->  phần 2 = |C1 - C3|
+    const part1 = Math.abs(c2 - c3);
+    const part2 = Math.abs(c1 - c3);
+    const total_parts = part1 + part2;
+
+    const amount1 = target_amount * (part1 / total_parts);
+    const amount2 = target_amount * (part2 / total_parts);
+    const unit_label = amount_type === "volume" ? "mL" : "g";
+
+    const stepsLatex = [
+      {
+        title: "1. Thiết lập sơ đồ Quy tắc Đường chéo Pearson",
+        dataOrigin: `Hai dung dịch gốc $C_1 = ${c1}${conc_unit}$ và $C_2 = ${c2}${conc_unit}$, nồng độ đích $C_3 = ${c3}${conc_unit}$`,
+        formula: "\frac{m_1}{m_2} = \frac{|C_2 - C_3|}{|C_1 - C_3|} = \frac{\Delta_1}{\Delta_2}",
+        substituted: `\Delta_1 = |${c2} - ${c3}| = ${part1.toFixed(2)}; \quad \Delta_2 = |${c1} - ${c3}| = ${part2.toFixed(2)} \implies \frac{\Delta_1}{\Delta_2} = \frac{${part1.toFixed(2)}}{${part2.toFixed(2)}}`,
+        result: `Tỉ lệ trộn: ${part1.toFixed(2)} phần dd 1 / ${part2.toFixed(2)} phần dd 2 (Tổng = ${total_parts.toFixed(2)} phần)`
+      },
+      {
+        title: "2. Tính toán lượng dung dịch thành phần cần đong",
+        dataOrigin: `Tổng lượng sản phẩm mong muốn: $${target_amount}\text{ ${unit_label}}$`,
+        formula: `V_1 = V_3 \times \frac{\Delta_1}{\Delta_1 + \Delta_2}; \quad V_2 = V_3 \times \frac{\Delta_2}{\Delta_1 + \Delta_2}`,
+        substituted: `V_1 = ${target_amount} \times \frac{${part1.toFixed(2)}}{${total_parts.toFixed(2)}} = ${amount1.toFixed(2)}\text{ ${unit_label}}; \quad V_2 = ${target_amount} \times \frac{${part2.toFixed(2)}}{${total_parts.toFixed(2)}} = ${amount2.toFixed(2)}\text{ ${unit_label}}`,
+        result: `Dung dịch 1: ${amount1.toFixed(2)} ${unit_label}; Dung dịch 2: ${amount2.toFixed(2)} ${unit_label}`
+      },
+      {
+        title: "3. Kiểm tra cân bằng bảo toàn chất tan",
+        dataOrigin: "Bảo toàn số mol/khối lượng chất tan: $C_1 V_1 + C_2 V_2 = C_3 V_3$",
+        formula: "C_{\text{kt}} = \frac{C_1 V_1 + C_2 V_2}{V_1 + V_2}",
+        substituted: `C_{\text{kt}} = \frac{${c1} \times ${amount1.toFixed(2)} + ${c2} \times ${amount2.toFixed(2)}}{${amount1.toFixed(2)} + ${amount2.toFixed(2)}} = ${c3.toFixed(2)}${conc_unit}`,
+        result: `Khớp tuyệt đối 100% với nồng độ mục tiêu ${c3}${conc_unit}`
+      }
+    ];
+
+    return {
+      success: true,
+      c1, c2, c3,
+      part1: part1.toFixed(2),
+      part2: part2.toFixed(2),
+      total_parts: total_parts.toFixed(2),
+      amount1: amount1.toFixed(2),
+      amount2: amount2.toFixed(2),
+      target_amount,
+      amount_type,
+      unit_label,
+      conc_unit,
+      stepsLatex
+    };
+  },
+
+  // 16. Công cụ Chuỗi Pha Loãng Liên Tiếp Một Nửa (Serial Dilution)
+  calc_solution_prep_serial_dilution(data) {
+    data = data || {};
+    const c_stock = parseFloat(data.c_stock) || 2.0; // Nồng độ dung dịch mẹ (ví dụ CH3COOH 2M)
+    const v_flask = parseFloat(data.v_flask) || 100.0; // Thể tích bình định mức (mL)
+    const v_first = parseFloat(data.v_first) || 20.0; // Thể tích hút pha bình 1 (mL)
+    const v_transfer = parseFloat(data.v_transfer) || 50.0; // Thể tích hút chuyển bình tiếp theo (mL)
+    const num_flasks = parseInt(data.num_flasks) || 6;
+    const conc_unit = data.conc_unit || "M";
+
+    const flasks = [];
+    // Bình 1:
+    const c1 = (c_stock * v_first) / v_flask;
+    flasks.push({
+      flask: 1,
+      source: `Hút ${v_first} mL từ dd mẹ ${c_stock} ${conc_unit}`,
+      c: c1,
+      c_str: c1 >= 0.01 ? c1.toFixed(3) : c1.toExponential(3),
+      v_pipet: v_first,
+      v_water: v_flask - v_first,
+      dilution_factor: (c_stock / c1).toFixed(1)
+    });
+
+    // Các bình tiếp theo:
+    const ratio = v_transfer / v_flask;
+    for (let i = 2; i <= num_flasks; i++) {
+      const prev = flasks[i - 2].c;
+      const ci = prev * ratio;
+      flasks.push({
+        flask: i,
+        source: `Hút ${v_transfer} mL từ bình ${i - 1} (${flasks[i - 2].c_str} ${conc_unit})`,
+        c: ci,
+        c_str: ci >= 0.001 ? ci.toFixed(4) : ci.toExponential(3),
+        v_pipet: v_transfer,
+        v_water: v_flask - v_transfer,
+        dilution_factor: (c_stock / ci).toFixed(1)
+      });
+    }
+
+    const stepsLatex = [
+      {
+        title: "1. Nồng độ bình số 1 ($C_1$)",
+        dataOrigin: `Hút $V_{\text{gốc}} = ${v_first}\text{ mL}$ từ dung dịch mẹ $C_0 = ${c_stock}\text{ ${conc_unit}}$ định mức lên $${v_flask}\text{ mL}$`,
+        formula: "C_1 = \frac{C_0 \times V_{\text{gốc}}}{V_{\text{đm}}}",
+        substituted: `C_1 = \frac{${c_stock} \times ${v_first}}{${v_flask}} = ${c1.toFixed(4)}\text{ ${conc_unit}}`,
+        result: `${c1.toFixed(4)} ${conc_unit}`
+      },
+      {
+        title: "2. Quy luật nồng độ các bình liên tiếp ($C_i$)",
+        dataOrigin: `Chuyển $V_{\text{hút}} = ${v_transfer}\text{ mL}$ từ bình trước và định mức thành $${v_flask}\text{ mL}$`,
+        formula: `C_i = C_{i-1} \times \frac{V_{\text{hút}}}{V_{\text{đm}}} = C_{i-1} \times \frac{${v_transfer}}{${v_flask}} = C_{i-1} \times ${ratio.toFixed(2)}`,
+        substituted: flasks.slice(1).map(f => `C_{${f.flask}} = ${f.c_str}\text{ ${conc_unit}}`).join("; \quad "),
+        result: `Chuỗi nồng độ: ${flasks.map(f => f.c_str).join(" -> ")} ${conc_unit}`
+      }
+    ];
+
+    return {
+      success: true,
+      c_stock,
+      v_flask,
+      v_first,
+      v_transfer,
+      num_flasks,
+      conc_unit,
+      flasks,
+      stepsLatex
     };
   }
 ,
@@ -4618,8 +5362,11 @@ $$F(C_x) = \\lg\\left[\\frac{C_{\\text{H}^+}(C_A - C_x)}{C_A(C_{\\text{H}^+} + C
       polyaGraphSteps
     };
   }
-
 };
+
+if (typeof window !== 'undefined') window.Calculators = Calculators;
+if (typeof module !== 'undefined' && module.exports) module.exports = Calculators;
+if (typeof global !== 'undefined') global.Calculators = Calculators;
 
 
 /* ========================================================================= */
@@ -7964,28 +8711,49 @@ function showToast(msg) {
   }, 3000);
 }
 
-// 6. View Công cụ Pha chế Dung dịch Phòng Lab (Solution Preparation View)
+// 6. View Công cụ Pha chế Dung dịch Phòng Lab Toàn Diện (Comprehensive Solution Preparation Suite)
 let SolPrepState = {
-  activeSubTab: "solid", // "solid", "dilution", "cheatsheet"
+  activeSubTab: "solid", // "solid", "dilution", "pearson", "serial", "handbook", "qa"
   solid: {
     presetIdx: 0,
-    mw: 40.00,
+    is_hydrated: false,
+    mw_anhydrous: 40.00,
+    mw_hydrated: 40.00,
+    water_moles: 0,
     z: 1,
     v_ml: 250,
-    conc_type: "cm",
+    conc_type: "cm", // "cm", "cn", "percent"
     target_conc: 0.1,
     purity: 100.0,
     density: 1.0
   },
   dilution: {
     presetIdx: 0,
-    c1_percent: 37.0,
+    input_type: "percent", // "percent", "cm", "cn"
+    input_val: 37.0,
     density1: 1.19,
     mw: 36.46,
     z: 1,
-    v2_ml: 500,
-    conc_type2: "cm",
-    target_conc2: 0.1
+    output_type: "cn", // "cn", "cm", "percent"
+    output_val: 0.1,
+    v2_ml: 100.0,
+    density2: 1.00
+  },
+  pearson: {
+    conc1: 40.0,
+    conc2: 20.0,
+    conc_target: 30.0,
+    conc_unit: "%", // "%", "M", "N"
+    target_amount: 250.0,
+    amount_type: "volume" // "volume" (mL), "mass" (g)
+  },
+  serial: {
+    c_stock: 2.0,
+    v_flask: 100.0,
+    v_first: 20.0,
+    v_transfer: 50.0,
+    num_flasks: 6,
+    conc_unit: "M"
   }
 };
 
@@ -8001,26 +8769,33 @@ function renderSolutionPrepView() {
 
   const subTab = SolPrepState.activeSubTab;
 
-  // Render Sub Tabs Navigation
+  // Render Sub Tabs Navigation - 6 Tabs
   let tabsHtml = `
-    <div class="workspace-tabs" style="margin-bottom: 20px;">
+    <div class="workspace-tabs" style="margin-bottom: 20px; flex-wrap: wrap;">
       <button class="tab-btn ${subTab === 'solid' ? 'active' : ''}" onclick="switchSolPrepTab('solid')">
-        <i class="fa-solid fa-cube"></i> 1. Pha từ Hóa Chất Rắn
+        <i class="fa-solid fa-cube"></i> 1. Pha từ Chất Rắn
       </button>
       <button class="tab-btn ${subTab === 'dilution' ? 'active' : ''}" onclick="switchSolPrepTab('dilution')">
-        <i class="fa-solid fa-droplet"></i> 2. Pha Loãng Dung Dịch Đặc
+        <i class="fa-solid fa-shuffle"></i> 2. Pha Loãng Đa Năng (Switch Cm, Cn, %)
       </button>
-      <button class="tab-btn ${subTab === 'cheatsheet' ? 'active' : ''}" onclick="switchSolPrepTab('cheatsheet')">
-        <i class="fa-solid fa-book-bookmark"></i> 3. Bảng Quy Đổi Nồng Độ & Công Thức
+      <button class="tab-btn ${subTab === 'pearson' ? 'active' : ''}" onclick="switchSolPrepTab('pearson')">
+        <i class="fa-solid fa-xmark"></i> 3. Pha Trộn Đường Chéo
       </button>
-      <button class="tab-btn ${subTab === 'indicators' ? 'active' : ''}" onclick="switchSolPrepTab('indicators')">
-        <i class="fa-solid fa-flask-vial"></i> 4. Pha Chế Chỉ Thị & Thuốc Thử
+      <button class="tab-btn ${subTab === 'serial' ? 'active' : ''}" onclick="switchSolPrepTab('serial')">
+        <i class="fa-solid fa-stairs"></i> 4. Chuỗi Pha Loãng Liên Tiếp
+      </button>
+      <button class="tab-btn ${subTab === 'handbook' ? 'active' : ''}" onclick="switchSolPrepTab('handbook')">
+        <i class="fa-solid fa-book-open"></i> 5. Sổ Tay Polya & Quy Trình
+      </button>
+      <button class="tab-btn ${subTab === 'qa' ? 'active' : ''}" onclick="switchSolPrepTab('qa')">
+        <i class="fa-solid fa-flask-vial"></i> 6. Chỉ Thị & Câu Hỏi Chuyên Sâu
       </button>
     </div>
   `;
 
   let mainBodyHtml = "";
 
+  // TAB 1: SOLID
   if (subTab === "solid") {
     const s = SolPrepState.solid;
     const res = Calculators.calc_solution_prep_solid(s);
@@ -8032,20 +8807,40 @@ function renderSolutionPrepView() {
     mainBodyHtml = `
       <div class="card">
         <div class="card-header">
-          <div class="card-title"><i class="fa-solid fa-sliders"></i> Thông Số Pha Chế Từ Chất Rắn</div>
+          <div class="card-title"><i class="fa-solid fa-sliders"></i> Thông Số Hòa Tan Hóa Chất Rắn (Khan & Ngậm Nước)</div>
         </div>
         <div class="form-grid">
           <div class="form-group" style="grid-column: 1 / -1;">
-            <label class="form-label"><span><b>Hóa chất rắn mẫu:</b> Chọn chất thường dùng</span></label>
+            <label class="form-label"><span><b>Hóa chất mẫu:</b> Chọn chất từ cơ sở dữ liệu phòng lab</span></label>
             <select class="form-control" id="sol-solid-preset" onchange="onSelectSolidPreset(this.value)">
               ${solidOptions}
-              <option value="-1" ${s.presetIdx === -1 ? 'selected' : ''}>Tùy chỉnh (Tự nhập M và z)</option>
+              <option value="-1" ${s.presetIdx === -1 ? 'selected' : ''}>Tùy chỉnh (Tự nhập phân tử lượng)</option>
             </select>
           </div>
-          <div class="form-group">
-            <label class="form-label"><span><b>Khối lượng mol ($M$):</b></span> <span class="unit">(g/mol)</span></label>
-            <input type="number" step="0.01" class="form-control" id="sol-solid-mw" value="${s.mw}" oninput="updateSolidField('mw', this.value)">
+
+          <div class="form-group" style="grid-column: 1 / -1; background: var(--bg-sidebar); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-line);">
+            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 600; color: var(--text-main);">
+              <input type="checkbox" id="sol-solid-hydrated-toggle" ${s.is_hydrated ? 'checked' : ''} onchange="updateSolidHydrated(this.checked)">
+              <span>Sử dụng muối ngậm nước tinh thể ($A \cdot k\text{H}_2\text{O}$) - Tự động bù nước kết tinh</span>
+            </label>
           </div>
+
+          <div class="form-group">
+            <label class="form-label"><span><b>$M_{\text{khan}}$ (Khối lượng mol khan):</b></span> <span class="unit">(g/mol)</span></label>
+            <input type="number" step="0.01" class="form-control" id="sol-solid-mw-anh" value="${s.mw_anhydrous}" oninput="updateSolidField('mw_anhydrous', this.value)">
+          </div>
+
+          ${s.is_hydrated ? `
+            <div class="form-group">
+              <label class="form-label"><span><b>$M_{\text{ngậm}}$ (Khối lượng mol ngậm nước):</b></span> <span class="unit">(g/mol)</span></label>
+              <input type="number" step="0.01" class="form-control" id="sol-solid-mw-hyd" value="${s.mw_hydrated}" oninput="updateSolidField('mw_hydrated', this.value)">
+            </div>
+            <div class="form-group">
+              <label class="form-label"><span><b>Số phân tử nước ($k$):</b></span> <span class="unit">($A \cdot k\text{H}_2\text{O}$)</span></label>
+              <input type="number" step="1" min="1" class="form-control" id="sol-solid-water-moles" value="${s.water_moles}" oninput="updateSolidField('water_moles', this.value)">
+            </div>
+          ` : ''}
+
           <div class="form-group">
             <label class="form-label"><span><b>Số đương lượng trao đổi ($z$):</b></span> <span class="unit">($E = M/z$)</span></label>
             <input type="number" step="1" min="1" class="form-control" id="sol-solid-z" value="${s.z}" oninput="updateSolidField('z', this.value)">
@@ -8055,7 +8850,7 @@ function renderSolutionPrepView() {
             <input type="number" step="10" min="1" class="form-control" id="sol-solid-v" value="${s.v_ml}" oninput="updateSolidField('v_ml', this.value)">
           </div>
           <div class="form-group">
-            <label class="form-label"><span><b>Loại nồng độ mục tiêu:</b></span></label>
+            <label class="form-label"><span><b>Loại nồng độ đích:</b></span></label>
             <select class="form-control" id="sol-solid-ctype" onchange="updateSolidField('conc_type', this.value)">
               <option value="cm" ${s.conc_type === 'cm' ? 'selected' : ''}>Nồng độ Mol (CM - mol/L)</option>
               <option value="cn" ${s.conc_type === 'cn' ? 'selected' : ''}>Nồng độ Đương Lượng (CN - đlg/L)</option>
@@ -8070,49 +8865,76 @@ function renderSolutionPrepView() {
             <label class="form-label"><span><b>Độ tinh khiết hóa chất ($P$):</b></span> <span class="unit">(%)</span></label>
             <input type="number" step="0.1" max="100" min="1" class="form-control" id="sol-solid-purity" value="${s.purity}" oninput="updateSolidField('purity', this.value)">
           </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title"><i class="fa-solid fa-scale-balanced"></i> Kết Quả Tính Toán Khối Lượng Cần Cân</div>
-        </div>
-        <div style="font-size: 16px; margin-bottom: 12px; color: var(--text-main);">
-          Khối lượng hóa chất thực tế cần cân: <strong style="font-size: 20px; color: var(--ink-blue);">${res.m_actual} g</strong>
-        </div>
-        ${res.stepsLatex.map((st, idx) => `
-          <div class="math-step-card">
-            <div class="math-step-header">
-              <span class="math-step-badge">Bước ${idx + 1}</span>
-              <span class="math-step-title">${st.title}</span>
-            </div>
-            ${st.dataOrigin ? `
-              <div class="math-data-origin">
-                <i class="fa-solid fa-crosshairs"></i> <strong>Nguồn gốc số liệu:</strong> ${st.dataOrigin}
-              </div>
-            ` : ''}
-            <div class="math-formula-box">$$${st.formula}$$</div>
-            <div class="math-formula-box">$$${st.substituted}$$</div>
-            <div class="math-result-badge"><i class="fa-solid fa-check"></i> Kết quả: ${st.result}</div>
+          <div class="form-group">
+            <label class="form-label"><span><b>Tỉ khối dung dịch ($d$):</b></span> <span class="unit">(g/mL)</span></label>
+            <input type="number" step="0.001" min="0.5" class="form-control" id="sol-solid-density" value="${s.density}" oninput="updateSolidField('density', this.value)">
           </div>
-        `).join("")}
+        </div>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <div class="card-title"><i class="fa-solid fa-list-check"></i> Quy Trình Thao Tác Chuẩn Phòng Lab (Bình Định Mức)</div>
+          <div class="card-title"><i class="fa-solid fa-scale-balanced"></i> Kết Quả Lượng Cân & Quy Đổi Nồng Độ Thành Phẩm</div>
+        </div>
+        <div class="triplet-grid">
+          <div class="triplet-box" style="border-left: 4px solid var(--ink-blue);">
+            <div class="label">Khối lượng thực tế cần cân ($m_{\text{cân, tt}}$)</div>
+            <div class="val">${res.m_actual} g</div>
+          </div>
+          <div class="triplet-box">
+            <div class="label">Chất tan khan nguyên chất ($m_{\text{ct, khan}}$)</div>
+            <div class="val" style="color: var(--text-main);">${res.m_pure_anhydrous} g</div>
+          </div>
+          <div class="triplet-box">
+            <div class="label">Lượng nước cất cần đong ($V_{\text{nước}}$)</div>
+            <div class="val" style="color: var(--text-main);">~ ${res.v_water} mL</div>
+          </div>
+          <div class="triplet-box">
+            <div class="label">Bộ 3 nồng độ thành phẩm</div>
+            <div style="font-size: 14px; font-weight: 600; color: var(--text-main); margin-top: 4px;">
+              ${res.cm} M | ${res.cn} N | ${res.c_percent}%
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+          ${res.stepsLatex.map((st, idx) => `
+            <div class="math-step-card">
+              <div class="math-step-header">
+                <span class="math-step-badge">Bước ${idx + 1}</span>
+                <span class="math-step-title">${st.title}</span>
+              </div>
+              ${st.dataOrigin ? `
+                <div class="math-data-origin">
+                  <i class="fa-solid fa-crosshairs"></i> <strong>Nguồn gốc số liệu:</strong> ${st.dataOrigin}
+                </div>
+              ` : ''}
+              <div class="math-formula-box">$$${st.formula}$$</div>
+              <div class="math-formula-box">$$${st.substituted}$$</div>
+              <div class="math-result-badge"><i class="fa-solid fa-check"></i> Kết quả: ${st.result}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="fa-solid fa-list-check"></i> Quy Trình Thao Tác Chuẩn Bình Định Mức</div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 10px;">
           ${res.procedureSteps.map((step, idx) => `
             <div class="procedure-step-item">
               <span class="procedure-step-badge">${idx + 1}</span>
-              <div style="flex: 1;">${marked_lite(step.replace(/^\\d+\\.\\s*/, ''))}</div>
+              <div style="flex: 1;">${marked_lite(step.replace(/^\d+\.\s*/, ''))}</div>
             </div>
           `).join("")}
         </div>
       </div>
     `;
-  } else if (subTab === "dilution") {
+  }
+
+  // TAB 2: DILUTION WITH SWITCHER MATRIX (Input Cm, Cn, % -> Output Cm, Cn, %)
+  else if (subTab === "dilution") {
     const d = SolPrepState.dilution;
     const res = Calculators.calc_solution_prep_dilution(d);
 
@@ -8125,51 +8947,110 @@ function renderSolutionPrepView() {
     mainBodyHtml = `
       <div class="card">
         <div class="card-header">
-          <div class="card-title"><i class="fa-solid fa-sliders"></i> Thông Số Pha Loãng Dung Dịch Mẹ (Đặc)</div>
+          <div class="card-title"><i class="fa-solid fa-shuffle"></i> Bộ Chuyển Đổi Nồng Độ Pha Loãng Đa Chiều (Input $\rightarrow$ Output Matrix)</div>
         </div>
-        <div class="form-grid">
-          <div class="form-group" style="grid-column: 1 / -1;">
-            <label class="form-label"><span><b>Dung dịch đặc gốc:</b> Chọn axit/bazo mẫu</span></label>
-            <select class="form-control" id="sol-dil-preset" onchange="onSelectDilutionPreset(this.value)">
-              ${liquidOptions}
-              <option value="-1" ${d.presetIdx === -1 ? 'selected' : ''}>Tùy chỉnh (Tự nhập C%, d, M)</option>
-            </select>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label class="form-label"><span><b>Dung dịch mẹ mẫu:</b> Chọn axit/bazơ có sẵn trong lab</span></label>
+          <select class="form-control" id="sol-dil-preset" onchange="onSelectDilutionPreset(this.value)">
+            ${liquidOptions}
+            <option value="-1" ${d.presetIdx === -1 ? 'selected' : ''}>Tùy chỉnh (Tự thiết lập nồng độ và tỉ khối)</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+          <!-- CỘT 1: INPUT SWITCHER (DUNG DỊCH GỐC) -->
+          <div style="background: var(--bg-sidebar); border: 1px solid var(--border-line); border-radius: var(--radius-md); padding: 18px;">
+            <div style="font-weight: 700; color: var(--ink-blue); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-arrow-right-to-bracket"></i> 1. ĐƠN VỊ NỒNG ĐỘ GỐC (INPUT)
+            </div>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+              <label class="form-label"><span>Chọn kiểu nồng độ đầu vào của dung dịch mẹ:</span></label>
+              <div class="switcher-pill-group">
+                <button type="button" class="switcher-pill ${d.input_type === 'percent' ? 'active' : ''}" onclick="setDilutionInputType('percent')">
+                  C% (%)
+                </button>
+                <button type="button" class="switcher-pill ${d.input_type === 'cm' ? 'active' : ''}" onclick="setDilutionInputType('cm')">
+                  CM (mol/L)
+                </button>
+                <button type="button" class="switcher-pill ${d.input_type === 'cn' ? 'active' : ''}" onclick="setDilutionInputType('cn')">
+                  CN (đlg/L)
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <span><b>Giá trị nồng độ gốc ($C_1$):</b></span>
+                <span class="unit">(${d.input_type === 'percent' ? '%' : d.input_type === 'cm' ? 'M' : 'N'})</span>
+              </label>
+              <input type="number" step="0.01" class="form-control" id="sol-dil-inval" value="${d.input_val}" oninput="updateDilutionField('input_val', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label"><span><b>Khối lượng riêng dung dịch gốc ($d_1$):</b></span> <span class="unit">(g/mL)</span></label>
+              <input type="number" step="0.001" class="form-control" id="sol-dil-d1" value="${d.density1}" oninput="updateDilutionField('density1', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label"><span><b>Khối lượng mol phân tử ($M$):</b></span> <span class="unit">(g/mol)</span></label>
+              <input type="number" step="0.01" class="form-control" id="sol-dil-mw" value="${d.mw}" oninput="updateDilutionField('mw', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label"><span><b>Số đương lượng trao đổi ($z$):</b></span> <span class="unit">($E = M/z$)</span></label>
+              <input type="number" step="1" min="1" class="form-control" id="sol-dil-z" value="${d.z}" oninput="updateDilutionField('z', this.value)">
+            </div>
           </div>
-          <div class="form-group">
-            <label class="form-label"><span><b>Nồng độ dung dịch gốc ($C_1$):</b></span> <span class="unit">(%)</span></label>
-            <input type="number" step="0.1" class="form-control" id="sol-dil-c1" value="${d.c1_percent}" oninput="updateDilutionField('c1_percent', this.value)">
-          </div>
-          <div class="form-group">
-            <label class="form-label"><span><b>Khối lượng riêng ($d_1$):</b></span> <span class="unit">(g/mL)</span></label>
-            <input type="number" step="0.01" class="form-control" id="sol-dil-d1" value="${d.density1}" oninput="updateDilutionField('density1', this.value)">
-          </div>
-          <div class="form-group">
-            <label class="form-label"><span><b>Khối lượng mol ($M$):</b></span> <span class="unit">(g/mol)</span></label>
-            <input type="number" step="0.01" class="form-control" id="sol-dil-mw" value="${d.mw}" oninput="updateDilutionField('mw', this.value)">
-          </div>
-          <div class="form-group">
-            <label class="form-label"><span><b>Số đương lượng trao đổi ($z$):</b></span></label>
-            <input type="number" step="1" min="1" class="form-control" id="sol-dil-z" value="${d.z}" oninput="updateDilutionField('z', this.value)">
-          </div>
-          <div class="form-group">
-            <label class="form-label"><span><b>Thể tích dung dịch loãng cần pha ($V_2$):</b></span> <span class="unit">(mL)</span></label>
-            <input type="number" step="10" min="1" class="form-control" id="sol-dil-v2" value="${d.v2_ml}" oninput="updateDilutionField('v2_ml', this.value)">
-          </div>
-          <div class="form-group">
-            <label class="form-label"><span><b>Loại nồng độ đích:</b></span></label>
-            <select class="form-control" id="sol-dil-ctype" onchange="updateDilutionField('conc_type2', this.value)">
-              <option value="cm" ${d.conc_type2 === 'cm' ? 'selected' : ''}>Nồng độ Mol (CM2 - mol/L)</option>
-              <option value="cn" ${d.conc_type2 === 'cn' ? 'selected' : ''}>Nồng độ Đương Lượng (CN2 - đlg/L)</option>
-              <option value="percent" ${d.conc_type2 === 'percent' ? 'selected' : ''}>Nồng độ Phần Trăm (C%2)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label"><span><b>Nồng độ mong muốn ($C_2$):</b></span> <span class="unit">(${d.conc_type2 === 'cm' ? 'M' : d.conc_type2 === 'cn' ? 'N' : '%'})</span></label>
-            <input type="number" step="0.01" class="form-control" id="sol-dil-target" value="${d.target_conc2}" oninput="updateDilutionField('target_conc2', this.value)">
+
+          <!-- CỘT 2: OUTPUT SWITCHER (DUNG DỊCH ĐÍCH) -->
+          <div style="background: var(--bg-sidebar); border: 1px solid var(--border-line); border-radius: var(--radius-md); padding: 18px;">
+            <div style="font-weight: 700; color: var(--emerald-green); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> 2. ĐƠN VỊ NỒNG ĐỘ ĐÍCH (OUTPUT)
+            </div>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+              <label class="form-label"><span>Chọn kiểu nồng độ mong muốn sau khi pha:</span></label>
+              <div class="switcher-pill-group">
+                <button type="button" class="switcher-pill ${d.output_type === 'cn' ? 'active' : ''}" onclick="setDilutionOutputType('cn')">
+                  CN (đlg/L)
+                </button>
+                <button type="button" class="switcher-pill ${d.output_type === 'cm' ? 'active' : ''}" onclick="setDilutionOutputType('cm')">
+                  CM (mol/L)
+                </button>
+                <button type="button" class="switcher-pill ${d.output_type === 'percent' ? 'active' : ''}" onclick="setDilutionOutputType('percent')">
+                  C% (%)
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">
+                <span><b>Nồng độ mong muốn ($C_2$):</b></span>
+                <span class="unit">(${d.output_type === 'cn' ? 'N' : d.output_type === 'cm' ? 'M' : '%'})</span>
+              </label>
+              <input type="number" step="0.0001" class="form-control" id="sol-dil-outval" value="${d.output_val}" oninput="updateDilutionField('output_val', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label"><span><b>Thể tích bình định mức ($V_2$):</b></span> <span class="unit">(mL)</span></label>
+              <input type="number" step="10" min="1" class="form-control" id="sol-dil-v2" value="${d.v2_ml}" oninput="updateDilutionField('v2_ml', this.value)">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label"><span><b>Tỉ khối dung dịch sau pha ($d_2$):</b></span> <span class="unit">(g/mL)</span></label>
+              <input type="number" step="0.001" min="0.5" class="form-control" id="sol-dil-d2" value="${d.density2}" oninput="updateDilutionField('density2', this.value)">
+            </div>
+
+            <div style="background: var(--bg-card); border: 1px dashed var(--border-line); border-radius: var(--radius-sm); padding: 12px; margin-top: 24px; font-size: 13px; line-height: 1.5;">
+              <i class="fa-solid fa-calculator" style="color: var(--ink-blue);"></i> <strong>Cơ chế chuyển đổi:</strong> Đang chạy chế độ chuyển đổi trực tiếp từ <strong>Input [${d.input_type.toUpperCase()}]</strong> sang <strong>Output [${d.output_type.toUpperCase()}]</strong>.
+            </div>
           </div>
         </div>
+
         ${currentReagent ? `
-          <div class="safety-note-item" style="margin-top: 14px;">
+          <div class="safety-note-item" style="margin-top: 18px;">
             <i class="fa-solid fa-triangle-exclamation" style="margin-top: 3px; flex-shrink: 0;"></i>
             <div><strong>Cảnh báo an toàn hóa chất:</strong> ${currentReagent.safety}</div>
           </div>
@@ -8178,43 +9059,81 @@ function renderSolutionPrepView() {
 
       <div class="card">
         <div class="card-header">
-          <div class="card-title"><i class="fa-solid fa-eye-dropper"></i> Kết Quả Tính Toán Thể Tích Cần Hút</div>
+          <div class="card-title"><i class="fa-solid fa-eye-dropper"></i> Kết Quả Tính Toán & Bảng Quy Đổi 3 Nồng Độ Tương Đương</div>
         </div>
-        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 14px;">
-          <div style="background: var(--bg-sidebar); border: 1px solid var(--border-line); padding: 12px 18px; border-radius: var(--radius-sm);">
-            <div style="font-size: 12px; color: var(--text-muted);">Nồng độ dung dịch đặc gốc ($C_{M1}$)</div>
-            <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">${res.cm1} M (${res.cn1} N)</div>
+
+        <div class="triplet-grid">
+          <div class="triplet-box" style="border-left: 4px solid var(--ink-blue);">
+            <div class="label">Thể tích dung dịch mẹ cần lấy ($V_1$)</div>
+            <div class="val">${res.v1_ml} mL</div>
           </div>
-          <div style="background: var(--bg-sidebar); border: 1px solid var(--border-line); padding: 12px 18px; border-radius: var(--radius-sm);">
-            <div style="font-size: 12px; color: var(--text-muted);">Thể tích dung dịch đặc cần lấy ($V_1$)</div>
-            <div style="font-size: 18px; font-weight: 700; color: var(--ink-blue);">${res.v1_ml} mL</div>
+          <div class="triplet-box">
+            <div class="label">Lượng nước cất ước tính cần thêm ($V_{\text{nước}}$)</div>
+            <div class="val" style="color: var(--text-main);">~ ${res.v_water} mL</div>
           </div>
-          <div style="background: var(--bg-sidebar); border: 1px solid var(--border-line); padding: 12px 18px; border-radius: var(--radius-sm);">
-            <div style="font-size: 12px; color: var(--text-muted);">Lượng nước cất ước tính cần thêm ($V_{\\text{nước}}$)</div>
-            <div style="font-size: 18px; font-weight: 700; color: var(--text-main);">~ ${res.v_water} mL</div>
+          <div class="triplet-box">
+            <div class="label">Hệ số pha loãng ($f = V_2/V_1$)</div>
+            <div class="val" style="color: var(--emerald-green);">${res.f_dilution} lần</div>
           </div>
         </div>
-        ${res.stepsLatex.map((st, idx) => `
-          <div class="math-step-card">
-            <div class="math-step-header">
-              <span class="math-step-badge">Bước ${idx + 1}</span>
-              <span class="math-step-title">${st.title}</span>
-            </div>
-            ${st.dataOrigin ? `
-              <div class="math-data-origin">
-                <i class="fa-solid fa-crosshairs"></i> <strong>Nguồn gốc số liệu:</strong> ${st.dataOrigin}
+
+        <!-- BẢNG ĐỐI CHIẾU 3 NỒNG ĐỘ CẢ 2 DUNG DỊCH -->
+        <div style="margin-top: 18px;">
+          <h4 style="font-size: 14px; margin-bottom: 8px; color: var(--text-muted);"><i class="fa-solid fa-table-cells"></i> Bảng đối chiếu nồng độ tương đương toàn diện:</h4>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Dung dịch</th>
+                  <th>Nồng độ Mol ($C_M$)</th>
+                  <th>Nồng độ Đương lượng ($C_N$)</th>
+                  <th>Nồng độ % ($C\%$)</th>
+                  <th>Tỉ khối ($d$, g/mL)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Dung dịch gốc (Mẹ)</strong></td>
+                  <td><strong>${res.cm1} M</strong></td>
+                  <td><strong>${res.cn1} N</strong></td>
+                  <td><strong>${res.c1_pct}%</strong></td>
+                  <td>${d.density1} g/mL</td>
+                </tr>
+                <tr>
+                  <td><strong>Dung dịch đích (Sau pha)</strong></td>
+                  <td><strong style="color: var(--ink-blue);">${res.cm2} M</strong></td>
+                  <td><strong style="color: var(--ink-blue);">${res.cn2} N</strong></td>
+                  <td><strong style="color: var(--ink-blue);">${res.c2_pct}%</strong></td>
+                  <td>${d.density2} g/mL</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+          ${res.stepsLatex.map((st, idx) => `
+            <div class="math-step-card">
+              <div class="math-step-header">
+                <span class="math-step-badge">Bước ${idx + 1}</span>
+                <span class="math-step-title">${st.title}</span>
               </div>
-            ` : ''}
-            <div class="math-formula-box">$$${st.formula}$$</div>
-            <div class="math-formula-box">$$${st.substituted}$$</div>
-            <div class="math-result-badge"><i class="fa-solid fa-check"></i> Kết quả: ${st.result}</div>
-          </div>
-        `).join("")}
+              ${st.dataOrigin ? `
+                <div class="math-data-origin">
+                  <i class="fa-solid fa-crosshairs"></i> <strong>Nguồn gốc số liệu:</strong> ${st.dataOrigin}
+                </div>
+              ` : ''}
+              <div class="math-formula-box">$$${st.formula}$$</div>
+              <div class="math-formula-box">$$${st.substituted}$$</div>
+              <div class="math-result-badge"><i class="fa-solid fa-check"></i> Kết quả: ${st.result}</div>
+            </div>
+          `).join("")}
+        </div>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <div class="card-title"><i class="fa-solid fa-list-check"></i> Quy Trình Pha Loãng An Toàn Phòng Lab</div>
+          <div class="card-title"><i class="fa-solid fa-shield-halved"></i> Quy Trình Pha Loãng An Toàn & Chuẩn Xác</div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 10px;">
           ${res.procedureSteps.map((step, idx) => `
@@ -8226,19 +9145,300 @@ function renderSolutionPrepView() {
         </div>
       </div>
     `;
-  } else if (subTab === "indicators") {
-    const indicators = (typeof REAGENTS_INDICATORS !== 'undefined') ? REAGENTS_INDICATORS : [];
+  }
+
+  // TAB 3: PEARSON'S SQUARE (PHA TRỘN ĐƯỜNG CHÉO)
+  else if (subTab === "pearson") {
+    const p = SolPrepState.pearson;
+    const res = Calculators.calc_solution_prep_pearson_square(p);
+
     mainBodyHtml = `
       <div class="card">
         <div class="card-header">
-          <div class="card-title"><i class="fa-solid fa-vial-circle-check"></i> Quy Trình Pha Chế Các Chỉ Thị & Thuốc Thử Chuẩn Phòng Lab</div>
+          <div class="card-title"><i class="fa-solid fa-xmark"></i> Pha Trộn 2 Dung Dịch Theo Quy Tắc Đường Chéo (Pearson's Square)</div>
         </div>
-        <p style="color: var(--text-muted); margin-bottom: 18px;">
-          Các chất chỉ thị màu đóng vai trò quyết định độ chính xác của phép chuẩn độ thể tích trong toàn bộ các bài thực hành Hóa Đại Cương (Bài 8) và Hóa Lý (Bài 3, 9, 10). Dưới đây là hướng dẫn pha chế chuẩn phân tích.
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">
+          Áp dụng định luật bảo toàn khối lượng chất tan khi pha trộn hai dung dịch có nồng độ khác nhau ($C_1$ và $C_2$) để thu được dung dịch có nồng độ trung gian ($C_3$).
         </p>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label"><span><b>Đơn vị nồng độ:</b></span></label>
+            <div class="switcher-pill-group">
+              <button type="button" class="switcher-pill ${p.conc_unit === '%' ? 'active' : ''}" onclick="updatePearsonField('conc_unit', '%')">%</button>
+              <button type="button" class="switcher-pill ${p.conc_unit === 'M' ? 'active' : ''}" onclick="updatePearsonField('conc_unit', 'M')">M</button>
+              <button type="button" class="switcher-pill ${p.conc_unit === 'N' ? 'active' : ''}" onclick="updatePearsonField('conc_unit', 'N')">N</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>Loại đại lượng mục tiêu:</b></span></label>
+            <div class="switcher-pill-group">
+              <button type="button" class="switcher-pill ${p.amount_type === 'volume' ? 'active' : ''}" onclick="updatePearsonField('amount_type', 'volume')">Thể tích (mL)</button>
+              <button type="button" class="switcher-pill ${p.amount_type === 'mass' ? 'active' : ''}" onclick="updatePearsonField('amount_type', 'mass')">Khối lượng (g)</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>Nồng độ dung dịch 1 ($C_1$):</b></span> <span class="unit">(${p.conc_unit})</span></label>
+            <input type="number" step="0.1" class="form-control" id="sol-pea-c1" value="${p.conc1}" oninput="updatePearsonField('conc1', this.value)">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>Nồng độ dung dịch 2 ($C_2$):</b> (hoặc nước cất = 0)</span> <span class="unit">(${p.conc_unit})</span></label>
+            <input type="number" step="0.1" class="form-control" id="sol-pea-c2" value="${p.conc2}" oninput="updatePearsonField('conc2', this.value)">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>Nồng độ mong muốn ($C_3$):</b></span> <span class="unit">(${p.conc_unit})</span></label>
+            <input type="number" step="0.1" class="form-control" id="sol-pea-c3" value="${p.conc_target}" oninput="updatePearsonField('conc_target', this.value)">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>Tổng lượng cần pha (${p.amount_type === 'volume' ? 'V₃' : 'm₃'}):</b></span> <span class="unit">(${p.amount_type === 'volume' ? 'mL' : 'g'})</span></label>
+            <input type="number" step="10" min="1" class="form-control" id="sol-pea-amt" value="${p.target_amount}" oninput="updatePearsonField('target_amount', this.value)">
+          </div>
+        </div>
+      </div>
+
+      ${res.success ? `
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="fa-solid fa-diagram-project"></i> Sơ Đồ & Kết Quả Lượng Cần Lấy</div>
+          </div>
+          <div class="triplet-grid">
+            <div class="triplet-box" style="border-left: 4px solid var(--ink-blue);">
+              <div class="label">Lượng dung dịch 1 ($C_1 = ${p.conc1}${p.conc_unit}$) cần lấy</div>
+              <div class="val">${res.amount1} ${res.unit_label}</div>
+            </div>
+            <div class="triplet-box" style="border-left: 4px solid var(--emerald-green);">
+              <div class="label">Lượng dung dịch 2 ($C_2 = ${p.conc2}${p.conc_unit}$) cần lấy</div>
+              <div class="val">${res.amount2} ${res.unit_label}</div>
+            </div>
+            <div class="triplet-box">
+              <div class="label">Tỉ lệ phần đường chéo (Δ₁ / Δ₂)</div>
+              <div class="val" style="color: var(--text-main); font-size: 16px;">${res.part1} : ${res.part2} (Tổng = ${res.total_parts})</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px;">
+            ${res.stepsLatex.map((st, idx) => `
+              <div class="math-step-card">
+                <div class="math-step-header">
+                  <span class="math-step-badge">Bước ${idx + 1}</span>
+                  <span class="math-step-title">${st.title}</span>
+                </div>
+                ${st.dataOrigin ? `
+                  <div class="math-data-origin">
+                    <i class="fa-solid fa-crosshairs"></i> <strong>Nguồn gốc số liệu:</strong> ${st.dataOrigin}
+                  </div>
+                ` : ''}
+                <div class="math-formula-box">$$${st.formula}$$</div>
+                <div class="math-formula-box">$$${st.substituted}$$</div>
+                <div class="math-result-badge"><i class="fa-solid fa-check"></i> Kết quả: ${st.result}</div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      ` : `
+        <div class="card" style="border-left: 4px solid var(--error-red);">
+          <div style="color: var(--error-red); font-weight: 600;"><i class="fa-solid fa-triangle-exclamation"></i> Lỗi thông số: ${res.error}</div>
+        </div>
+      `}
+    `;
+  }
+
+  // TAB 4: SERIAL DILUTION (CHUỖI PHA LOÃNG LIÊN TIẾP)
+  else if (subTab === "serial") {
+    const s = SolPrepState.serial;
+    const res = Calculators.calc_solution_prep_serial_dilution(s);
+
+    mainBodyHtml = `
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="fa-solid fa-stairs"></i> Chuỗi Pha Loãng Liên Tiếp Một Nửa (Serial Dilution)</div>
+        </div>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">
+          Phương pháp pha loãng theo chuỗi bậc thang dùng trong khảo sát đẳng nhiệt hấp phụ than hoạt tính (Bài 4 Hóa Lý) hoặc khảo sát enzyme/động học.
+        </p>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label"><span><b>Nồng độ dung dịch mẹ ($C_0$):</b></span> <span class="unit">(M)</span></label>
+            <input type="number" step="0.1" class="form-control" id="sol-ser-c0" value="${s.c_stock}" oninput="updateSerialField('c_stock', this.value)">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>Dung tích bình định mức ($V_{\text{đm}}$):</b></span> <span class="unit">(mL)</span></label>
+            <input type="number" step="10" min="10" class="form-control" id="sol-ser-vflask" value="${s.v_flask}" oninput="updateSerialField('v_flask', this.value)">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>Thể tích hút pha bình 1 ($V_{\text{hút, 1}}$):</b></span> <span class="unit">(mL)</span></label>
+            <input type="number" step="1" min="1" class="form-control" id="sol-ser-vfirst" value="${s.v_first}" oninput="updateSerialField('v_first', this.value)">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>Thể tích hút chuyển bình tiếp theo ($V_{\text{hút}}$):</b></span> <span class="unit">(mL)</span></label>
+            <input type="number" step="1" min="1" class="form-control" id="sol-ser-vtrans" value="${s.v_transfer}" oninput="updateSerialField('v_transfer', this.value)">
+          </div>
+          <div class="form-group">
+            <label class="form-label"><span><b>Số lượng bình cần pha:</b></span></label>
+            <input type="number" step="1" min="2" max="12" class="form-control" id="sol-ser-num" value="${s.num_flasks}" oninput="updateSerialField('num_flasks', this.value)">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="fa-solid fa-table-list"></i> Bảng Phân Bố Nồng Độ Chuỗi Bình Định Mức</div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Bình số</th>
+                <th>Thao tác pha chế</th>
+                <th>Thể tích mẫu hút</th>
+                <th>Thể tích nước cất</th>
+                <th>Nồng độ thu được ($C_i$)</th>
+                <th>Hệ số loãng so với dd mẹ</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${res.flasks.map(f => `
+                <tr>
+                  <td><strong>Bình ${f.flask}</strong></td>
+                  <td>${f.source}</td>
+                  <td>${f.v_pipet} mL</td>
+                  <td>${f.v_water} mL</td>
+                  <td><strong style="color: var(--ink-blue); font-size: 15px;">${f.c_str} ${res.conc_unit}</strong></td>
+                  <td>${f.dilution_factor} lần</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top: 20px;">
+          ${res.stepsLatex.map((st, idx) => `
+            <div class="math-step-card">
+              <div class="math-step-header">
+                <span class="math-step-badge">Bước ${idx + 1}</span>
+                <span class="math-step-title">${st.title}</span>
+              </div>
+              ${st.dataOrigin ? `
+                <div class="math-data-origin">
+                  <i class="fa-solid fa-crosshairs"></i> <strong>Nguồn gốc số liệu:</strong> ${st.dataOrigin}
+                </div>
+              ` : ''}
+              <div class="math-formula-box">$$${st.formula}$$</div>
+              <div class="math-formula-box">$$${st.substituted}$$</div>
+              <div class="math-result-badge"><i class="fa-solid fa-check"></i> Kết quả: ${st.result}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  // TAB 5: HANDBOOK POLYA & PROCEDURES
+  else if (subTab === "handbook") {
+    const hb = (typeof SOLUTION_PREP_HANDBOOK !== 'undefined') ? SOLUTION_PREP_HANDBOOK : { polyaSteps: [], firstPrinciples: [] };
+
+    mainBodyHtml = `
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="fa-solid fa-brain"></i> Khung Tư Duy Polya 4 Bước Trong Pha Chế Dung Dịch</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          ${hb.polyaSteps.map(step => `
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-left: 4px solid var(--ink-blue); border-radius: var(--radius-sm); padding: 14px 18px;">
+              <h4 style="margin: 0 0 6px 0; color: var(--ink-blue); font-size: 15px;">
+                Bước ${step.step}: ${step.title}
+              </h4>
+              <div style="font-size: 13px; line-height: 1.6; color: var(--text-main);">
+                ${step.desc}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="fa-solid fa-square-root-variable"></i> Thiết Lập Mô Hình Toán Học Từ First Principles</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          ${hb.firstPrinciples.map(fp => `
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 16px;">
+              <h4 style="margin: 0 0 10px 0; color: var(--ink-blue); font-size: 15px;">
+                <i class="fa-solid fa-certificate"></i> ${fp.title}
+              </h4>
+              <div class="math-formula-box">$$${fp.formula}$$</div>
+              <div style="font-size: 13px; line-height: 1.6; color: var(--text-main); margin-top: 8px;">
+                <strong>Chứng minh:</strong> ${fp.proof}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="fa-solid fa-triangle-exclamation"></i> Đánh Giá Sai Số & Kiểm Soát Kỹ Thuật Thao Tác</div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+          <div style="background: var(--bg-sidebar); border: 1px solid var(--border-line); border-radius: var(--radius-sm); padding: 14px;">
+            <h4 style="margin: 0 0 8px 0; color: var(--ink-blue); font-size: 14px;"><i class="fa-solid fa-vial"></i> Sai số dụng cụ thể tích Class A (ở 20°C)</h4>
+            <ul style="margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.6; color: var(--text-main);">
+              <li>Bình định mức 100 mL: $\pm 0{,}08\text{ mL}$</li>
+              <li>Pipet bầu 10 mL: $\pm 0{,}02\text{ mL}$</li>
+              <li>Buret 25 mL: $\pm 0{,}03\text{ mL}$</li>
+              <li><em>Không dùng ống đong hoặc cốc mỏ để đong hút mẫu chuẩn vì sai số lên tới 5% - 10%.</em></li>
+            </ul>
+          </div>
+          <div style="background: var(--bg-sidebar); border: 1px solid var(--border-line); border-radius: var(--radius-sm); padding: 14px;">
+            <h4 style="margin: 0 0 8px 0; color: var(--ink-blue); font-size: 14px;"><i class="fa-solid fa-temperature-half"></i> Giãn nở nhiệt của nước & thủy tinh</h4>
+            <ul style="margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.6; color: var(--text-main);">
+              <li>Ở $20^\circ\text{C}$: $d = 0{,}9982\text{ g/mL}$</li>
+              <li>Ở $30^\circ\text{C}$: $d = 0{,}9956\text{ g/mL}$</li>
+              <li>Nếu định mức khi nước còn nóng, khi nguội về $20^\circ\text{C}$ thể tích sẽ co lại làm nồng độ thực tế tăng cao hơn lý thuyết.</li>
+            </ul>
+          </div>
+          <div style="background: var(--bg-sidebar); border: 1px solid var(--border-line); border-radius: var(--radius-sm); padding: 14px;">
+            <h4 style="margin: 0 0 8px 0; color: var(--ink-blue); font-size: 14px;"><i class="fa-solid fa-eye"></i> Kỹ thuật đọc khum chất lỏng chuẩn</h4>
+            <ul style="margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.6; color: var(--text-main);">
+              <li><strong>Dung dịch không màu/nhạt:</strong> Đặt mắt ngang tầm, đọc theo <strong>đáy vòm khum lõm</strong>.</li>
+              <li><strong>Dung dịch màu đậm (I2, KMnO4):</strong> Đọc theo <strong>mép trên của vòm khum</strong>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // TAB 6: QA & INDICATORS
+  else {
+    const indicators = (typeof REAGENTS_INDICATORS !== 'undefined') ? REAGENTS_INDICATORS : [];
+    const qaList = (typeof SOLUTION_PREP_HANDBOOK !== 'undefined' && SOLUTION_PREP_HANDBOOK.qaList) ? SOLUTION_PREP_HANDBOOK.qaList : [];
+
+    mainBodyHtml = `
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="fa-solid fa-comments"></i> Bộ 5 Câu Hỏi Thảo Luận Chuyên Sâu (Kèm Lời Giải)</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          ${qaList.map((item, idx) => `
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-left: 4px solid var(--ink-blue); border-radius: var(--radius-sm); padding: 16px;">
+              <h4 style="margin: 0 0 8px 0; color: var(--ink-blue); font-size: 15px;">
+                <i class="fa-solid fa-circle-question"></i> Câu ${idx + 1}: ${item.q}
+              </h4>
+              <div style="background: var(--bg-secondary); padding: 12px 16px; border-radius: 6px; font-size: 13px; line-height: 1.65; color: var(--text-main);">
+                <strong><i class="fa-solid fa-lightbulb"></i> Lời giải First Principles:</strong> ${item.a}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="fa-solid fa-vial-circle-check"></i> Quy Trình Pha Chế Chỉ Thị & Thuốc Thử Phòng Lab</div>
+        </div>
         <div style="display: flex; flex-direction: column; gap: 16px;">
           ${indicators.map((ind, idx) => `
-            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-left: 4px solid var(--ink-blue); border-radius: 8px; padding: 16px;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                 <h4 style="margin: 0; color: var(--ink-blue); font-size: 16px;">
                   <i class="fa-solid fa-eye-dropper"></i> ${idx + 1}. ${ind.name}
@@ -8258,142 +9458,15 @@ function renderSolutionPrepView() {
         </div>
       </div>
     `;
-  } else {
-    // Cheatsheet
-    mainBodyHtml = `
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title"><i class="fa-solid fa-table-list"></i> Bảng Công Thức Chuyển Đổi Nồng Độ Tương Hỗ</div>
-        </div>
-        <div class="table-responsive">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Tên nồng độ</th>
-                <th>Ký hiệu & Đơn vị</th>
-                <th>Công thức định nghĩa</th>
-                <th>Công thức quy đổi tương hỗ</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Nồng độ Mol</strong></td>
-                <td>$C_M\\text{ (mol/L)}$</td>
-                <td>$$C_M = \\frac{n}{V_{\\text{dd (L)}}} = \\frac{m_{\\text{ct}}}{M \\cdot V_{\\text{L}}}$$</td>
-                <td>$$C_M = \\frac{10 \\times C\\% \\times d}{M} = \\frac{C_N}{z} = \\frac{1000 \\cdot T}{M}$$</td>
-              </tr>
-              <tr>
-                <td><strong>Nồng độ Đương lượng</strong></td>
-                <td>$C_N\\text{ (đlg/L hoặc N)}$</td>
-                <td>$$C_N = \\frac{m_{\\text{ct}}}{E \\cdot V_{\\text{L}}} \\quad \\left(E = \\frac{M}{z}\\right)$$</td>
-                <td>$$C_N = C_M \\times z = \\frac{10 \\times C\\% \\times d \\times z}{M}$$</td>
-              </tr>
-              <tr>
-                <td><strong>Nồng độ Phần trăm Khối lượng</strong></td>
-                <td>$C\\%\\text{ (\\%)}$</td>
-                <td>$$C\\% = \\frac{m_{\\text{ct}}}{m_{\\text{dd}}} \\times 100\\%$$</td>
-                <td>$$C\\% = \\frac{C_M \\times M}{10 \\times d} = \\frac{C_N \\times E}{10 \\times d}$$</td>
-              </tr>
-              <tr>
-                <td><strong>Độ chuẩn</strong></td>
-                <td>$T\\text{ (g/mL)}$</td>
-                <td>$$T = \\frac{m_{\\text{ct (g)}}}{V_{\\text{dd (mL)}}}$$</td>
-                <td>$$T = \\frac{C_M \\times M}{1000} = \\frac{C_N \\times E}{1000}$$</td>
-              </tr>
-              <tr>
-                <td><strong>Nồng độ Molan</strong></td>
-                <td>$C_m\\text{ (mol/kg dung môi)}$</td>
-                <td>$$C_m = \\frac{n_{\\text{ct}}}{m_{\\text{dung môi (kg)}}}$$</td>
-                <td>$$C_m = \\frac{1000 \\times C_M}{1000 \\times d - C_M \\times M}$$</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title"><i class="fa-solid fa-flask"></i> Danh Mục Dung Dịch Chuẩn Dùng Trong 11 Bài Thí Nghiệm</div>
-        </div>
-        <div class="table-responsive">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Tên dung dịch</th>
-                <th>Nồng độ</th>
-                <th>Cách pha từ chất rắn / dd đặc</th>
-                <th>Ứng dụng trong học phần</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Dung dịch $\\text{NaOH}$</strong></td>
-                <td>$0,100\\text{ N} = 0,100\\text{ M}$</td>
-                <td>Cân $4,000\\text{ g } \\text{NaOH}$ rắn pha định mức thành $1000\\text{ mL}$</td>
-                <td>Bài HL4 (Freundlich), Bài KT2 (Tinh chế NaCl)</td>
-              </tr>
-              <tr>
-                <td><strong>Dung dịch $\\text{NaOH}$</strong></td>
-                <td>$0,050\\text{ N} = 0,050\\text{ M}$</td>
-                <td>Cân $2,000\\text{ g } \\text{NaOH}$ rắn (hoặc pha loãng gấp đôi dd 0,1N) thành $1000\\text{ mL}$</td>
-                <td>Bài HL9 (Thủy phân Etyl Axetat)</td>
-              </tr>
-              <tr>
-                <td><strong>Dung dịch $\\text{HCl}$</strong></td>
-                <td>$0,100\\text{ N} = 0,100\\text{ M}$</td>
-                <td>Hút $8,30\\text{ mL } \\text{HCl 37\\%}$ ($d=1,19$) pha định mức thành $1000\\text{ mL}$</td>
-                <td>Bài HL9 (Xúc tác thủy phân Este)</td>
-              </tr>
-              <tr>
-                <td><strong>Dung dịch $\\text{HCl}$</strong></td>
-                <td>$0,500\\text{ M}$</td>
-                <td>Hút $41,40\\text{ mL } \\text{HCl 37\\%}$ ($d=1,19$) pha định mức thành $1000\\text{ mL}$</td>
-                <td>Bài HL10 (Iod hóa Axeton)</td>
-              </tr>
-              <tr>
-                <td><strong>Dung dịch $\\text{Na}_2\\text{S}_2\\text{O}_3$</strong></td>
-                <td>$0,050\\text{ N} = 0,050\\text{ M}$</td>
-                <td>Cân $12,409\\text{ g } \\text{Na}_2\\text{S}_2\\text{O}_3\\cdot 5\\text{H}_2\\text{O}$ pha định mức thành $1000\\text{ mL}$</td>
-                <td>Bài HL3 (Chuẩn độ pha CCl4)</td>
-              </tr>
-              <tr>
-                <td><strong>Dung dịch $\\text{Na}_2\\text{S}_2\\text{O}_3$</strong></td>
-                <td>$0,010\\text{ N} = 0,010\\text{ M}$</td>
-                <td>Cân $2,482\\text{ g } \\text{Na}_2\\text{S}_2\\text{O}_3\\cdot 5\\text{H}_2\\text{O}$ pha định mức thành $1000\\text{ mL}$</td>
-                <td>Bài HL3 (Pha nước), Bài HL10 (I2 dư)</td>
-              </tr>
-              <tr>
-                <td><strong>Dung dịch $\\text{BaCl}_2\\text{ 20\\%}$</strong></td>
-                <td>$20\\text{ g/100 g dd}$</td>
-                <td>Hòa tan $23,5\\text{ g } \\text{BaCl}_2\\cdot 2\\text{H}_2\\text{O}$ trong $80\\text{ mL}$ nước</td>
-                <td>Bài KT2 (Kết tủa tạp chất SO4)</td>
-              </tr>
-              <tr>
-                <td><strong>Chỉ thị Hồ tinh bột</strong></td>
-                <td>$1\\%$</td>
-                <td>Hòa tan $1\\text{ g}$ tinh bột tan trong một ít nước lạnh, rót vào $100\\text{ mL}$ nước đang sôi, đun sôi 2 phút</td>
-                <td>Chỉ thị phép chuẩn độ Iod (HL3, HL10)</td>
-              </tr>
-              <tr>
-                <td><strong>Chỉ thị Phenolphthalein</strong></td>
-                <td>$1\\%$ trong cồn</td>
-                <td>Hòa tan $1\\text{ g}$ phenolphthalein trong $100\\text{ mL}$ cồn $95^\\circ$</td>
-                <td>Chỉ thị axit-bazo (HL4, HL9)</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    `;
   }
 
   container.innerHTML = `
     <div class="main-content-wrapper">
       <div class="module-header">
         <div class="module-header-info">
-          <span class="module-tag"><i class="fa-solid fa-flask-vial"></i> Tiện Ích Phòng Lab</span>
-          <h2>Pha Chế Dung Dịch Chuẩn Phòng Thí Nghiệm ($C_M$, $C_N$, $C\\%$)</h2>
-          <p>Tính toán lượng cân chất rắn, thể tích dung dịch mẹ cần lấy, kèm công thức tổng quát, phép thế số và quy trình thao tác chuẩn bình định mức.</p>
+          <span class="module-tag"><i class="fa-solid fa-flask-vial"></i> Tiện Ích Phòng Lab Toàn Diện</span>
+          <h2>Pha Chế & Pha Loãng Dung Dịch Phòng Thí Nghiệm ($C_M, C_N, C\%$)</h2>
+          <p>Hệ thống tính toán đa năng: Hòa tan chất rắn (khan & ngậm nước), Bộ Switcher pha loãng Input $\rightarrow$ Output, Quy tắc đường chéo Pearson, Chuỗi pha loãng liên tiếp và Sổ tay thực hành Polya.</p>
         </div>
       </div>
       ${tabsHtml}
@@ -8424,9 +9497,17 @@ function onSelectSolidPreset(idxStr) {
   SolPrepState.solid.presetIdx = idx;
   if (idx >= 0 && typeof REAGENTS_SOLID !== 'undefined' && REAGENTS_SOLID[idx]) {
     const r = REAGENTS_SOLID[idx];
-    SolPrepState.solid.mw = r.mw;
-    SolPrepState.solid.z = r.z;
+    SolPrepState.solid.mw_anhydrous = r.mw_anhydrous || r.mw;
+    SolPrepState.solid.mw_hydrated = r.mw_hydrated || r.mw;
+    SolPrepState.solid.is_hydrated = Boolean(r.is_hydrated);
+    SolPrepState.solid.water_moles = r.water_moles || 0;
+    SolPrepState.solid.z = r.z || 1;
   }
+  renderSolutionPrepView();
+}
+
+function updateSolidHydrated(checked) {
+  SolPrepState.solid.is_hydrated = Boolean(checked);
   renderSolutionPrepView();
 }
 
@@ -8444,28 +9525,58 @@ function onSelectDilutionPreset(idxStr) {
   SolPrepState.dilution.presetIdx = idx;
   if (idx >= 0 && typeof REAGENTS_LIQUID !== 'undefined' && REAGENTS_LIQUID[idx]) {
     const r = REAGENTS_LIQUID[idx];
-    SolPrepState.dilution.c1_percent = r.c_percent;
+    SolPrepState.dilution.input_type = "percent";
+    SolPrepState.dilution.input_val = r.c_percent;
     SolPrepState.dilution.density1 = r.density;
     SolPrepState.dilution.mw = r.mw;
-    SolPrepState.dilution.z = r.z;
+    SolPrepState.dilution.z = r.z || 1;
   }
   renderSolutionPrepView();
 }
 
+function setDilutionInputType(type) {
+  SolPrepState.dilution.input_type = type;
+  renderSolutionPrepView();
+}
+
+function setDilutionOutputType(type) {
+  SolPrepState.dilution.output_type = type;
+  renderSolutionPrepView();
+}
+
 function updateDilutionField(field, val) {
-  if (field === "conc_type2") {
-    SolPrepState.dilution.conc_type2 = val;
+  SolPrepState.dilution[field] = parseFloat(val) || 0;
+  renderSolutionPrepView();
+}
+
+function updatePearsonField(field, val) {
+  if (field === "conc_unit" || field === "amount_type") {
+    SolPrepState.pearson[field] = val;
   } else {
-    SolPrepState.dilution[field] = parseFloat(val) || 0;
+    SolPrepState.pearson[field] = parseFloat(val) || 0;
+  }
+  renderSolutionPrepView();
+}
+
+function updateSerialField(field, val) {
+  if (field === "num_flasks") {
+    SolPrepState.serial[field] = parseInt(val) || 6;
+  } else {
+    SolPrepState.serial[field] = parseFloat(val) || 0;
   }
   renderSolutionPrepView();
 }
 
 window.switchSolPrepTab = switchSolPrepTab;
 window.onSelectSolidPreset = onSelectSolidPreset;
+window.updateSolidHydrated = updateSolidHydrated;
 window.updateSolidField = updateSolidField;
 window.onSelectDilutionPreset = onSelectDilutionPreset;
+window.setDilutionInputType = setDilutionInputType;
+window.setDilutionOutputType = setDilutionOutputType;
 window.updateDilutionField = updateDilutionField;
+window.updatePearsonField = updatePearsonField;
+window.updateSerialField = updateSerialField;
 window.renderSolutionPrepView = renderSolutionPrepView;
 
 window.SolPrepState = SolPrepState;
